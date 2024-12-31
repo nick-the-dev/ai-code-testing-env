@@ -3,28 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue App</title>
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura/theme.css">
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
+    <title>Vue.js App</title>
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-teal/theme.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/primevue/core/core.min.js"></script>
     <script src="https://unpkg.com/primevue/button/button.min.js"></script>
-    <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
-    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
+     <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
+    <script src="https://unpkg.com/primevue/menubar/menubar.min.js"></script>
     <script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script>
+    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
     <script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
-    <script src="https://unpkg.com/primevue/progressbar/progressbar.min.js"></script>
-    <script src="https://unpkg.com/primevue/card/card.min.js"></script>
-    <script src="https://unpkg.com/primevue/divider/divider.min.js"></script>
-    <script src="https://unpkg.com/primevue/datatable/datatable.min.js"></script>
-    <script src="https://unpkg.com/primevue/column/column.min.js"></script>
-    <script src="https://unpkg.com/primevue/tag/tag.min.js"></script>
     <script src="https://unpkg.com/primevue/toast/toast.min.js"></script>
-    <script src="https://unpkg.com/primevue/overlaypanel/overlaypanel.min.js"></script>
-    <script src="https://unpkg.com/primevue/tooltip/tooltip.min.js"></script>
-    <script src="https://unpkg.com/primevue/api/api.min.js"></script>
-    <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
+     <script src="https://unpkg.com/primevue/toastservice/toastservice.min.js"></script>
     <style>
         html, body, div, span, applet, object, iframe,
         h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -35,8 +27,8 @@
         dl, dt, dd, ol, ul, li,
         fieldset, form, label, legend,
         table, caption, tbody, tfoot, thead, tr, th, td,
-        article, aside, canvas, details, embed,
-        figure, figcaption, footer, header, hgroup,
+        article, aside, canvas, details, embed, 
+        figure, figcaption, footer, header, hgroup, 
         menu, nav, output, ruby, section, summary,
         time, mark, audio, video {
             margin: 0;
@@ -46,363 +38,138 @@
             font: inherit;
             vertical-align: baseline;
         }
-        article, aside, details, figcaption, figure,
+        article, aside, details, figcaption, figure, 
         footer, header, hgroup, menu, nav, section {
             display: block;
         }
-        body {
-            line-height: 1;
-        }
-        ol, ul {
-            list-style: none;
-        }
-        blockquote, q {
-            quotes: none;
-        }
-        blockquote:before, blockquote:after,
-        q:before, q:after {
-            content: '';
-            content: none;
-        }
-        table {
-            border-collapse: collapse;
-            border-spacing: 0;
-        }
-        body {
-            font-family: sans-serif;
-            line-height: 1.6;
-            background-color: #f0f0f0;
-            color: #333;
-        }
-        #app {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .p-button {
-            margin-right: 5px;
-        }
-        .p-menu {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .p-menuitem-link {
-            padding: 10px;
-        }
-        .p-menuitem-link:hover {
-            background-color: #f0f0f0;
-        }
-        .p-inputtext {
-            border: 1px solid #ddd;
-            padding: 8px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-        .p-dialog-content {
-            padding: 20px;
-        }
-        .p-dropdown {
-             min-width: 150px;       
-            margin-bottom: 10px;
-        }
-        .p-progressbar {
-            height: 20px;
-            margin-bottom: 15px;
-        }
-        .p-card {
-            margin-bottom: 15px;
-        }
-        .p-divider-horizontal {
-            margin: 20px 0;
-        }
-       .p-datatable-wrapper {
-        overflow-x: auto;
-    }
-    .p-datatable {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    .p-datatable th,
-    .p-datatable td {
-        padding: 10px;
-        border: 1px solid #ddd;
-        text-align: left;
-    }
-    .p-datatable th {
-            background-color: #f0f0f0;
-        }
-     .p-tag {
-          margin-right: 5px;        
-        }
-        .p-toast{
-          position: fixed;
-          top: 20px;
-          right: 20px;
-           z-index: 1000;           
-        }
-         .p-overlaypanel {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        padding: 10px;
-        border-radius: 4px;
-      }
-      .p-tooltip-text{
-          background-color: #333;
-          color: #fff;
-          padding: 5px;
-          border-radius: 4px;
-      }
+        body {line-height: 1;}
+        ol, ul {list-style: none;}
+        blockquote, q {quotes: none;}
+        blockquote:before, blockquote:after,q:before, q:after {content: '';content: none;}
+        table {border-collapse: collapse;border-spacing: 0;}
+        body { font-family: sans-serif; }
+        #app { margin: 20px; }
+        .p-button { margin-right: 5px; }
     </style>
 </head>
 <body>
-<div id="app">
-    <PrimeVue></PrimeVue>
-    <Toast ref="toast"></Toast>
-
-    <h1>Vue.js Application</h1>
-
-    <Button icon="pi pi-plus" label="Add New" @click="showDialog = true"></Button>
-
-    <Menu ref="menu" :model="menuItems"></Menu>
-    <Button icon="pi pi-bars" @click="menu.toggle($event)" aria-controls="popup_menu" aria-haspopup="true"></Button>
-
-    <p>Search something:</p>
-    <InputText v-model="searchText" placeholder="Search..." />
-
-
-    <Dialog header="Add Item" v-model:visible="showDialog" :style="{ width: '50vw' }">
-        <p>Enter item details:</p>
-        <InputText v-model="newItem.name" placeholder="Name" class="p-mb-3"/>
-        <InputText v-model="newItem.description" placeholder="Description" class="p-mb-3"/>
-        <Dropdown  v-model="newItem.status" :options="statusOptions" placeholder="Status" class="p-mb-3"/>
-        <Button label="Save" @click="saveItem" class="p-mt-2"/>
-        <Button label="Cancel" @click="showDialog = false" class="p-button-secondary p-mt-2"/>
-    </Dialog>
-
-    <ProgressBar :value="progressValue"></ProgressBar>
-
-    <Card title="Card Example" subTitle="Subtitle of the card">
-        <template #content>
-            <img src="https://placehold.co/600x400/EEE/31343C" alt="Placeholder Image">
-            <p>This is a basic card with an image.</p>
-        </template>
-    </Card>
-
-    <Divider />
-    
-    <DataTable :value="items" responsiveLayout="scroll" >
-        <Column field="id" header="ID"></Column>
-        <Column field="name" header="Name"></Column>
-        <Column field="description" header="Description"></Column>
-       <Column field="status" header="Status">
-          <template #body="slotProps">
-            <Tag :value="slotProps.data.status" :severity="getStatusSeverity(slotProps.data.status)"></Tag>
-          </template>
-        </Column>
-    </DataTable>
-
-    <Button label="Show Toast" @click="showSuccess()" class="p-mt-3"/>
-
-    <Button label="Toggle Panel" @click="overlayPanel.toggle($event)" aria-controls="popup_panel" aria-haspopup="true" />
-    <OverlayPanel ref="overlayPanel" id="popup_panel" >
-       <div>This is the panel content!</div>
-       <Button label="Close Panel" @click="overlayPanel.hide()"></Button>       
-    </OverlayPanel>
-     <Button label="Tooltip Button"  ref="tooltip"  class="p-mt-3"  v-tooltip.top="'This is a tooltip'">Hover me</Button>
-     <Button icon="pi pi-question-circle" aria-label="Help"  class="p-ml-2"  v-tooltip.right="'This is help tooltip'"  />
-
-</div>
-<script>
-(function() {
+    <div id="app">
+    <Menubar :model="menuItems" />
+        <Toast ref="toast" />
+        <h1>{{ title }}</h1>
+       
+        <p>Selected Item: {{ selectedItem ? selectedItem.label : 'None' }}</p>
+        <Button icon="pi pi-plus" label="Add New" @click="openDialog" class="p-button-success" />
+         <Button icon="pi pi-pencil" label="Edit Item" @click="editItem" :disabled="!selectedItem" class="p-button-warning" />
+        <Button icon="pi pi-trash" label="Delete Item" @click="deleteItem" :disabled="!selectedItem" class="p-button-danger" />
+        
+        <Dropdown v-model="selectedItem" :options="items" optionLabel="label" placeholder="Select an Item" @change="onItemChange" />
+         <Dialog v-model:visible="dialogVisible" :header="dialogTitle"  @hide="closeDialog">
+           <div style="margin-bottom: 15px;">
+            <label for="name">Name:</label>
+                <InputText id="name" v-model="itemForm.label" />
+                </div>
+                 <div style="margin-bottom: 15px;">
+                   <label for="description">Description:</label>
+                   <InputText id="description" v-model="itemForm.description" />
+                 </div>
+                <Button label="Save" @click="saveItem" icon="pi pi-check" />
+               <Button label="Cancel" @click="closeDialog" class="p-button-secondary" icon="pi pi-times"/>
+             </Dialog>
+        <ul>
+            <li v-for="item in items" :key="item.id">
+            {{ item.label }} - {{item.description}}
+            </li>
+        </ul>
+    </div>
+    <script>
+    (function() {
     const { createApp, ref } = Vue;
-    const { useToast } = PrimeVue.useToast;
+    const { useToast } = PrimeVue;
 
-    const app = createApp({
+    createApp({
         setup() {
-            const showDialog = ref(false);
-            const searchText = ref('');
-            const progressValue = ref(50);
-            const menu = ref(null);
-            const toast = ref(null);
-            const overlayPanel = ref(null);
-            const tooltip = ref(null);
-            const statusOptions = ref(['Pending', 'In Progress', 'Completed']);
-            const newItem = ref({
-                name: '',
-                description: '',
-                 status: 'Pending'
-            });
-             const items = ref([
-                 {
-                     id: 1,
-                     name: 'Item 1',
-                     description: 'Description of item 1',
-                     status: 'Pending'
-                 },
-                 {
-                     id: 2,
-                     name: 'Item 2',
-                     description: 'Description of item 2',
-                      status: 'In Progress'
-                 },
-                 {
-                     id: 3,
-                     name: 'Item 3',
-                     description: 'Description of item 3',
-                     status: 'Completed'
-                 },
-                 {
-                     id: 4,
-                     name: 'Item 4',
-                     description: 'Description of item 4',
-                     status: 'Pending'
-                 },
-                {
-                    id: 5,
-                    name: 'Item 5',
-                    description: 'Description of item 5',
-                     status: 'In Progress'
-                },
-                 {
-                     id: 6,
-                     name: 'Item 6',
-                     description: 'Description of item 6',
-                     status: 'Completed'
-                 },
-                 {
-                   id: 7,
-                   name: 'Item 7',
-                   description: 'Description of item 7',
-                    status: 'Pending'
-                },
-                {
-                    id: 8,
-                    name: 'Item 8',
-                    description: 'Description of item 8',
-                     status: 'In Progress'
-                },
-                {
-                    id: 9,
-                    name: 'Item 9',
-                    description: 'Description of item 9',
-                    status: 'Completed'
-                },
-                {
-                    id: 10,
-                    name: 'Item 10',
-                    description: 'Description of item 10',
-                     status: 'Pending'
-                },
-                 {
-                     id: 11,
-                     name: 'Item 11',
-                     description: 'Description of item 11',
-                      status: 'In Progress'
-                 },
-                {
-                     id: 12,
-                     name: 'Item 12',
-                     description: 'Description of item 12',
-                     status: 'Completed'
-                },
-                {
-                    id: 13,
-                    name: 'Item 13',
-                    description: 'Description of item 13',
-                     status: 'Pending'
-                },
-                {
-                     id: 14,
-                     name: 'Item 14',
-                     description: 'Description of item 14',
-                      status: 'In Progress'
-                 },
-                 {
-                    id: 15,
-                    name: 'Item 15',
-                    description: 'Description of item 15',
-                    status: 'Completed'
-                 },
-                {
-                    id: 16,
-                    name: 'Item 16',
-                    description: 'Description of item 16',
-                     status: 'Pending'
-                },
-                  {
-                    id: 17,
-                    name: 'Item 17',
-                    description: 'Description of item 17',
-                      status: 'In Progress'
-                 },
-                 {
-                    id: 18,
-                    name: 'Item 18',
-                    description: 'Description of item 18',
-                     status: 'Completed'
-                 }
+             const toast = useToast();
+           const title = ref('My Vue.js Application');
+            const dialogVisible = ref(false);
+             const dialogTitle = ref('Add New Item');
+            const items = ref([
+                { id: 1, label: 'Item 1', description: 'Description for Item 1', image: 'https://placehold.co/600x400/EEE/31343C' },
+                 { id: 2, label: 'Item 2', description: 'Description for Item 2', image: 'https://placehold.co/600x400/EEE/31343C' },
+                { id: 3, label: 'Item 3', description: 'Description for Item 3', image: 'https://placehold.co/600x400/EEE/31343C' },
+                { id: 4, label: 'Item 4', description: 'Description for Item 4', image: 'https://placehold.co/600x400/EEE/31343C' },
+                { id: 5, label: 'Item 5', description: 'Description for Item 5', image: 'https://placehold.co/600x400/EEE/31343C' },
+                { id: 6, label: 'Item 6', description: 'Description for Item 6', image: 'https://placehold.co/600x400/EEE/31343C' },
+                  { id: 7, label: 'Item 7', description: 'Description for Item 7', image: 'https://placehold.co/600x400/EEE/31343C' },
+                  { id: 8, label: 'Item 8', description: 'Description for Item 8', image: 'https://placehold.co/600x400/EEE/31343C' },
+                 { id: 9, label: 'Item 9', description: 'Description for Item 9', image: 'https://placehold.co/600x400/EEE/31343C' },
+                  { id: 10, label: 'Item 10', description: 'Description for Item 10', image: 'https://placehold.co/600x400/EEE/31343C' }
+
+
+            ]);
+            const selectedItem = ref(null);
+            const itemForm = ref({label: '', description: ''});
+            const isEditMode = ref(false);
+             const menuItems = ref([
+               {label: 'Home', icon: 'pi pi-home', command: () => {toast.add({severity:'info', summary: 'Home', detail:'Navigated to Home', life: 3000});} },
+                {label: 'Items', icon: 'pi pi-list', command: () => {toast.add({severity:'info', summary: 'Items', detail:'Navigated to Items', life: 3000});} },
+               {label: 'Settings', icon: 'pi pi-cog', command: () => {toast.add({severity:'info', summary: 'Settings', detail:'Navigated to Settings', life: 3000});} },
             ]);
 
-            const menuItems = ref([
-                { label: 'Home', icon: 'pi pi-home' },
-                { label: 'Settings', icon: 'pi pi-cog' },
-                { label: 'Profile', icon: 'pi pi-user' }
-            ]);
-
-              const getStatusSeverity = (status) => {
-                  switch(status) {
-                    case 'Pending':
-                      return 'warning';
-                    case 'In Progress':
-                      return 'info';
-                     case 'Completed':
-                      return 'success';
-                     default:
-                       return null;
-                  }
+            const openDialog = () => {
+                 dialogTitle.value = 'Add New Item';
+                isEditMode.value = false;
+                 itemForm.value = { label: '', description: '' };
+                dialogVisible.value = true;
             };
-            const showSuccess = () => {
-                 toast.value.add({ severity: 'success', summary: 'Success', detail: 'Action was successful!', life: 3000 });
+              const editItem = () => {
+                   if (selectedItem.value) {
+                    dialogTitle.value = 'Edit Item';
+                    isEditMode.value = true;
+                    itemForm.value = { ...selectedItem.value };
+                    dialogVisible.value = true;
+                } else {
+                      toast.add({severity:'warn', summary: 'Warning', detail:'Please select an item to edit', life: 3000});
+                }
             };
-
+            const closeDialog = () => {
+                dialogVisible.value = false;
+            };
             const saveItem = () => {
-                 items.value.push({
-                    id: items.value.length + 1,
-                    name: newItem.value.name,
-                    description: newItem.value.description,
-                      status: newItem.value.status
-                 });
-                newItem.value = { name: '', description: '', status: 'Pending'};
-                showDialog.value = false;
-                showSuccess();
-            };
+               if (itemForm.value.label && itemForm.value.description) {
+                if (isEditMode.value) {
+                    const index = items.value.findIndex(item => item.id === selectedItem.value.id);
+                    if (index !== -1) {
+                        items.value[index] = { ...itemForm.value, id: selectedItem.value.id };
+                    }
+                     toast.add({severity:'success', summary: 'Success', detail:'Item updated successfully', life: 3000});
+                } else {
+                     const newItem = { ...itemForm.value, id: Date.now() };
+                    items.value.push(newItem);
+                      toast.add({severity:'success', summary: 'Success', detail:'Item added successfully', life: 3000});
 
-            return {
-                showDialog,
-                searchText,
-                progressValue,
-                menu,
-                menuItems,
-                newItem,
-                items,
-                saveItem,
-                 statusOptions,
-                 toast,        
-                showSuccess,
-                getStatusSeverity,
-                overlayPanel,               
-                tooltip
-             };
+                }
+               closeDialog();
+              } else {
+                toast.add({severity:'error', summary: 'Error', detail:'Please fill all fields', life: 3000});
+            }
+            };
+           const deleteItem = () => {
+            if (selectedItem.value) {
+                items.value = items.value.filter(item => item.id !== selectedItem.value.id);
+                selectedItem.value = null;
+                 toast.add({severity:'success', summary: 'Success', detail:'Item deleted successfully', life: 3000});
+            } else {
+                 toast.add({severity:'warn', summary: 'Warning', detail:'Please select an item to delete', life: 3000});
+            }
+         };
+         const onItemChange = () => {
+            console.log('Selected item:', selectedItem.value);
+        };
+            return { title, items, selectedItem, openDialog, dialogVisible, closeDialog, saveItem, itemForm, deleteItem, editItem, dialogTitle, onItemChange, menuItems, toast};
         }
-    });
-    app.use(PrimeVue.default);
-      app.mount('#app');
-})();
-</script>
+    }).use(PrimeVue.ToastService).mount('#app');
+    })();
+    </script>
 </body>
 </html>
