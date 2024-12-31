@@ -1,191 +1,172 @@
  <style>
-    html, body, div, span, applet, object, iframe,
-    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-    a, abbr, acronym, address, big, cite, code,
-    del, dfn, em, img, ins, kbd, q, s, samp,
-    small, strike, strong, sub, sup, tt, var,
-    b, u, i, center,
-    dl, dt, dd, ol, ul, li,
-    fieldset, form, label, legend,
-    table, caption, tbody, tfoot, thead, tr, th, td,
-    article, aside, canvas, details, embed,
-    figure, figcaption, footer, header, hgroup,
-    menu, nav, output, ruby, section, summary,
-    time, mark, audio, video {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        font-size: 100%;
-        font: inherit;
-        vertical-align: baseline;
-    }
-    article, aside, details, figcaption, figure,
-    footer, header, hgroup, menu, nav, section {
-        display: block;
-    }
-    body {
-        line-height: 1;
-    }
-    ol, ul {
-        list-style: none;
-    }
-    blockquote, q {
-        quotes: none;
-    }
-    blockquote:before, blockquote:after,
-    q:before, q:after {
-        content: '';
-        content: none;
-    }
-    table {
-        border-collapse: collapse;
-        border-spacing: 0;
-    }
-    button {
-      background: none;
-      color: inherit;
-      border: none;
-      padding: 0;
-      font: inherit;
-      cursor: pointer;
-      outline: inherit;
-    }
-    *, *:before, *:after {
-      box-sizing: border-box;
-    }
-  </style>
-<div id="app"></div>
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="https://unpkg.com/primevue/core/core.min.js"></script>
-<script src="https://unpkg.com/primevue/button/button.min.js"></script>
-<script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
-<script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
-<script src="https://unpkg.com/primevue/menubar/menubar.min.js"></script>
-<script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
-<script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script>
-<script src="https://unpkg.com/primevue/card/card.min.js"></script>
-<script src="https://unpkg.com/primevue/progressbar/progressbar.min.js"></script>
-<script src="https://unpkg.com/primevue/carousel/carousel.min.js"></script>
-<script src="https://unpkg.com/primevue/divider/divider.min.js"></script>
-<script src="https://unpkg.com/primevue/textarea/textarea.min.js"></script>
-<script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
-<link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css" />
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup, 
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+        body {
+            line-height: 1;
+        }
+        ol, ul {
+            list-style: none;
+        }
+        blockquote, q {
+            quotes: none;
+        }
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        button {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
 
-<script>
-(function() {
-  const { createApp, ref } = Vue;
-  const app = createApp({
-    setup() {
-      const items = ref([
-          { label: 'Home', icon: 'pi pi-home', to: '/' },
-          { label: 'Products', icon: 'pi pi-shopping-cart', to: '/products' },
-          { label: 'About', icon: 'pi pi-info-circle', to: '/about'},
-          { label: 'Contact', icon: 'pi pi-envelope', to: '/contact'}
-      ]);
-      const products = ref([
-          { id: 1, name: 'Product 1', description: 'Description for product 1', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 19.99 },
-          { id: 2, name: 'Product 2', description: 'Description for product 2', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 29.99 },
-          { id: 3, name: 'Product 3', description: 'Description for product 3', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 39.99 },
-          { id: 4, name: 'Product 4', description: 'Description for product 4', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 49.99 },
-          { id: 5, name: 'Product 5', description: 'Description for product 5', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 59.99 },
-          { id: 6, name: 'Product 6', description: 'Description for product 6', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 69.99 },
-          { id: 7, name: 'Product 7', description: 'Description for product 7', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 79.99 },
-          { id: 8, name: 'Product 8', description: 'Description for product 8', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 89.99 },
-          { id: 9, name: 'Product 9', description: 'Description for product 9', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 99.99 },
-          { id: 10, name: 'Product 10', description: 'Description for product 10', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 109.99 }
-      ]);
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
+    <div id="app"></div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/primevue/primevue.min.js"></script>
+    <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
+    <script type="module">
+    (function() {
+      const { createApp, ref } = Vue;
+      const { PrimeVue } = primevue;
+      const { DataTable } = primevue.datatable;
+      const { Column } = primevue.column;
+      const { Button } = primevue.button;
+      const { Dialog } = primevue.dialog;
+      const { InputText } = primevue.inputtext;
+      const { Menu } = primevue.menu;
 
-      const cities = ref([
-        { name: 'New York', code: 'NY' },
-        { name: 'Rome', code: 'RM' },
-        { name: 'London', code: 'LDN' },
-        { name: 'Istanbul', code: 'IST' },
-        { name: 'Paris', code: 'PRS' }
-      ]);
-      const selectedCity = ref(null);
-      const dialogVisible = ref(false);
-       const progressBarValue = ref(0);
-        const startProgressBar = () => {
-            progressBarValue.value = 0;
-            const interval = setInterval(() => {
-                progressBarValue.value += 10;
-                if (progressBarValue.value >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => { progressBarValue.value = 0; }, 500);
-                }
-            }, 200);
+      const app = createApp({
+        setup() {
+            const products = ref([
+                { id: 1, name: 'Product A', image: 'https://placehold.co/600x400/EEE/31343C', price: 25, inventory: 50, description: 'A wonderful product A' },
+                { id: 2, name: 'Product B', image: 'https://placehold.co/600x400/EEE/31343C', price: 50, inventory: 100, description: 'An amazing product B' },
+                { id: 3, name: 'Product C', image: 'https://placehold.co/600x400/EEE/31343C', price: 75, inventory: 150, description: 'A fantastic product C' },
+                { id: 4, name: 'Product D', image: 'https://placehold.co/600x400/EEE/31343C', price: 100, inventory: 200, description: 'An excellent product D' },
+                { id: 5, name: 'Product E', image: 'https://placehold.co/600x400/EEE/31343C', price: 125, inventory: 250, description: 'A stunning product E' },
+                { id: 6, name: 'Product F', image: 'https://placehold.co/600x400/EEE/31343C', price: 150, inventory: 300, description: 'A remarkable product F' },
+                { id: 7, name: 'Product G', image: 'https://placehold.co/600x400/EEE/31343C', price: 175, inventory: 350, description: 'A superb product G' },
+                { id: 8, name: 'Product H', image: 'https://placehold.co/600x400/EEE/31343C', price: 200, inventory: 400, description: 'An outstanding product H' },
+                { id: 9, name: 'Product I', image: 'https://placehold.co/600x400/EEE/31343C', price: 225, inventory: 450, description: 'A top-notch product I' },
+                { id: 10, name: 'Product J', image: 'https://placehold.co/600x400/EEE/31343C', price: 250, inventory: 500, description: 'An extraordinary product J' },
+                { id: 11, name: 'Product K', image: 'https://placehold.co/600x400/EEE/31343C', price: 275, inventory: 550, description: 'A premium product K' },
+                { id: 12, name: 'Product L', image: 'https://placehold.co/600x400/EEE/31343C', price: 300, inventory: 600, description: 'A high-quality product L' },
+                { id: 13, name: 'Product M', image: 'https://placehold.co/600x400/EEE/31343C', price: 325, inventory: 650, description: 'A superior product M' },
+                { id: 14, name: 'Product N', image: 'https://placehold.co/600x400/EEE/31343C', price: 350, inventory: 700, description: 'An exceptional product N' },
+                { id: 15, name: 'Product O', image: 'https://placehold.co/600x400/EEE/31343C', price: 375, inventory: 750, description: 'A first-class product O' },
+                { id: 16, name: 'Product P', image: 'https://placehold.co/600x400/EEE/31343C', price: 400, inventory: 800, description: 'A world-class product P' },
+                { id: 17, name: 'Product Q', image: 'https://placehold.co/600x400/EEE/31343C', price: 425, inventory: 850, description: 'A state-of-the-art product Q' },
+                { id: 18, name: 'Product R', image: 'https://placehold.co/600x400/EEE/31343C', price: 450, inventory: 900, description: 'A cutting-edge product R' },
+                { id: 19, name: 'Product S', image: 'https://placehold.co/600x400/EEE/31343C', price: 475, inventory: 950, description: 'A groundbreaking product S' },
+                { id: 20, name: 'Product T', image: 'https://placehold.co/600x400/EEE/31343C', price: 500, inventory: 1000, description: 'An innovative product T' }
+            ]);
+          const visible = ref(false);
+          const selectedProduct = ref(null);
+          const searchText = ref('');
+          const menu = ref(null);
+
+          const openDialog = (product) => {
+            selectedProduct.value = product;
+            visible.value = true;
+          };
+
+          const hideDialog = () => {
+            visible.value = false;
+          };
+
+          const filteredProducts = Vue.computed(() => {
+                const search = searchText.value.toLowerCase();
+                return products.value.filter(product =>
+                    product.name.toLowerCase().includes(search) ||
+                    product.description.toLowerCase().includes(search)
+                );
+          });
+          const menuItems = ref([
+            { label: 'Home', icon: 'pi pi-home', command: () => { alert('Home') } },
+            { label: 'Products', icon: 'pi pi-shopping-cart', command: () => { alert('Products') } },
+            { label: 'About', icon: 'pi pi-info-circle', command: () => { alert('About') } },
+            { label: 'Settings', icon: 'pi pi-cog', command: () => { alert('Settings') } },
+            { label: 'Logout', icon: 'pi pi-sign-out', command: () => { alert('Logout') } }
+        ]);
+        const toggleMenu = (event) => {
+                menu.value.toggle(event);
         };
-        const toggleDialog = () => {
-          dialogVisible.value = !dialogVisible.value;
-        };
-      return {
-        items,
-        products,
-        cities,
-        selectedCity,
-        dialogVisible,
-        progressBarValue,
-        startProgressBar,
-        toggleDialog
-      };
-    },
-    template: `
-    <Menubar :model="items" style="margin-bottom: 20px;"></Menubar>
-    <div style="padding: 20px;">
-      <h1>Welcome to our Store!</h1>
-      <p>Explore our amazing products.</p>
-      <Divider />
-        <Carousel :value="products" :numVisible="3" :numScroll="1" :circular="true">
-            <template #item="{ data }">
-                <Card :title="data.name" style="margin: 5px;" :subTitle="'$' + data.price">
-                    <template #content>
-                       <img :src="data.imageUrl" alt="Product Image" style="width: 100%; max-height: 200px; object-fit: cover;"/>
-                        <p>{{data.description}}</p>
-                    </template>
-                    <template #footer>
-                        <Button icon="pi pi-shopping-cart" label="Add to cart" />
-                    </template>
-                </Card>
-            </template>
-        </Carousel>
-      <Divider />
-         <div style="margin-bottom: 20px;">
-          <h2>Select a City</h2>
-          <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a City" />
-          <p v-if="selectedCity">Selected city: {{ selectedCity.name }}</p>
-        </div>
-      <Divider />
-      <div style="margin-bottom: 20px;">
-        <Button label="Show Dialog" @click="toggleDialog" icon="pi pi-external-link"></Button>
-          <Dialog header="Dialog Title" v-model:visible="dialogVisible" :modal="true" :style="{width: '50vw'}">
-            <p>This is a modal dialog.</p>
-             <textarea rows="5" cols="50" placeholder="Enter text here"></textarea>
-            <template #footer>
-                <Button label="Close" @click="toggleDialog" class="p-button-secondary"></Button>
-            </template>
-        </Dialog>
-      </div>
-      <Divider/>
+          return { products, visible, selectedProduct, openDialog, hideDialog, filteredProducts, searchText, menu, menuItems, toggleMenu };
+        },
+        components: {
+          DataTable,
+          Column,
+          Button,
+          Dialog,
+          InputText,
+          Menu
+        },
+        template: `
         <div>
-             <Button label="Start Progress" @click="startProgressBar" icon="pi pi-play"/>
-            <ProgressBar :value="progressBarValue" style="margin-top: 10px;"></ProgressBar>
+        <Menu ref="menu" :model="menuItems" />
+          <Button icon="pi pi-bars" @click="toggleMenu" class="p-button-secondary p-button-text" />
+          <InputText v-model="searchText" placeholder="Search products..." />
+          <DataTable :value="filteredProducts">
+              <Column field="id" header="ID"></Column>
+              <Column field="name" header="Name"></Column>
+              <Column header="Image">
+                <template #body="{ data }">
+                   <img :src="data.image" alt="Product Image" style="max-width: 100px; max-height: 100px;" />
+                </template>
+              </Column>
+              <Column field="price" header="Price"></Column>
+              <Column field="inventory" header="Inventory"></Column>
+               <Column header="Actions">
+                  <template #body="{ data }">
+                    <Button icon="pi pi-eye" class="p-button-info p-button-text" @click="openDialog(data)" />
+                  </template>
+                </Column>
+          </DataTable>
+          <Dialog v-model:visible="visible" header="Product Details" :style="{ width: '50vw' }" :modal="true">
+            <div v-if="selectedProduct">
+            <img :src="selectedProduct.image" alt="Product Image" style="max-width: 200px; max-height: 200px;" />
+              <p><strong>Name:</strong> {{ selectedProduct.name }}</p>
+              <p><strong>Description:</strong> {{ selectedProduct.description }}</p>
+              <p><strong>Price:</strong> {{ selectedProduct.price }}</p>
+              <p><strong>Inventory:</strong> {{ selectedProduct.inventory }}</p>
+            </div>
+            <template #footer>
+               <Button label="Close" icon="pi pi-times" class="p-button-secondary" @click="hideDialog" />
+            </template>
+          </Dialog>
         </div>
-    </div>
-    `
-  });
-
-  app.use(PrimeVue.default);
-  app.component('Button', PrimeVue.Button);
-  app.component('Menubar', PrimeVue.Menubar);
-  app.component('Dropdown', PrimeVue.Dropdown);
-  app.component('Dialog', PrimeVue.Dialog);
-    app.component('Card', PrimeVue.Card);
-    app.component('ProgressBar', PrimeVue.ProgressBar);
-     app.component('Carousel', PrimeVue.Carousel);
-     app.component('Divider', PrimeVue.Divider);
-      app.component('InputText', PrimeVue.InputText);
-      app.component('Textarea', PrimeVue.Textarea);
-  app.mount('#app');
-})();
-</script>
+        `
+      });
+      app.use(PrimeVue);
+      app.mount('#app');
+    })();
+    </script>
