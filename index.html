@@ -1,1 +1,284 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PrimeVue App</title><link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-blue/theme.css"><link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css"><link rel="stylesheet" href="https://unpkg.com/primeflex@^3.0.0/primeflex.min.css"><style>html,body{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}body{line-height:1;}ol,ul{list-style:none;}blockquote,q{quotes:none;}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}table{border-collapse:collapse;border-spacing:0;}button{background:none;border:none;cursor:pointer;}</style></head><body><div id="app"> <div class="card"> <Toolbar> <template #start> <Button icon="pi pi-bars" @click="toggleSidebar" class="mr-2"></Button> </template> <template #center> <span class="text-xl">My App</span> </template> <template #end> <Button icon="pi pi-user"></Button> </template> </Toolbar> <Sidebar v-model:visible="sidebarVisible"> <div class="p-4"> <h2>Menu</h2> <ul class="p-0"> <li class="mb-2"> <Button icon="pi pi-home" label="Home" class="w-full p-button-text" @click="navigateTo('/')"></Button> </li> <li class="mb-2"> <Button icon="pi pi-list" label="Products" class="w-full p-button-text" @click="navigateTo('/products')"></Button> </li> <li class="mb-2"> <Button icon="pi pi-cog" label="Settings" class="w-full p-button-text" @click="navigateTo('/settings')"></Button> </li> </ul> </div> </Sidebar> <div class="p-4"> <template v-if="route === '/'"> <h1>Welcome</h1> <p>This is the home page.</p> <Galleria :value="images" :numVisible="3" :circular="true" :responsiveOptions="responsiveOptions" style="max-width: 600px; margin: 20px auto;"> <template #item="{ item }"> <img :src="item.src" alt="item.alt" style="width: 100%; display: block;" /> </template> <template #thumbnail="{ item }"> <img :src="item.src" alt="item.alt" style="display: block;" /> </template> </Galleria> <DataTable :value="users" responsiveLayout="scroll"> <Column field="id" header="ID"></Column> <Column field="name" header="Name"></Column> <Column field="email" header="Email"></Column> </DataTable> </template> <template v-else-if="route === '/products'"> <h1>Products</h1> <div class="flex flex-wrap justify-content-around"> <Card v-for="product in products" :key="product.id" class="mb-4" style="width: 250px;"> <template #header> <img :src="product.image" :alt="product.name" style="width: 100%; height: auto; max-height: 200px;object-fit:cover" /> </template> <template #title> {{ product.name }} </template> <template #subtitle> $ {{ product.price }} </template> <template #content> <p>{{ product.description }}</p> </template> <template #footer> <Button icon="pi pi-shopping-cart" label="Add to Cart"></Button> </template> </Card> </div> </template> <template v-else-if="route === '/settings'"> <h1>Settings</h1> <p>Application settings.</p> </template> <template v-else> <h1>404 Not Found</h1> <p>Page not found.</p> </template> </div> </div></div> <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script><script src="https://unpkg.com/primevue/primevue.min.js"></script><script>(() => {const { createApp, ref, onMounted } = Vue; const { useToast } = PrimeVue; const { Button } = PrimeVue.button; const { Sidebar } = PrimeVue.sidebar; const { Toolbar } = PrimeVue.toolbar; const { DataTable } = PrimeVue.datatable; const { Column } = PrimeVue.column; const { Galleria } = PrimeVue.galleria; const { Card } = PrimeVue.card; const app = createApp({ setup() { const toast = useToast(); const sidebarVisible = ref(false); const route = ref(window.location.pathname); const navigateTo = (path) => { route.value = path; window.history.pushState({}, '', path); sidebarVisible.value = false; }; const toggleSidebar = () => { sidebarVisible.value = !sidebarVisible.value; }; const images = ref([{ src: 'https://placehold.co/600x400/EEE/31343C', alt: 'Image 1' }, { src: 'https://placehold.co/600x400/CCC/31343C', alt: 'Image 2' }, { src: 'https://placehold.co/600x400/AAA/31343C', alt: 'Image 3' }, { src: 'https://placehold.co/600x400/BBB/31343C', alt: 'Image 4' }, { src: 'https://placehold.co/600x400/DDD/31343C', alt: 'Image 5' }]); const responsiveOptions = ref([ { breakpoint: '992px', numVisible: 4 }, { breakpoint: '768px', numVisible: 3 }, { breakpoint: '576px', numVisible: 2 } ]); const users = ref([ { id: 1, name: 'John Doe', email: 'john.doe@example.com' }, { id: 2, name: 'Jane Smith', email: 'jane.smith@example.com' }, { id: 3, name: 'Alice Brown', email: 'alice.brown@example.com' }, { id: 4, name: 'Bob Green', email: 'bob.green@example.com' }, { id: 5, name: 'Charlie White', email: 'charlie.white@example.com' }, { id: 6, name: 'Diana Black', email: 'diana.black@example.com' }, { id: 7, name: 'Edward Grey', email: 'edward.grey@example.com' }, { id: 8, name: 'Fiona Blue', email: 'fiona.blue@example.com' }, { id: 9, name: 'George Red', email: 'george.red@example.com' }, { id: 10, name: 'Hannah Pink', email: 'hannah.pink@example.com' } ]); const products = ref([ { id: 1, name: 'Product 1', price: 19.99, description: 'This is the first product.', image: 'https://placehold.co/200x200/EEE/31343C' }, { id: 2, name: 'Product 2', price: 29.99, description: 'This is the second product.', image: 'https://placehold.co/200x200/CCC/31343C' }, { id: 3, name: 'Product 3', price: 39.99, description: 'This is the third product.', image: 'https://placehold.co/200x200/AAA/31343C' }, { id: 4, name: 'Product 4', price: 49.99, description: 'This is the fourth product.', image: 'https://placehold.co/200x200/BBB/31343C' }, { id: 5, name: 'Product 5', price: 59.99, description: 'This is the fifth product.', image: 'https://placehold.co/200x200/DDD/31343C' }, { id: 6, name: 'Product 6', price: 69.99, description: 'This is the sixth product.', image: 'https://placehold.co/200x200/EEE/31343C' }, { id: 7, name: 'Product 7', price: 79.99, description: 'This is the seventh product.', image: 'https://placehold.co/200x200/CCC/31343C' }, { id: 8, name: 'Product 8', price: 89.99, description: 'This is the eighth product.', image: 'https://placehold.co/200x200/AAA/31343C' }, { id: 9, name: 'Product 9', price: 99.99, description: 'This is the ninth product.', image: 'https://placehold.co/200x200/BBB/31343C' }, { id: 10, name: 'Product 10', price: 109.99, description: 'This is the tenth product.', image: 'https://placehold.co/200x200/DDD/31343C' } ]); onMounted(() => { window.addEventListener('popstate', () => { route.value = window.location.pathname; }); }); return { sidebarVisible, route, navigateTo, toggleSidebar, images, responsiveOptions, users, products }; }, components: { Button, Sidebar, Toolbar, DataTable, Column, Galleria, Card }, }); app.use(PrimeVue); app.mount('#app'); })();</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimeVue App</title>
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-blue/theme.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
+    <script src="https://unpkg.com/primevue/button/button.min.js"></script>
+    <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
+    <script src="https://unpkg.com/primevue/card/card.min.js"></script>
+    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
+    <script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script>
+    <script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
+    <script src="https://unpkg.com/primevue/textarea/textarea.min.js"></script>
+    <script src="https://unpkg.com/primevue/tabview/tabview.min.js"></script>
+    <script src="https://unpkg.com/primevue/tabpanel/tabpanel.min.js"></script>
+    <script src="https://unpkg.com/primevue/checkbox/checkbox.min.js"></script>
+    <script src="https://unpkg.com/primevue/radiobutton/radiobutton.min.js"></script>
+    <script src="https://unpkg.com/primevue/slider/slider.min.js"></script>
+    <script src="https://unpkg.com/primevue/selectbutton/selectbutton.min.js"></script>
+    <script src="https://unpkg.com/primevue/avatar/avatar.min.js"></script>
+    <script src="https://unpkg.com/primevue/badge/badge.min.js"></script>
+    <script src="https://unpkg.com/primevue/progressbar/progressbar.min.js"></script>
+    <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #f8f9fa;
+        }
+        .p-button {
+            margin: 5px;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .p-card {
+            margin: 10px;
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        .p-card:hover {
+            transform: scale(1.02);
+        }
+        .p-dialog-content {
+            padding: 20px;
+        }
+        .p-dropdown, .p-inputtext, .p-textarea {
+            margin-bottom: 10px;
+        }
+        .tabview-demo {
+            margin-top: 20px;
+        }
+        .p-tabview-panels {
+            padding: 20px;
+        }
+         .p-slider {
+            margin-bottom: 10px;
+        }
+        .progress-container {
+          margin: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .p-progressbar {
+          width: 80%;
+        }
+        .p-badge {
+            margin: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+    (function(){
+    const { createApp, ref } = Vue;
+    const app = createApp({
+        data() {
+            return {
+                menuItems: [
+                  { label: 'Home', icon: 'pi pi-home' },
+                  { label: 'Products', icon: 'pi pi-shopping-cart' },
+                  { label: 'Contact', icon: 'pi pi-envelope' },
+                  { label: 'Settings', icon: 'pi pi-cog' }
+                ],
+                products: [],
+                dialogVisible: false,
+                newProductName: '',
+                newProductDescription: '',
+                newProductCategory: '',
+                categories: ['Electronics', 'Books', 'Clothing', 'Home & Garden', 'Toys'],
+                 selectedCategory: 'Electronics',
+                formData: {
+                   name: '',
+                   email: '',
+                   newsletter: false,
+                   gender: 'male',
+                   rating: 50,
+                   favoriteColor: 'blue'
+                  },
+                progressValue: 0,
+                badges: [
+                      { severity: 'success', value: 'Success' },
+                       { severity: 'info', value: 'Info' },
+                      { severity: 'warning', value: 'Warning' },
+                      { severity: 'danger', value: 'Danger' }
+                  ],
+                colors: [
+                        { name: 'Red', code: 'red' },
+                        { name: 'Green', code: 'green' },
+                        { name: 'Blue', code: 'blue' },
+                    ],
+                selectedColor: null
+            };
+        },
+        computed: {
+             filteredProducts() {
+                if (!this.selectedCategory) return this.products;
+                return this.products.filter(product => product.category === this.selectedCategory);
+            }
+        },
+        methods: {
+             addItem() {
+                  this.products.push({
+                       id: Date.now(),
+                       name: this.newProductName,
+                       description: this.newProductDescription,
+                      category: this.newProductCategory,
+                      image: 'https://placehold.co/600x400/EEE/31343C'
+                    });
+                  this.newProductName = '';
+                  this.newProductDescription = '';
+                    this.newProductCategory = '';
+                  this.dialogVisible = false;
+                },
+                openDialog() {
+                    this.dialogVisible = true;
+                },
+            closeDialog() {
+                this.dialogVisible = false;
+             },
+             generateMockData() {
+                this.products = [
+                    { id: 1, name: 'Laptop', description: 'Powerful laptop for everyday use', category: 'Electronics', image: 'https://placehold.co/600x400/EEE/31343C' },
+                    { id: 2, name: 'The Great Gatsby', description: 'A classic novel by F. Scott Fitzgerald', category: 'Books', image: 'https://placehold.co/600x400/EEE/31343C' },
+                    { id: 3, name: 'T-Shirt', description: 'Comfortable cotton t-shirt', category: 'Clothing', image: 'https://placehold.co/600x400/EEE/31343C' },
+                    { id: 4, name: 'Garden Hose', description: 'Durable garden hose for watering plants', category: 'Home & Garden', image: 'https://placehold.co/600x400/EEE/31343C' },
+                    { id: 5, name: 'Teddy Bear', description: 'Soft and cuddly teddy bear for children', category: 'Toys', image: 'https://placehold.co/600x400/EEE/31343C' },
+                    { id: 6, name: 'Smartphone', description: 'Latest smartphone with advanced features', category: 'Electronics', image: 'https://placehold.co/600x400/EEE/31343C' },
+                     { id: 7, name: 'To Kill a Mockingbird', description: 'A novel by Harper Lee', category: 'Books', image: 'https://placehold.co/600x400/EEE/31343C' },
+                     { id: 8, name: 'Jeans', description: 'Classic denim jeans', category: 'Clothing', image: 'https://placehold.co/600x400/EEE/31343C' },
+                    { id: 9, name: 'Lawn Mower', description: 'Powerful lawn mower for maintaining your lawn', category: 'Home & Garden', image: 'https://placehold.co/600x400/EEE/31343C' },
+                    { id: 10, name: 'Action Figure', description: 'Cool action figure for collectors', category: 'Toys', image: 'https://placehold.co/600x400/EEE/31343C' },
+                     { id: 11, name: 'Tablet', description: 'Lightweight tablet for on-the-go use', category: 'Electronics', image: 'https://placehold.co/600x400/EEE/31343C' },
+                    { id: 12, name: '1984', description: 'A dystopian novel by George Orwell', category: 'Books', image: 'https://placehold.co/600x400/EEE/31343C' },
+                    { id: 13, name: 'Dress', description: 'Elegant dress for special occasions', category: 'Clothing', image: 'https://placehold.co/600x400/EEE/31343C' },
+                    { id: 14, name: 'Shovel', description: 'Durable shovel for gardening and landscaping', category: 'Home & Garden', image: 'https://placehold.co/600x400/EEE/31343C' },
+                    { id: 15, name: 'Building Blocks', description: 'Set of building blocks for creative play', category: 'Toys', image: 'https://placehold.co/600x400/EEE/31343C' },
+                     { id: 16, name: 'Smartwatch', description: 'Smartwatch with fitness tracking and notifications', category: 'Electronics', image: 'https://placehold.co/600x400/EEE/31343C' },
+                     { id: 17, name: 'Pride and Prejudice', description: 'A novel by Jane Austen', category: 'Books', image: 'https://placehold.co/600x400/EEE/31343C' },
+                     { id: 18, name: 'Jacket', description: 'Warm and stylish jacket', category: 'Clothing', image: 'https://placehold.co/600x400/EEE/31343C' },
+                      { id: 19, name: 'Watering Can', description: 'Plastic watering can for garden use', category: 'Home & Garden', image: 'https://placehold.co/600x400/EEE/31343C' },
+                     { id: 20, name: 'Doll', description: 'Collectible doll for kids', category: 'Toys', image: 'https://placehold.co/600x400/EEE/31343C' }
+
+                ];
+            },
+            updateProgress() {
+              if (this.progressValue < 100) {
+                this.progressValue += 10;
+                setTimeout(this.updateProgress, 200);
+              }
+             },
+        },
+       mounted(){
+         this.generateMockData();
+         this.updateProgress();
+       }
+    });
+        app.component('Button', primevue.button);
+        app.component('Menu', primevue.menu);
+        app.component('Card', primevue.card);
+        app.component('InputText', primevue.inputtext);
+        app.component('Dialog', primevue.dialog);
+        app.component('Dropdown', primevue.dropdown);
+        app.component('Textarea', primevue.textarea);
+        app.component('TabView', primevue.tabview);
+        app.component('TabPanel', primevue.tabpanel);
+        app.component('Checkbox', primevue.checkbox);
+        app.component('RadioButton', primevue.radiobutton);
+        app.component('Slider', primevue.slider);
+        app.component('SelectButton', primevue.selectbutton);
+        app.component('Avatar', primevue.avatar);
+         app.component('Badge', primevue.badge);
+         app.component('ProgressBar', primevue.progressbar);
+        app.mount('#app');
+    })();
+    </script>
+    <script type="text/x-template" id="app-template">
+      <div>
+         <Menu :model="menuItems" style="margin-bottom: 20px"></Menu>
+          <div class="progress-container">
+            <ProgressBar :value="progressValue"></ProgressBar>
+             <div style="display: flex;">
+               <Badge v-for="badge in badges" :key="badge.value" :severity="badge.severity" :value="badge.value"></Badge>
+             </div>
+          </div>
+         <div class="card-container">
+              <Card v-for="product in filteredProducts" :key="product.id" :header="product.name" style="margin: 10px; width: 300px">
+                    <img :src="product.image" alt="Product Image" style="width: 100%; margin-bottom: 10px;"/>
+                   <p>{{ product.description }}</p>
+                     <Button label="Details" icon="pi pi-info-circle" />
+                </Card>
+        </div>
+          <Button label="Add Product" icon="pi pi-plus" @click="openDialog" style="margin: 20px"/>
+           <Dialog header="Add New Product" v-model:visible="dialogVisible"  :style="{ width: '50vw' }">
+             <span class="p-float-label">
+                <InputText id="productName" v-model="newProductName" />
+                <label for="productName">Product Name</label>
+             </span>
+            <span class="p-float-label">
+              <Textarea id="productDescription" v-model="newProductDescription" rows="5" cols="30" />
+              <label for="productDescription">Description</label>
+             </span>
+                <Dropdown v-model="newProductCategory" :options="categories" placeholder="Select a Category" />
+               <Button label="Add" icon="pi pi-check" @click="addItem" />
+                <Button label="Cancel" icon="pi pi-times" @click="closeDialog" class="p-button-secondary" />
+           </Dialog>
+             <div class="tabview-demo">
+                 <TabView>
+                     <TabPanel header="Form">
+                         <div class="form-container" style="padding: 20px;">
+                            <span class="p-float-label">
+                              <InputText id="name" v-model="formData.name" type="text" />
+                               <label for="name">Name</label>
+                            </span>
+                             <span class="p-float-label">
+                                <InputText id="email" v-model="formData.email" type="email" />
+                               <label for="email">Email</label>
+                           </span>
+                             <div style="margin-bottom: 10px">
+                                <Checkbox id="newsletter" v-model="formData.newsletter"></Checkbox>
+                                <label for="newsletter" style="margin-left: 5px;">Subscribe to Newsletter</label>
+                              </div>
+                              <div style="margin-bottom: 10px;">
+                                <RadioButton id="male" name="gender" value="male" v-model="formData.gender"></RadioButton>
+                               <label for="male" style="margin-left: 5px;">Male</label>
+                                <RadioButton id="female" name="gender" value="female" v-model="formData.gender" style="margin-left: 10px;"></RadioButton>
+                                 <label for="female" style="margin-left: 5px;">Female</label>
+                             </div>
+                                 <Slider v-model="formData.rating" style="margin-bottom: 20px"/>
+                                     <SelectButton v-model="selectedColor" :options="colors" optionLabel="name" optionValue="code" style="margin-bottom: 20px"/>
+                                     <div style="margin-top: 20px;">
+                                      <Avatar icon="pi pi-user" size="large" style="background-color: #673ab7; color: #ffffff;" ></Avatar>
+                                     </div>
+                            </div>
+                     </TabPanel>
+                     <TabPanel header="Category Filter">
+                        <Dropdown v-model="selectedCategory" :options="categories" placeholder="All Categories" />
+                       </TabPanel>
+                   </TabView>
+            </div>
+      </div>
+    </script>
+
+    <script>
+     document.getElementById('app').innerHTML = document.getElementById('app-template').innerHTML;
+    </script>
+</body>
+</html>
