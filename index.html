@@ -1,190 +1,191 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue App with PrimeVue</title>
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-indigo/theme.css">
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
-    <style>
-        html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-            margin: 0;
-            padding: 0;
-            border: 0;
-            font-size: 100%;
-            font: inherit;
-            vertical-align: baseline;
-        }
-        article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-            display: block;
-        }
-        body {
-            line-height: 1;
-        }
-        ol, ul {
-            list-style: none;
-        }
-        blockquote, q {
-            quotes: none;
-        }
-        blockquote:before, blockquote:after, q:before, q:after {
-            content: '';
-            content: none;
-        }
-        table {
-            border-collapse: collapse;
-            border-spacing: 0;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-        }
-        .card {
-            background: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 15px;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .centered {
-             text-align: center;   
-        }
-        .p-button {
-           margin-right: 10px;
-        }
-        .p-menu {
-            margin-top: 10px;   
-        }
-    </style>
-</head>
-<body>
-    <div id="app"></div>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
-    <script src="https://unpkg.com/primevue/button/button.min.js"></script>
-    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
-    <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
-    <script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
-    <script src="https://unpkg.com/primevue/card/card.min.js"></script>
-    <script src="https://unpkg.com/primevue/progressbar/progressbar.min.js"></script>
-    <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
-    <script>
-        const { createApp, ref, onMounted } = Vue;
-        const app = createApp({
-            setup() {
-                const searchQuery = ref('');
-                const searchResults = ref([]);
-                const loading = ref(false);
-                const menuItems = ref([
-                    { label: 'Home', icon: 'pi pi-home', command: () => { window.location.href = '#'; } },
-                    { label: 'About', icon: 'pi pi-info-circle', command: () => { window.location.href = '#about'; } },
-                    { label: 'Contact', icon: 'pi pi-envelope', command: () => { window.location.href = '#contact'; } }
-                ]);
-                 const dropdownOptions = ref([
-                   { label: 'Option 1', value: 1 },
-                   { label: 'Option 2', value: 2 },
-                   { label: 'Option 3', value: 3 }
-                ]);
-                 const selectedOption = ref(null);
-                 const progressValue = ref(0);
-                const mockData = ref([
-                    { id: 1, title: 'Product A', description: 'This is a description for Product A.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$19.99' },
-                    { id: 2, title: 'Product B', description: 'This is a description for Product B.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$29.99' },
-                     { id: 3, title: 'Product C', description: 'This is a description for Product C.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$39.99' },
-                    { id: 4, title: 'Product D', description: 'This is a description for Product D.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$49.99' },
-                    { id: 5, title: 'Product E', description: 'This is a description for Product E.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$59.99' },
-                    { id: 6, title: 'Product F', description: 'This is a description for Product F.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$69.99' },
-                     { id: 7, title: 'Product G', description: 'This is a description for Product G.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$79.99' },
-                    { id: 8, title: 'Product H', description: 'This is a description for Product H.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$89.99' },
-                    { id: 9, title: 'Product I', description: 'This is a description for Product I.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$99.99' },
-                     { id: 10, title: 'Product J', description: 'This is a description for Product J.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$109.99' },
-                    { id: 11, title: 'Product K', description: 'This is a description for Product K.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$119.99' },
-                     { id: 12, title: 'Product L', description: 'This is a description for Product L.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$129.99' }
-                ]);
-                const handleSearch = () => {
-                    loading.value = true;
-                    setTimeout(() => {
-                        if(searchQuery.value) {
-                             searchResults.value = mockData.value.filter(item => item.title.toLowerCase().includes(searchQuery.value.toLowerCase()));
-                         } else {
-                            searchResults.value = [];
-                         }
-                         loading.value = false;
-                    }, 500);
-                };
-                 const handleOptionChange = (event) => {
-                    selectedOption.value = event.value;
-                   };
-                  const updateProgress = () => {
-                     let val = progressValue.value;
-                      const interval = setInterval(() => {
-                         val += 5;
-                            if(val <= 100) {
-                                progressValue.value = val;
-                            } else {
-                                clearInterval(interval);
-                                progressValue.value = 0;
-                            };
-                      }, 50);
-                  };
-                onMounted(() => {
-                     updateProgress();
-                });
-                return {searchQuery, searchResults, loading, handleSearch, menuItems, dropdownOptions, selectedOption, handleOptionChange, progressValue, mockData, updateProgress};
-            },
-            template: `
-                <div class="container">
-                    <div class="card">
-                        <div class="centered">
-                          <h1>Welcome to the Application</h1>
-                          <p>This is a sample application demonstrating PrimeVue components.</p>
-                          <p>Progress: {{progressValue}} % </p>
-                          <ProgressBar :value="progressValue" style="width: 50%; margin: 20px auto;"></ProgressBar>
-                           <Button icon="pi pi-refresh" label="Refresh Progress" @click="updateProgress" />
-                        </div>
-                    </div>
-                     <div class="card">
-                     <Menu :model="menuItems" />
-                     </div>
-                    <div class="card">
-                        <div style="display: flex; align-items:center; margin-bottom: 20px;">
-                           <InputText v-model="searchQuery" placeholder="Search products..." style="margin-right: 10px;"/>
-                           <Button label="Search" icon="pi pi-search" @click="handleSearch" :loading="loading" />
-                        </div>
-                       <div v-if="searchResults.length > 0">
-                         <h2>Search Results:</h2>
-                         <div class="card" v-for="(item, index) in searchResults" :key="index" style="margin-bottom: 10px;">
-                           <img :src="item.imageUrl" alt="Product Image" style="max-width: 100%;"/>
-                            <h3>{{ item.title }}</h3>
-                             <p>{{ item.description }}</p>
-                            <p>Price: {{item.price}}</p>
-                         </div>
-                     </div>
-                     <div v-else-if="searchQuery && !loading">
-                         <p>No matching products found.</p>
-                     </div>
-                    </div>
-                     <div class="card">
-                       <Dropdown v-model="selectedOption" :options="dropdownOptions" optionLabel="label" placeholder="Select an option" @change="handleOptionChange" />
-                        <div v-if="selectedOption">
-                            <p>Selected option value: {{ selectedOption }}</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                         <h2>Product List</h2>
-                         <div class="card" v-for="(item, index) in mockData" :key="index" style="margin-bottom: 10px;">
-                           <img :src="item.imageUrl" alt="Product Image" style="max-width: 100%;"/>
-                            <h3>{{ item.title }}</h3>
-                             <p>{{ item.description }}</p>
-                            <p>Price: {{item.price}}</p>
-                         </div>
-                    </div>
-                </div>
-            `
-        });
-        app.use(PrimeVue.default).mount('#app');
-    </script>
-</body>
-</html>
+ <style>
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+    }
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+        display: block;
+    }
+    body {
+        line-height: 1;
+    }
+    ol, ul {
+        list-style: none;
+    }
+    blockquote, q {
+        quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+        content: '';
+        content: none;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    button {
+      background: none;
+      color: inherit;
+      border: none;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      outline: inherit;
+    }
+    *, *:before, *:after {
+      box-sizing: border-box;
+    }
+  </style>
+<div id="app"></div>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/primevue/core/core.min.js"></script>
+<script src="https://unpkg.com/primevue/button/button.min.js"></script>
+<script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
+<script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
+<script src="https://unpkg.com/primevue/menubar/menubar.min.js"></script>
+<script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
+<script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script>
+<script src="https://unpkg.com/primevue/card/card.min.js"></script>
+<script src="https://unpkg.com/primevue/progressbar/progressbar.min.js"></script>
+<script src="https://unpkg.com/primevue/carousel/carousel.min.js"></script>
+<script src="https://unpkg.com/primevue/divider/divider.min.js"></script>
+<script src="https://unpkg.com/primevue/textarea/textarea.min.js"></script>
+<script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
+<link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css" />
+
+<script>
+(function() {
+  const { createApp, ref } = Vue;
+  const app = createApp({
+    setup() {
+      const items = ref([
+          { label: 'Home', icon: 'pi pi-home', to: '/' },
+          { label: 'Products', icon: 'pi pi-shopping-cart', to: '/products' },
+          { label: 'About', icon: 'pi pi-info-circle', to: '/about'},
+          { label: 'Contact', icon: 'pi pi-envelope', to: '/contact'}
+      ]);
+      const products = ref([
+          { id: 1, name: 'Product 1', description: 'Description for product 1', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 19.99 },
+          { id: 2, name: 'Product 2', description: 'Description for product 2', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 29.99 },
+          { id: 3, name: 'Product 3', description: 'Description for product 3', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 39.99 },
+          { id: 4, name: 'Product 4', description: 'Description for product 4', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 49.99 },
+          { id: 5, name: 'Product 5', description: 'Description for product 5', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 59.99 },
+          { id: 6, name: 'Product 6', description: 'Description for product 6', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 69.99 },
+          { id: 7, name: 'Product 7', description: 'Description for product 7', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 79.99 },
+          { id: 8, name: 'Product 8', description: 'Description for product 8', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 89.99 },
+          { id: 9, name: 'Product 9', description: 'Description for product 9', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 99.99 },
+          { id: 10, name: 'Product 10', description: 'Description for product 10', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: 109.99 }
+      ]);
+
+      const cities = ref([
+        { name: 'New York', code: 'NY' },
+        { name: 'Rome', code: 'RM' },
+        { name: 'London', code: 'LDN' },
+        { name: 'Istanbul', code: 'IST' },
+        { name: 'Paris', code: 'PRS' }
+      ]);
+      const selectedCity = ref(null);
+      const dialogVisible = ref(false);
+       const progressBarValue = ref(0);
+        const startProgressBar = () => {
+            progressBarValue.value = 0;
+            const interval = setInterval(() => {
+                progressBarValue.value += 10;
+                if (progressBarValue.value >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => { progressBarValue.value = 0; }, 500);
+                }
+            }, 200);
+        };
+        const toggleDialog = () => {
+          dialogVisible.value = !dialogVisible.value;
+        };
+      return {
+        items,
+        products,
+        cities,
+        selectedCity,
+        dialogVisible,
+        progressBarValue,
+        startProgressBar,
+        toggleDialog
+      };
+    },
+    template: `
+    <Menubar :model="items" style="margin-bottom: 20px;"></Menubar>
+    <div style="padding: 20px;">
+      <h1>Welcome to our Store!</h1>
+      <p>Explore our amazing products.</p>
+      <Divider />
+        <Carousel :value="products" :numVisible="3" :numScroll="1" :circular="true">
+            <template #item="{ data }">
+                <Card :title="data.name" style="margin: 5px;" :subTitle="'$' + data.price">
+                    <template #content>
+                       <img :src="data.imageUrl" alt="Product Image" style="width: 100%; max-height: 200px; object-fit: cover;"/>
+                        <p>{{data.description}}</p>
+                    </template>
+                    <template #footer>
+                        <Button icon="pi pi-shopping-cart" label="Add to cart" />
+                    </template>
+                </Card>
+            </template>
+        </Carousel>
+      <Divider />
+         <div style="margin-bottom: 20px;">
+          <h2>Select a City</h2>
+          <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a City" />
+          <p v-if="selectedCity">Selected city: {{ selectedCity.name }}</p>
+        </div>
+      <Divider />
+      <div style="margin-bottom: 20px;">
+        <Button label="Show Dialog" @click="toggleDialog" icon="pi pi-external-link"></Button>
+          <Dialog header="Dialog Title" v-model:visible="dialogVisible" :modal="true" :style="{width: '50vw'}">
+            <p>This is a modal dialog.</p>
+             <textarea rows="5" cols="50" placeholder="Enter text here"></textarea>
+            <template #footer>
+                <Button label="Close" @click="toggleDialog" class="p-button-secondary"></Button>
+            </template>
+        </Dialog>
+      </div>
+      <Divider/>
+        <div>
+             <Button label="Start Progress" @click="startProgressBar" icon="pi pi-play"/>
+            <ProgressBar :value="progressBarValue" style="margin-top: 10px;"></ProgressBar>
+        </div>
+    </div>
+    `
+  });
+
+  app.use(PrimeVue.default);
+  app.component('Button', PrimeVue.Button);
+  app.component('Menubar', PrimeVue.Menubar);
+  app.component('Dropdown', PrimeVue.Dropdown);
+  app.component('Dialog', PrimeVue.Dialog);
+    app.component('Card', PrimeVue.Card);
+    app.component('ProgressBar', PrimeVue.ProgressBar);
+     app.component('Carousel', PrimeVue.Carousel);
+     app.component('Divider', PrimeVue.Divider);
+      app.component('InputText', PrimeVue.InputText);
+      app.component('Textarea', PrimeVue.Textarea);
+  app.mount('#app');
+})();
+</script>
