@@ -1,221 +1,408 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue.js App with PrimeVue</title>
-    <link href="https://unpkg.com/primevue/resources/themes/aura-light-teal/theme.css" rel="stylesheet">
-    <link href="https://unpkg.com/primevue/resources/primevue.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet">
+    <title>Vue App</title>
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura/theme.css">
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/primevue/primevue.min.js"></script>
+    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
+    <script src="https://unpkg.com/primevue/button/button.min.js"></script>
+    <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
+    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
+    <script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script>
+    <script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
+    <script src="https://unpkg.com/primevue/progressbar/progressbar.min.js"></script>
+    <script src="https://unpkg.com/primevue/card/card.min.js"></script>
+    <script src="https://unpkg.com/primevue/divider/divider.min.js"></script>
+    <script src="https://unpkg.com/primevue/datatable/datatable.min.js"></script>
+    <script src="https://unpkg.com/primevue/column/column.min.js"></script>
+    <script src="https://unpkg.com/primevue/tag/tag.min.js"></script>
+    <script src="https://unpkg.com/primevue/toast/toast.min.js"></script>
+    <script src="https://unpkg.com/primevue/overlaypanel/overlaypanel.min.js"></script>
+    <script src="https://unpkg.com/primevue/tooltip/tooltip.min.js"></script>
+    <script src="https://unpkg.com/primevue/api/api.min.js"></script>
     <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
     <style>
-        body, h1, h2, h3, h4, h5, h6, p, ul, li, ol, dl, dd, dt, form, fieldset, legend, textarea, pre, code {
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
             margin: 0;
             padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
         }
         body {
-          font-family: sans-serif;
-          line-height: 1.6;
+            line-height: 1;
         }
-        ul, ol {list-style: none;}
-        a {text-decoration: none; color: inherit;}
-        button { cursor: pointer;}
+        ol, ul {
+            list-style: none;
+        }
+        blockquote, q {
+            quotes: none;
+        }
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        #app {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .p-button {
+            margin-right: 5px;
+        }
+        .p-menu {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .p-menuitem-link {
+            padding: 10px;
+        }
+        .p-menuitem-link:hover {
+            background-color: #f0f0f0;
+        }
+        .p-inputtext {
+            border: 1px solid #ddd;
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .p-dialog-content {
+            padding: 20px;
+        }
+        .p-dropdown {
+             min-width: 150px;       
+            margin-bottom: 10px;
+        }
+        .p-progressbar {
+            height: 20px;
+            margin-bottom: 15px;
+        }
+        .p-card {
+            margin-bottom: 15px;
+        }
+        .p-divider-horizontal {
+            margin: 20px 0;
+        }
+       .p-datatable-wrapper {
+        overflow-x: auto;
+    }
+    .p-datatable {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .p-datatable th,
+    .p-datatable td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    .p-datatable th {
+            background-color: #f0f0f0;
+        }
+     .p-tag {
+          margin-right: 5px;        
+        }
+        .p-toast{
+          position: fixed;
+          top: 20px;
+          right: 20px;
+           z-index: 1000;           
+        }
+         .p-overlaypanel {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        padding: 10px;
+        border-radius: 4px;
+      }
+      .p-tooltip-text{
+          background-color: #333;
+          color: #fff;
+          padding: 5px;
+          border-radius: 4px;
+      }
     </style>
 </head>
 <body>
-    <div id="app"></div>
+<div id="app">
+    <PrimeVue></PrimeVue>
+    <Toast ref="toast"></Toast>
 
-    <script>
-    const { createApp, ref, onMounted } = Vue;
-    const { PrimeVue } = primevue;
-    const { DataTable } = primevue.datatable;
-    const { Column } = primevue.column;
-    const { Button } = primevue.button;
-    const { InputText } = primevue.inputtext;
-    const { Dialog } = primevue.dialog;
-    const { Menu } = primevue.menu;
-    const { Toast } = primevue.toast;
-    const { useToast } = primevue.usetoast;
-    const { FilterMatchMode } = primevue.api;
+    <h1>Vue.js Application</h1>
 
-      (async () => {
-          const app = createApp({
-            components: {
-              DataTable,
-              Column,
-              Button,
-              InputText,
-              Dialog,
-              Menu,
-              Toast,
-            },
-            setup() {
-              const products = ref([]);
-              const loading = ref(true);
-              const productDialog = ref(false);
-              const selectedProduct = ref(null);
-              const searchText = ref('');
-              const menu = ref(null);
-              const toast = useToast();
-              const filteredProducts = ref([]);
+    <Button icon="pi pi-plus" label="Add New" @click="showDialog = true"></Button>
 
-              const menuItems = ref([
-                  {label: 'Dashboard', icon: 'pi pi-home', command: () => {toast.add({severity: 'info', summary: 'Dashboard', detail: 'Navigated to dashboard', life: 3000})}},
-                  {label: 'Products', icon: 'pi pi-box', command: () => {toast.add({severity: 'info', summary: 'Products', detail: 'Navigated to products', life: 3000})}},
-                  {label: 'Orders', icon: 'pi pi-shopping-cart', command: () => {toast.add({severity: 'info', summary: 'Orders', detail: 'Navigated to orders', life: 3000})}},
-                  {label: 'Settings', icon: 'pi pi-cog', command: () => {toast.add({severity: 'info', summary: 'Settings', detail: 'Navigated to settings', life: 3000})}}
-              ]);
+    <Menu ref="menu" :model="menuItems"></Menu>
+    <Button icon="pi pi-bars" @click="menu.toggle($event)" aria-controls="popup_menu" aria-haspopup="true"></Button>
 
-              const search = () => {
-                if (!searchText.value) {
-                  filteredProducts.value = [...products.value];
-                } else {
-                filteredProducts.value = products.value.filter(product => {
-                    return Object.values(product).some(value => {
-                        if (typeof value === 'string') {
-                            return value.toLowerCase().includes(searchText.value.toLowerCase());
-                        } else if (typeof value === 'number'){
-                          return String(value).includes(searchText.value);
-                        }
-                        return false;
-                    });
-                    });
-                }
-              };
-
-              const openNew = () => {
-                  selectedProduct.value = {};
-                  productDialog.value = true;
-              };
-
-               const hideDialog = () => {
-                productDialog.value = false;
-               };
-
-               const saveProduct = () => {
-                if (selectedProduct.value.id) {
-                  const index = products.value.findIndex(p => p.id === selectedProduct.value.id);
-                  products.value.splice(index, 1, { ...selectedProduct.value });
-                   filteredProducts.value.splice(filteredProducts.value.findIndex(p => p.id === selectedProduct.value.id), 1, {...selectedProduct.value}) ;  
-                   toast.add({ severity: 'success', summary: 'Successful', detail: 'Product updated', life: 3000 });
-                } else {
-                  selectedProduct.value.id = Math.floor(Math.random() * 100000);
-                  products.value.push({ ...selectedProduct.value });
-                  filteredProducts.value.push({...selectedProduct.value});
-                   toast.add({ severity: 'success', summary: 'Successful', detail: 'Product created', life: 3000 });
-
-                }
-                productDialog.value = false;
-
-               };
-
-              const editProduct = (product) => {
-                  selectedProduct.value = { ...product };
-                  productDialog.value = true;
-              };
-
-              const deleteProduct = (product) => {
-                const index = products.value.findIndex(p => p.id === product.id);
-                  products.value.splice(index, 1);
-                   filteredProducts.value.splice(filteredProducts.value.findIndex(p => p.id === product.id),1);
-                    toast.add({ severity: 'warn', summary: 'Successful', detail: 'Product removed', life: 3000 });
-              };
-
-              const fetchData = async () => {
-                loading.value = true;
-
-                  const mockData = Array.from({ length: 20 }, (_, i) => ({
-                      id: i + 1,
-                      name: `Product ${i + 1}`,
-                      description: `Description for product ${i + 1}`,
-                      price: (Math.random() * 100).toFixed(2),
-                      category: ['Electronics', 'Books', 'Clothing', 'Home'][Math.floor(Math.random() * 4)],
-                      imageUrl: `https://placehold.co/150x100/EEE/31343C`,
-                      quantity: Math.floor(Math.random() * 100),
-                      sku: Math.random().toString(36).substring(2, 15),
-                      isFeatured: Math.random() > 0.5,
-                      rating: Math.floor(Math.random() * 5) + 1
-                }));
-                products.value = mockData;
-                filteredProducts.value = [...mockData];
-                 loading.value = false;
-              };
-
-                onMounted(() => {
-                    fetchData();
-                });
+    <p>Search something:</p>
+    <InputText v-model="searchText" placeholder="Search..." />
 
 
-              return {
-                products,
-                loading,
-                productDialog,
-                selectedProduct,
-                openNew,
-                hideDialog,
-                saveProduct,
-                editProduct,
-                deleteProduct,
+    <Dialog header="Add Item" v-model:visible="showDialog" :style="{ width: '50vw' }">
+        <p>Enter item details:</p>
+        <InputText v-model="newItem.name" placeholder="Name" class="p-mb-3"/>
+        <InputText v-model="newItem.description" placeholder="Description" class="p-mb-3"/>
+        <Dropdown  v-model="newItem.status" :options="statusOptions" placeholder="Status" class="p-mb-3"/>
+        <Button label="Save" @click="saveItem" class="p-mt-2"/>
+        <Button label="Cancel" @click="showDialog = false" class="p-button-secondary p-mt-2"/>
+    </Dialog>
+
+    <ProgressBar :value="progressValue"></ProgressBar>
+
+    <Card title="Card Example" subTitle="Subtitle of the card">
+        <template #content>
+            <img src="https://placehold.co/600x400/EEE/31343C" alt="Placeholder Image">
+            <p>This is a basic card with an image.</p>
+        </template>
+    </Card>
+
+    <Divider />
+    
+    <DataTable :value="items" responsiveLayout="scroll" >
+        <Column field="id" header="ID"></Column>
+        <Column field="name" header="Name"></Column>
+        <Column field="description" header="Description"></Column>
+       <Column field="status" header="Status">
+          <template #body="slotProps">
+            <Tag :value="slotProps.data.status" :severity="getStatusSeverity(slotProps.data.status)"></Tag>
+          </template>
+        </Column>
+    </DataTable>
+
+    <Button label="Show Toast" @click="showSuccess()" class="p-mt-3"/>
+
+    <Button label="Toggle Panel" @click="overlayPanel.toggle($event)" aria-controls="popup_panel" aria-haspopup="true" />
+    <OverlayPanel ref="overlayPanel" id="popup_panel" >
+       <div>This is the panel content!</div>
+       <Button label="Close Panel" @click="overlayPanel.hide()"></Button>       
+    </OverlayPanel>
+     <Button label="Tooltip Button"  ref="tooltip"  class="p-mt-3"  v-tooltip.top="'This is a tooltip'">Hover me</Button>
+     <Button icon="pi pi-question-circle" aria-label="Help"  class="p-ml-2"  v-tooltip.right="'This is help tooltip'"  />
+
+</div>
+<script>
+(function() {
+    const { createApp, ref } = Vue;
+    const { useToast } = PrimeVue.useToast;
+
+    const app = createApp({
+        setup() {
+            const showDialog = ref(false);
+            const searchText = ref('');
+            const progressValue = ref(50);
+            const menu = ref(null);
+            const toast = ref(null);
+            const overlayPanel = ref(null);
+            const tooltip = ref(null);
+            const statusOptions = ref(['Pending', 'In Progress', 'Completed']);
+            const newItem = ref({
+                name: '',
+                description: '',
+                 status: 'Pending'
+            });
+             const items = ref([
+                 {
+                     id: 1,
+                     name: 'Item 1',
+                     description: 'Description of item 1',
+                     status: 'Pending'
+                 },
+                 {
+                     id: 2,
+                     name: 'Item 2',
+                     description: 'Description of item 2',
+                      status: 'In Progress'
+                 },
+                 {
+                     id: 3,
+                     name: 'Item 3',
+                     description: 'Description of item 3',
+                     status: 'Completed'
+                 },
+                 {
+                     id: 4,
+                     name: 'Item 4',
+                     description: 'Description of item 4',
+                     status: 'Pending'
+                 },
+                {
+                    id: 5,
+                    name: 'Item 5',
+                    description: 'Description of item 5',
+                     status: 'In Progress'
+                },
+                 {
+                     id: 6,
+                     name: 'Item 6',
+                     description: 'Description of item 6',
+                     status: 'Completed'
+                 },
+                 {
+                   id: 7,
+                   name: 'Item 7',
+                   description: 'Description of item 7',
+                    status: 'Pending'
+                },
+                {
+                    id: 8,
+                    name: 'Item 8',
+                    description: 'Description of item 8',
+                     status: 'In Progress'
+                },
+                {
+                    id: 9,
+                    name: 'Item 9',
+                    description: 'Description of item 9',
+                    status: 'Completed'
+                },
+                {
+                    id: 10,
+                    name: 'Item 10',
+                    description: 'Description of item 10',
+                     status: 'Pending'
+                },
+                 {
+                     id: 11,
+                     name: 'Item 11',
+                     description: 'Description of item 11',
+                      status: 'In Progress'
+                 },
+                {
+                     id: 12,
+                     name: 'Item 12',
+                     description: 'Description of item 12',
+                     status: 'Completed'
+                },
+                {
+                    id: 13,
+                    name: 'Item 13',
+                    description: 'Description of item 13',
+                     status: 'Pending'
+                },
+                {
+                     id: 14,
+                     name: 'Item 14',
+                     description: 'Description of item 14',
+                      status: 'In Progress'
+                 },
+                 {
+                    id: 15,
+                    name: 'Item 15',
+                    description: 'Description of item 15',
+                    status: 'Completed'
+                 },
+                {
+                    id: 16,
+                    name: 'Item 16',
+                    description: 'Description of item 16',
+                     status: 'Pending'
+                },
+                  {
+                    id: 17,
+                    name: 'Item 17',
+                    description: 'Description of item 17',
+                      status: 'In Progress'
+                 },
+                 {
+                    id: 18,
+                    name: 'Item 18',
+                    description: 'Description of item 18',
+                     status: 'Completed'
+                 }
+            ]);
+
+            const menuItems = ref([
+                { label: 'Home', icon: 'pi pi-home' },
+                { label: 'Settings', icon: 'pi pi-cog' },
+                { label: 'Profile', icon: 'pi pi-user' }
+            ]);
+
+              const getStatusSeverity = (status) => {
+                  switch(status) {
+                    case 'Pending':
+                      return 'warning';
+                    case 'In Progress':
+                      return 'info';
+                     case 'Completed':
+                      return 'success';
+                     default:
+                       return null;
+                  }
+            };
+            const showSuccess = () => {
+                 toast.value.add({ severity: 'success', summary: 'Success', detail: 'Action was successful!', life: 3000 });
+            };
+
+            const saveItem = () => {
+                 items.value.push({
+                    id: items.value.length + 1,
+                    name: newItem.value.name,
+                    description: newItem.value.description,
+                      status: newItem.value.status
+                 });
+                newItem.value = { name: '', description: '', status: 'Pending'};
+                showDialog.value = false;
+                showSuccess();
+            };
+
+            return {
+                showDialog,
                 searchText,
-                search,
-                menuItems,
+                progressValue,
                 menu,
-                filteredProducts,
-                toast,
-                 FilterMatchMode
-              };
-            },
-             template: `
-             <Toast />
-             <Menu ref="menu" :model="menuItems" popup />
-              <Button icon="pi pi-bars" @click="menu.toggle($event)" aria-label="Menu"/>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px;">
-                     <InputText v-model="searchText" @input="search" placeholder="Search products..." style="padding: 10px; border: 1px solid #ddd; margin-right: 10px" />
-                    <Button label="Add Product" icon="pi pi-plus" @click="openNew" class="p-button-success" />
-                </div>
-                <DataTable :value="filteredProducts" :loading="loading" stripedRows>
-                    <Column field="imageUrl" header="Image" style="width:100px;"><template #body="{ data }"><img :src="data.imageUrl" style="max-width: 100%; max-height: 100px;"/></template></Column>
-                    <Column field="name" header="Name" sortable></Column>
-                    <Column field="description" header="Description"></Column>
-                    <Column field="price" header="Price" sortable></Column>
-                    <Column field="category" header="Category" sortable></Column>
-                    <Column field="quantity" header="Quantity" sortable></Column>
-                    <Column field="sku" header="SKU"></Column>
-                     <Column field="rating" header="Rating" sortable></Column>
-                     <Column header="Actions" style="width: 150px;">
-                        <template #body="{ data }">
-                            <Button icon="pi pi-pencil" class="p-button-sm p-button-warning mr-2" @click="editProduct(data)" aria-label="Edit"/>
-                            <Button icon="pi pi-trash" class="p-button-sm p-button-danger" @click="deleteProduct(data)" aria-label="Delete"/>
-                        </template>
-                    </Column>
-                </DataTable>
-                  <Dialog v-model:visible="productDialog" :header="selectedProduct.id ? 'Edit Product' : 'Add Product'" :style="{width: '50vw'}">
-                  <div style="display:flex; flex-direction:column; gap: 10px;">
-                  <label for="name">Name</label>
-                  <InputText id="name" v-model="selectedProduct.name" />
-                   <label for="description">Description</label>
-                  <InputText id="description" v-model="selectedProduct.description" />
-                  <label for="price">Price</label>
-                  <InputText id="price" v-model="selectedProduct.price" type="number" />
-                   <label for="category">Category</label>
-                   <InputText id="category" v-model="selectedProduct.category" />
-                    <label for="quantity">Quantity</label>
-                  <InputText id="quantity" v-model="selectedProduct.quantity" type="number" />
-                 </div>
-                  <template #footer>
-                      <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
-                      <Button label="Save" icon="pi pi-check" class="p-button-success" @click="saveProduct" />
-                  </template>
-              </Dialog>
-            `
-          });
-           app.use(PrimeVue);
-           app.mount('#app');
-        })();
-    </script>
+                menuItems,
+                newItem,
+                items,
+                saveItem,
+                 statusOptions,
+                 toast,        
+                showSuccess,
+                getStatusSeverity,
+                overlayPanel,               
+                tooltip
+             };
+        }
+    });
+    app.use(PrimeVue.default);
+      app.mount('#app');
+})();
+</script>
 </body>
 </html>
-```
