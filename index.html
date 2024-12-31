@@ -1,239 +1,380 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue App with PrimeVue</title>
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-indigo/theme.css" />
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
+    <title>Admin Dashboard</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
+    <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/menu.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/menubar.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/sidebar.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/badge.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/button.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/inputtext.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/card.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/chart.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/listbox.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/progressbar.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/avatar.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/badge.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/divider.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/tag.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/dropdown.min.js"></script>
+    <script src="https://unpkg.com/@primevue/core/umd/core.min.js"></script>
     <style>
-        /* Reset CSS */
-        body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, figcaption, blockquote, dl, dd {
+        body {
+            font-family: sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
         }
-        *, *::before, *::after {
-            box-sizing: border-box;
+
+        .layout-wrapper {
+            display: flex;
+            min-height: 100vh;
         }
-        img {
-            max-width: 100%;
-            display: block;
+
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
         }
-        button {
+        .sidebar .p-menu {
+            background-color: transparent;
             border: none;
-            background: none;
-            cursor: pointer;
+        }
+        .sidebar .p-menu ul {
             padding: 0;
         }
-        ul, ol {
-            list-style: none;
+         .sidebar .p-menuitem-link {
+             color: #fff;
+         }
+         .sidebar .p-menuitem-link:hover {
+             background-color: #495057;
+         }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
         }
-        body {
-          font-family: sans-serif;   
+
+        .dashboard-widgets {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
+
+        .widget {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .widget h3 {
+            margin-top: 0;
+        }
+        .widget .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .widget .p-button {
+            margin-top: 10px;
+        }
+        .chart-container {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .balances-widget .balances {
+            display: flex;
+            justify-content: space-between;
+        }
+        .balances-widget .balance-item {
+            text-align: center;
+        }
+         .top-products-widget .product-list {
+             list-style: none;
+             padding: 0;
+         }
+         .top-products-widget .product-item {
+             display: flex;
+             align-items: center;
+             padding: 10px;
+             border-bottom: 1px solid #eee;
+             cursor: pointer;
+         }
+          .top-products-widget .product-item:last-child {
+              border-bottom: none;
+          }
+         .top-products-widget .product-item .product-icon {
+             margin-right: 10px;
+         }
+        .top-products-widget .product-item .product-details {
+            flex: 1;
+        }
+    .p-badge {
+        background-color: #e91e63;
+    }
+     .search-bar {
+         margin-bottom: 1rem;
+     }
+    .main-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+     .main-header .user-profile {
+         display: flex;
+         align-items: center;
+     }
+     .main-header .user-profile .p-avatar {
+         margin-right: 10px;
+     }
+     .main-header .user-profile span {
+         font-weight: bold;
+     }
+    .p-menuitem-text{
+        font-weight: bold;
+    }
+    .p-menuitem-link {
+        border-radius: 5px;
+    }
+    .p-menuitem-icon {
+        margin-right: .5rem;
+    }
     </style>
 </head>
+
 <body>
-    <div id="app"></div>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
-    <script src="https://unpkg.com/primevue/button/button.min.js"></script>
-    <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
-    <script src="https://unpkg.com/primevue/menubar/menubar.min.js"></script>
-    <script src="https://unpkg.com/primevue/card/card.min.js"></script>
-    <script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script>
-    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
-    <script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
-     <script src="https://unpkg.com/primevue/textarea/textarea.min.js"></script>
-      <script src="https://unpkg.com/primevue/calendar/calendar.min.js"></script>
-    <script src="https://unpkg.com/primevue/progressbar/progressbar.min.js"></script>
-     <script src="https://unpkg.com/primevue/message/message.min.js"></script>
-     <script src="https://unpkg.com/primevue/slider/slider.min.js"></script>
-     <script src="https://unpkg.com/primevue/checkbox/checkbox.min.js"></script>
-     <script src="https://unpkg.com/primevue/radiobutton/radiobutton.min.js"></script>
-     <script src="https://unpkg.com/primevue/multiselect/multiselect.min.js"></script>
+    <div id="app">
+        <div class="layout-wrapper">
+            <div class="sidebar">
+              <p-menu :model="menuItems" class="sidebar-menu"></p-menu>
+              <p-button label="Contact Us" icon="pi pi-envelope" style="margin-top: auto;" class="p-button-secondary p-button-outlined" />
+            </div>
+            <div class="main-content">
+                <div class="main-header">
+                    <div class="search-bar">
+                        <p-inputtext type="text" placeholder="Search..." />
+                    </div>
+                     <div class="user-profile">
+                         <p-avatar icon="pi pi-user" shape="circle" style="margin-right: 10px;" ></p-avatar>
+                         <span>Lucy Lure</span>
+                         <p-badge value="3" severity="danger" class="p-ml-2"></p-badge>
+                     </div>
+                </div>
+                <div class="dashboard-widgets">
+                  <div class="widget">
+                      <div class="widget-header">
+                         <h3>Referral Program</h3>
+                         </div>
+                      <p>Want some EXTRA Money?</p>
+                        <p-button label="Referral Program" icon="pi pi-users" />
+                    </div>
+                    <div class="widget">
+                        <div class="widget-header">
+                            <h3>Total Products</h3>
+                        </div>
+                        <p style="font-size: 2em; margin-bottom:0;">1,134 Items</p>
+                        <p style="margin-top:0;"><span style="color: green;">+10%</span> this week</p>
+                        <div class="chart-container">
+                           <p-chart type="line" :data="productChartData" :options="chartOptions"></p-chart>
+                        </div>
+                    </div>
+                    <div class="widget">
+                       <div class="widget-header">
+                         <h3>Total Earnings</h3>
+                       </div>
+                        <p style="font-size: 2em; margin-bottom:0;">$4,231</p>
+                        <p style="margin-top:0;"><span style="color: red;">-22%</span> this week</p>
+                        <div class="chart-container">
+                             <p-chart type="line" :data="earningsChartData" :options="chartOptions"></p-chart>
+                         </div>
+                    </div>
+                    <div class="widget">
+                        <div class="widget-header">
+                           <h3>Latest Downloads</h3>
+                       </div>
+                        <div class="chart-container">
+                           <p-chart type="bar" :data="downloadChartData" :options="chartOptions"></p-chart>
+                        </div>
+                        <p style="text-align: center;"><strong>359</strong> on Thursday</p>
+                    </div>
+                    <div class="widget balances-widget">
+                         <div class="widget-header">
+                            <h3>Balances</h3>
+                        </div>
+                       <div class="balances">
+                          <div class="balance-item">
+                              <h4>Available</h4>
+                              <p>$537</p>
+                           </div>
+                           <div class="balance-item">
+                              <h4>Pending</h4>
+                              <p>$234</p>
+                           </div>
+                       </div>
+                         <p-button label="Withdraw Money" icon="pi pi-money-bill" class="p-button-success" />
+                   </div>
+                    <div class="widget top-products-widget">
+                       <div class="widget-header">
+                           <h3>Top Products</h3>
+                       </div>
+                        <ul class="product-list">
+                            <li v-for="product in topProducts" :key="product.id" class="product-item" @click="openProduct(product.id)">
+                                <div class="product-icon">
+                                    <img :src="product.icon" style="width:30px;height:30px;" alt="product-icon" />
+                                </div>
+                                <div class="product-details">
+                                    <h4>{{ product.name }}</h4>
+                                    <p>{{ product.category }}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="text-align: right; margin-top: 2rem;">
+                     <p-button label="Upload Product" icon="pi pi-upload" class="p-button-primary" />
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
-        (function() {
-            const { createApp, ref } = Vue;
-            const app = createApp({
-                setup() {
-                    const visible = ref(false);
-                     const selectedCity = ref(null);
-                    const cities = ref([
-                        { name: 'New York', code: 'NY' },
-                        { name: 'Rome', code: 'RM' },
-                        { name: 'London', code: 'LDN' },
-                        { name: 'Istanbul', code: 'IST' },
-                        { name: 'Paris', code: 'PRS' }
-                    ]);
-                    const textValue = ref('');
-                    const dateValue = ref(null);
-                    const progressValue = ref(0);
-                    const isChecked = ref(false);
-                    const favoriteFramework = ref(null);
-                    const selectedFrameworks = ref(null);
-                    const frameworks = ref([
-                      { name: 'Vue.js', code: 'vue' },
-                      { name: 'React', code: 'react' },
-                      { name: 'Angular', code: 'angular' },
-                      { name: 'Svelte', code: 'svelte' },
-                      { name: 'Ember.js', code: 'ember' }
-                    ]);
-                      const messages = ref([
-                        { severity: 'success', summary: 'Success', detail: 'Operation completed successfully' },
-                        { severity: 'info', summary: 'Info', detail: 'This is some information' },
-                        { severity: 'warn', summary: 'Warning', detail: 'Something might go wrong' },
-                         { severity: 'error', summary: 'Error', detail: 'An error occurred' }
-                     ]);
+      const { createApp, ref, onMounted } = Vue;
+      const app = createApp({
+        setup() {
+          const menuItems = ref([
+            {
+              label: 'Overview', icon: 'pi pi-home', command: () => { console.log('Overview clicked') },
+              style: {'background-color': '#495057'}
+            },
+            { label: 'Products', icon: 'pi pi-box', command: () => { console.log('Products clicked') } },
+            { label: 'Campaigns', icon: 'pi pi-megaphone', command: () => { console.log('Campaigns clicked') } },
+            { label: 'Schedules', icon: 'pi pi-calendar', command: () => { console.log('Schedules clicked') } },
+            { label: 'Payouts', icon: 'pi pi-dollar', command: () => { console.log('Payouts clicked') } },
+            { label: 'Statements', icon: 'pi pi-file', command: () => { console.log('Statements clicked') } },
+            { label: 'Settings', icon: 'pi pi-cog', command: () => { console.log('Settings clicked') } },
+          ]);
 
+          const productChartData = ref({
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [
+              {
+                label: 'Product Trend',
+                data: [10, 20, 15, 25, 22, 30, 28],
+                borderColor: '#42b983',
+                tension: 0.4,
+                fill: false,
+              },
+            ],
+          });
 
-                    const items = ref([
-                      {label: 'Update', icon: 'pi pi-refresh'}, 
-                      {label: 'Delete', icon: 'pi pi-trash'}
-                  ]);
-                      const menuItems = ref([
-                        {label: 'File', icon: 'pi pi-file', items: [
-                                {label: 'New', icon: 'pi pi-plus'}, 
-                                {label: 'Open', icon: 'pi pi-folder-open'}, 
-                                {label: 'Save', icon: 'pi pi-save'}
-                          ]},
-                          {label: 'Edit', icon: 'pi pi-pencil', items: [
-                            {label: 'Undo', icon: 'pi pi-undo'}, 
-                            {label: 'Redo', icon: 'pi pi-redo'}
-                          ]},
-                          {label: 'View', icon: 'pi pi-eye'}
-                      ]);
-                    const cardData = ref([
-                        {
-                            title: 'Card 1',
-                            image: 'https://placehold.co/600x400/EEE/31343C',
-                            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-                        },
-                        {
-                            title: 'Card 2',
-                            image: 'https://placehold.co/600x400/EEE/31343C',
-                             content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-                        },
-                        {
-                             title: 'Card 3',
-                             image: 'https://placehold.co/600x400/EEE/31343C',
-                             content: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.'
-                         },
-                         {
-                            title: 'Card 4',
-                             image: 'https://placehold.co/600x400/EEE/31343C',
-                             content: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
-                         },
-                         {
-                            title: 'Card 5',
-                            image: 'https://placehold.co/600x400/EEE/31343C',
-                            content: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-                         }
-                    ]);
-                    const showDialog = () => {
-                        visible.value = true;
-                    };
-                    const hideDialog = () => {
-                        visible.value = false;
-                    };
-                      const updateProgress = () => {
-                        if (progressValue.value < 100) {
-                          progressValue.value += 10;
-                         setTimeout(updateProgress, 100);
-                        }
-                    };
-                     const sliderValue = ref(50);
-                    (function(){
-                        updateProgress();
-                    })();
+          const earningsChartData = ref({
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [
+              {
+                label: 'Earnings Trend',
+                data: [5, 15, 10, 20, 18, 25, 20],
+                borderColor: '#3498db',
+                tension: 0.4,
+                fill: false,
+              },
+            ],
+          });
+          const downloadChartData = ref({
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [
+              {
+                label: 'Downloads',
+                data: [100, 150, 200, 350, 300, 400, 250],
+                backgroundColor: '#f39c12',
+              },
+            ],
+          });
 
-                    return {
-                         sliderValue,
-                        selectedFrameworks,
-                        frameworks,
-                        favoriteFramework,
-                        isChecked,
-                        progressValue,
-                        dateValue,
-                        textValue,
-                        cities,
-                        selectedCity,
-                         visible,
-                         showDialog,
-                        hideDialog,
-                        cardData,
-                        menuItems,
-                        items,
-                        messages
-                    };
-                },
-                components: {
-                    "pv-button": primevue.button,
-                     "pv-menu": primevue.menu,
-                     "pv-menubar": primevue.menubar,
-                     "pv-card": primevue.card,
-                      "pv-dialog": primevue.dialog,
-                      "pv-inputtext": primevue.inputtext,
-                     "pv-dropdown": primevue.dropdown,
-                      "pv-textarea": primevue.textarea,
-                      "pv-calendar": primevue.calendar,
-                       "pv-progressbar": primevue.progressbar,
-                       "pv-message": primevue.message,
-                       "pv-slider": primevue.slider,
-                       "pv-checkbox": primevue.checkbox,
-                       "pv-radiobutton": primevue.radiobutton,
-                       "pv-multiselect": primevue.multiselect
-                },
-                template: `
-                <pv-menubar :model="menuItems" style="margin-bottom: 20px;"></pv-menubar>
-                 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
-                    <pv-card v-for="card in cardData" :key="card.title" style="width: 300px; margin-bottom: 20px; ">
-                        <template #header>
-                            <img :alt="card.title" :src="card.image" style="width: 100%;">
-                        </template>
-                        <template #title>
-                            {{ card.title }}
-                        </template>
-                        <template #content>
-                           {{ card.content }}
-                        </template>
-                         <template #footer>
-                           <pv-button icon="pi pi-pencil" label="Edit" style="margin-right: .5em"></pv-button>
-                          <pv-button icon="pi pi-trash" label="Delete" severity="danger" ></pv-button>
-                        </template>
-                    </pv-card>
-                 </div>
-                 <div style="display:flex; flex-direction:column; align-items: center; margin-bottom: 20px; gap:10px">
-                 <pv-button label="Show Dialog" @click="showDialog" icon="pi pi-external-link" style="margin-bottom: 10px;"></pv-button>
-                  <pv-dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a City"  style="width: 300px;"></pv-dropdown>
-                    <pv-inputtext type="text" v-model="textValue"  placeholder="Enter text here" style="width: 300px;"/>
-                   <pv-textarea v-model="textValue" rows="5" cols="30"  placeholder="Enter text here" style="width: 300px;"></pv-textarea>
-                     <pv-calendar v-model="dateValue" placeholder="Select date" style="width: 300px;"></pv-calendar>
-                    <pv-progressbar :value="progressValue" style="width: 300px;" mode="determinate"></pv-progressbar>
-                    <pv-slider v-model="sliderValue" style="width: 300px;"></pv-slider>
-                    <div>Slider Value: {{sliderValue}}</div>
-                  <pv-checkbox v-model="isChecked" :binary="true" style="margin-bottom: 10px;"></pv-checkbox>Accept terms and conditions
-                    <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 10px">
-                         <pv-radiobutton name="framework" value="vue" v-model="favoriteFramework" :inputId="'radio1'"></pv-radiobutton>
-                         <label for="radio1">Vue.js</label>
-                    </div>
-                    <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 10px">
-                         <pv-radiobutton name="framework" value="react" v-model="favoriteFramework" :inputId="'radio2'"></pv-radiobutton>
-                         <label for="radio2">React</label>
-                    </div>
-                    <pv-multiselect v-model="selectedFrameworks" :options="frameworks" optionLabel="name" placeholder="Select frameworks" style="width: 300px; margin-bottom: 10px;"></pv-multiselect>
-                      <div style="display: flex; flex-direction: column; gap: 5px; max-width: 300px;">
-                         <pv-message v-for="msg in messages" :key="msg.summary" :severity="msg.severity" :summary="msg.summary" :detail="msg.detail" ></pv-message>
-                    </div>
-                 </div>
-                   <pv-dialog header="Dialog" v-model:visible="visible" :style="{ width: '50vw' }" @hide="hideDialog">
-                        <p>This is a dialog content.</p>
-                    </pv-dialog>
-                `
-            });
-            app.use(primevue.config.default).mount("#app");
-        })();
+          const chartOptions = ref({
+             responsive: true,
+             maintainAspectRatio: false,
+           });
+
+           const topProducts = ref([
+             {
+               id: 1,
+               name: 'Product A',
+               category: 'Category 1',
+                icon: 'https://placehold.co/600x400/EEE/31343C',
+             },
+             {
+               id: 2,
+               name: 'Product B',
+               category: 'Category 2',
+                icon: 'https://placehold.co/600x400/EEE/31343C',
+             },
+             {
+               id: 3,
+               name: 'Product C',
+               category: 'Category 3',
+               icon: 'https://placehold.co/600x400/EEE/31343C',
+             },
+             {
+                id: 4,
+                name: 'Product D',
+                category: 'Category 4',
+                icon: 'https://placehold.co/600x400/EEE/31343C',
+            },
+            {
+                id: 5,
+               name: 'Product E',
+               category: 'Category 5',
+               icon: 'https://placehold.co/600x400/EEE/31343C',
+            }
+           ]);
+
+           const openProduct = (productId) => {
+                console.log('Opening product:', productId);
+           }
+          return {
+            menuItems,
+            productChartData,
+            earningsChartData,
+            downloadChartData,
+            chartOptions,
+            topProducts,
+             openProduct
+          };
+        },
+      });
+        app.use(PrimeVue.Config, { theme: { preset: PrimeVue.Themes.Aura, options: { darkModeSelector: false || 'none', }, }, });
+      app.component('p-menu', PrimeVue.Menu);
+      app.component('p-menubar', PrimeVue.Menubar);
+      app.component('p-sidebar', PrimeVue.Sidebar);
+      app.component('p-badge', PrimeVue.Badge);
+      app.component('p-button', PrimeVue.Button);
+        app.component('p-inputtext', PrimeVue.InputText);
+      app.component('p-card', PrimeVue.Card);
+      app.component('p-chart', PrimeVue.Chart);
+      app.component('p-listbox', PrimeVue.Listbox);
+       app.component('p-progressbar', PrimeVue.ProgressBar);
+        app.component('p-avatar', PrimeVue.Avatar);
+         app.component('p-divider', PrimeVue.Divider);
+          app.component('p-tag', PrimeVue.Tag);
+         app.component('p-dropdown', PrimeVue.Dropdown);
+
+      app.mount('#app');
     </script>
 </body>
+
 </html>
