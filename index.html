@@ -1,161 +1,221 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue App with PrimeVue</title>
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-blue/theme.css">
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
+    <title>Vue.js App with PrimeVue</title>
+    <link href="https://unpkg.com/primevue/resources/themes/aura-light-teal/theme.css" rel="stylesheet">
+    <link href="https://unpkg.com/primevue/resources/primevue.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
-    <script src="https://unpkg.com/primevue/button/button.min.js"></script>
-    <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
-    <script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
-    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
-    <script src="https://unpkg.com/primevue/card/card.min.js"></script>
-    <script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script>
-    <script src="https://unpkg.com/primevue/toast/toast.min.js"></script>
-    <script src="https://unpkg.com/primevue/toastservice/toastservice.min.js"></script>
+    <script src="https://unpkg.com/primevue/primevue.min.js"></script>
+    <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
     <style>
-        html, body, div, span, applet, object, iframe,
-        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-        a, abbr, acronym, address, big, cite, code,
-        del, dfn, em, img, ins, kbd, q, s, samp,
-        small, strike, strong, sub, sup, tt, var,
-        b, u, i, center,
-        dl, dt, dd, ol, ul, li,
-        fieldset, form, label, legend,
-        table, caption, tbody, tfoot, thead, tr, th, td,
-        article, aside, canvas, details, embed,
-        figure, figcaption, footer, header, hgroup,
-        menu, nav, output, ruby, section, summary,
-        time, mark, audio, video {
+        body, h1, h2, h3, h4, h5, h6, p, ul, li, ol, dl, dd, dt, form, fieldset, legend, textarea, pre, code {
             margin: 0;
             padding: 0;
-            border: 0;
-            font-size: 100%;
-            font: inherit;
-            vertical-align: baseline;
-        }
-        article, aside, details, figcaption, figure,
-        footer, header, hgroup, menu, nav, section {
-            display: block;
         }
         body {
-            line-height: 1;
+          font-family: sans-serif;
+          line-height: 1.6;
         }
-        ol, ul {
-            list-style: none;
-        }
-        blockquote, q {
-            quotes: none;
-        }
-        blockquote:before, blockquote:after,
-        q:before, q:after {
-            content: '';
-            content: none;
-        }
-        table {
-            border-collapse: collapse;
-            border-spacing: 0;
-        }
-        body {
-            font-family: sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-        }
-        #app {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .p-button {
-            margin: 5px;
-        }
+        ul, ol {list-style: none;}
+        a {text-decoration: none; color: inherit;}
+        button { cursor: pointer;}
     </style>
 </head>
 <body>
-    <div id="app">
-        <p-toast></p-toast>
-        <p-menu :model="menuItems" />
-        <p-dropdown :options="dropdownOptions" v-model="selectedOption" placeholder="Select an option"></p-dropdown>
-        <p-button label="Click Me" icon="pi pi-check" @click="showMessage"></p-button>
-        <p-inputtext type="text" v-model="inputValue" placeholder="Enter text" />
-        <p-card title="Product Card">
-             <template #content>
-                <img src="https://placehold.co/600x400/EEE/31343C" alt="Product Image" style="max-width: 100%;"/>
-                <p>Price: $ {{ productPrice }}</p>
-                <p>Description: {{ productDescription }}</p>
-                <p-button label="Add to Cart" icon="pi pi-shopping-cart"></p-button>
-            </template>
-         </p-card>
-        <p-dialog header="Confirmation" v-model:visible="dialogVisible" :modal="true" :style="{width: '50vw'}">
-           Are you sure you want to perform this action?
-           <template #footer>
-             <p-button label="Yes" icon="pi pi-check" @click="closeDialog" class="p-button-success"></p-button>
-             <p-button label="No" icon="pi pi-times" @click="closeDialog" class="p-button-secondary"></p-button>
-           </template>
-       </p-dialog>
-    </div>
+    <div id="app"></div>
+
     <script>
-    (function(){
-        const { createApp, ref } = Vue;
-        const app = createApp({
-        setup() {
-                const menuItems = ref([
-                    { label: 'Home', icon: 'pi pi-home' },
-                    { label: 'Products', icon: 'pi pi-list' },
-                    { label: 'Settings', icon: 'pi pi-cog' }
-                ]);
-                 const dropdownOptions = ref([
-                    { label: 'Option 1', value: 1 },
-                    { label: 'Option 2', value: 2 },
-                    { label: 'Option 3', value: 3 }
-                ]);
-                const selectedOption = ref(null);
-                const inputValue = ref('');
-                const dialogVisible = ref(false);
+    const { createApp, ref, onMounted } = Vue;
+    const { PrimeVue } = primevue;
+    const { DataTable } = primevue.datatable;
+    const { Column } = primevue.column;
+    const { Button } = primevue.button;
+    const { InputText } = primevue.inputtext;
+    const { Dialog } = primevue.dialog;
+    const { Menu } = primevue.menu;
+    const { Toast } = primevue.toast;
+    const { useToast } = primevue.usetoast;
+    const { FilterMatchMode } = primevue.api;
 
-						const toastService = primevue.useToast();
+      (async () => {
+          const app = createApp({
+            components: {
+              DataTable,
+              Column,
+              Button,
+              InputText,
+              Dialog,
+              Menu,
+              Toast,
+            },
+            setup() {
+              const products = ref([]);
+              const loading = ref(true);
+              const productDialog = ref(false);
+              const selectedProduct = ref(null);
+              const searchText = ref('');
+              const menu = ref(null);
+              const toast = useToast();
+              const filteredProducts = ref([]);
 
-                const productPrice = ref('99.99');
-                const productDescription = ref('This is a sample product description. It shows what a product card can look like. We have more data in the component than usual to have a visual better representation.');
+              const menuItems = ref([
+                  {label: 'Dashboard', icon: 'pi pi-home', command: () => {toast.add({severity: 'info', summary: 'Dashboard', detail: 'Navigated to dashboard', life: 3000})}},
+                  {label: 'Products', icon: 'pi pi-box', command: () => {toast.add({severity: 'info', summary: 'Products', detail: 'Navigated to products', life: 3000})}},
+                  {label: 'Orders', icon: 'pi pi-shopping-cart', command: () => {toast.add({severity: 'info', summary: 'Orders', detail: 'Navigated to orders', life: 3000})}},
+                  {label: 'Settings', icon: 'pi pi-cog', command: () => {toast.add({severity: 'info', summary: 'Settings', detail: 'Navigated to settings', life: 3000})}}
+              ]);
 
-						const showMessage = () => {
-							 toastService.add({ severity: 'success', summary: 'Success Message', detail: 'This is a success message', life: 3000 });
-						};
+              const search = () => {
+                if (!searchText.value) {
+                  filteredProducts.value = [...products.value];
+                } else {
+                filteredProducts.value = products.value.filter(product => {
+                    return Object.values(product).some(value => {
+                        if (typeof value === 'string') {
+                            return value.toLowerCase().includes(searchText.value.toLowerCase());
+                        } else if (typeof value === 'number'){
+                          return String(value).includes(searchText.value);
+                        }
+                        return false;
+                    });
+                    });
+                }
+              };
 
-                const closeDialog = () => {
-                  dialogVisible.value = false;
-                };
-                return {
-                    menuItems,
-                    dropdownOptions,
-                    selectedOption,
-                    inputValue,
-									showMessage,
-                    productPrice,
-                    productDescription,
-                    dialogVisible,
-                    closeDialog
-                };
-            }
-        });
+              const openNew = () => {
+                  selectedProduct.value = {};
+                  productDialog.value = true;
+              };
 
-        app.use(primevue.PrimeVue);
-				app.use(primevue.ToastService);
-        app.component('p-button', primevue.Button);
-        app.component('p-menu', primevue.Menu);
-        app.component('p-dropdown', primevue.Dropdown);
-        app.component('p-inputtext', primevue.InputText);
-        app.component('p-card', primevue.Card);
-        app.component('p-dialog', primevue.Dialog);
-        app.component('p-toast', primevue.Toast);
+               const hideDialog = () => {
+                productDialog.value = false;
+               };
 
-        app.mount('#app');
-    })();
+               const saveProduct = () => {
+                if (selectedProduct.value.id) {
+                  const index = products.value.findIndex(p => p.id === selectedProduct.value.id);
+                  products.value.splice(index, 1, { ...selectedProduct.value });
+                   filteredProducts.value.splice(filteredProducts.value.findIndex(p => p.id === selectedProduct.value.id), 1, {...selectedProduct.value}) ;  
+                   toast.add({ severity: 'success', summary: 'Successful', detail: 'Product updated', life: 3000 });
+                } else {
+                  selectedProduct.value.id = Math.floor(Math.random() * 100000);
+                  products.value.push({ ...selectedProduct.value });
+                  filteredProducts.value.push({...selectedProduct.value});
+                   toast.add({ severity: 'success', summary: 'Successful', detail: 'Product created', life: 3000 });
+
+                }
+                productDialog.value = false;
+
+               };
+
+              const editProduct = (product) => {
+                  selectedProduct.value = { ...product };
+                  productDialog.value = true;
+              };
+
+              const deleteProduct = (product) => {
+                const index = products.value.findIndex(p => p.id === product.id);
+                  products.value.splice(index, 1);
+                   filteredProducts.value.splice(filteredProducts.value.findIndex(p => p.id === product.id),1);
+                    toast.add({ severity: 'warn', summary: 'Successful', detail: 'Product removed', life: 3000 });
+              };
+
+              const fetchData = async () => {
+                loading.value = true;
+
+                  const mockData = Array.from({ length: 20 }, (_, i) => ({
+                      id: i + 1,
+                      name: `Product ${i + 1}`,
+                      description: `Description for product ${i + 1}`,
+                      price: (Math.random() * 100).toFixed(2),
+                      category: ['Electronics', 'Books', 'Clothing', 'Home'][Math.floor(Math.random() * 4)],
+                      imageUrl: `https://placehold.co/150x100/EEE/31343C`,
+                      quantity: Math.floor(Math.random() * 100),
+                      sku: Math.random().toString(36).substring(2, 15),
+                      isFeatured: Math.random() > 0.5,
+                      rating: Math.floor(Math.random() * 5) + 1
+                }));
+                products.value = mockData;
+                filteredProducts.value = [...mockData];
+                 loading.value = false;
+              };
+
+                onMounted(() => {
+                    fetchData();
+                });
+
+
+              return {
+                products,
+                loading,
+                productDialog,
+                selectedProduct,
+                openNew,
+                hideDialog,
+                saveProduct,
+                editProduct,
+                deleteProduct,
+                searchText,
+                search,
+                menuItems,
+                menu,
+                filteredProducts,
+                toast,
+                 FilterMatchMode
+              };
+            },
+             template: `
+             <Toast />
+             <Menu ref="menu" :model="menuItems" popup />
+              <Button icon="pi pi-bars" @click="menu.toggle($event)" aria-label="Menu"/>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px;">
+                     <InputText v-model="searchText" @input="search" placeholder="Search products..." style="padding: 10px; border: 1px solid #ddd; margin-right: 10px" />
+                    <Button label="Add Product" icon="pi pi-plus" @click="openNew" class="p-button-success" />
+                </div>
+                <DataTable :value="filteredProducts" :loading="loading" stripedRows>
+                    <Column field="imageUrl" header="Image" style="width:100px;"><template #body="{ data }"><img :src="data.imageUrl" style="max-width: 100%; max-height: 100px;"/></template></Column>
+                    <Column field="name" header="Name" sortable></Column>
+                    <Column field="description" header="Description"></Column>
+                    <Column field="price" header="Price" sortable></Column>
+                    <Column field="category" header="Category" sortable></Column>
+                    <Column field="quantity" header="Quantity" sortable></Column>
+                    <Column field="sku" header="SKU"></Column>
+                     <Column field="rating" header="Rating" sortable></Column>
+                     <Column header="Actions" style="width: 150px;">
+                        <template #body="{ data }">
+                            <Button icon="pi pi-pencil" class="p-button-sm p-button-warning mr-2" @click="editProduct(data)" aria-label="Edit"/>
+                            <Button icon="pi pi-trash" class="p-button-sm p-button-danger" @click="deleteProduct(data)" aria-label="Delete"/>
+                        </template>
+                    </Column>
+                </DataTable>
+                  <Dialog v-model:visible="productDialog" :header="selectedProduct.id ? 'Edit Product' : 'Add Product'" :style="{width: '50vw'}">
+                  <div style="display:flex; flex-direction:column; gap: 10px;">
+                  <label for="name">Name</label>
+                  <InputText id="name" v-model="selectedProduct.name" />
+                   <label for="description">Description</label>
+                  <InputText id="description" v-model="selectedProduct.description" />
+                  <label for="price">Price</label>
+                  <InputText id="price" v-model="selectedProduct.price" type="number" />
+                   <label for="category">Category</label>
+                   <InputText id="category" v-model="selectedProduct.category" />
+                    <label for="quantity">Quantity</label>
+                  <InputText id="quantity" v-model="selectedProduct.quantity" type="number" />
+                 </div>
+                  <template #footer>
+                      <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
+                      <Button label="Save" icon="pi pi-check" class="p-button-success" @click="saveProduct" />
+                  </template>
+              </Dialog>
+            `
+          });
+           app.use(PrimeVue);
+           app.mount('#app');
+        })();
     </script>
 </body>
 </html>
+```
