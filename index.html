@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue.js App with PrimeVue</title>
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-blue/theme.css" />
-    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
+    <title>Vue App with PrimeVue</title>
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-blue/theme.css">
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/primevue/primevue.min.js"></script>
-    <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
+    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
+    <script src="https://unpkg.com/primevue/button/button.min.js"></script>
+    <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
+    <script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
+    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
+    <script src="https://unpkg.com/primevue/card/card.min.js"></script>
+    <script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script>
+    <script src="https://unpkg.com/primevue/toast/toast.min.js"></script>
+    <script src="https://unpkg.com/primevue/toastservice/toastservice.min.js"></script>
     <style>
         html, body, div, span, applet, object, iframe,
         h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -19,8 +27,8 @@
         dl, dt, dd, ol, ul, li,
         fieldset, form, label, legend,
         table, caption, tbody, tfoot, thead, tr, th, td,
-        article, aside, canvas, details, embed, 
-        figure, figcaption, footer, header, hgroup, 
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
         menu, nav, output, ruby, section, summary,
         time, mark, audio, video {
             margin: 0;
@@ -30,7 +38,7 @@
             font: inherit;
             vertical-align: baseline;
         }
-        article, aside, details, figcaption, figure, 
+        article, aside, details, figcaption, figure,
         footer, header, hgroup, menu, nav, section {
             display: block;
         }
@@ -52,192 +60,100 @@
             border-collapse: collapse;
             border-spacing: 0;
         }
-        body { font-family: sans-serif; }
-        .container { width: 80%; margin: 20px auto; }
+        body {
+            font-family: sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        #app {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .p-button {
+            margin: 5px;
+        }
     </style>
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <p-toast></p-toast>
+        <p-menu :model="menuItems" />
+        <p-dropdown :options="dropdownOptions" v-model="selectedOption" placeholder="Select an option"></p-dropdown>
+        <p-button label="Click Me" icon="pi pi-check" @click="showMessage"></p-button>
+        <p-inputtext type="text" v-model="inputValue" placeholder="Enter text" />
+        <p-card title="Product Card">
+             <template #content>
+                <img src="https://placehold.co/600x400/EEE/31343C" alt="Product Image" style="max-width: 100%;"/>
+                <p>Price: $ {{ productPrice }}</p>
+                <p>Description: {{ productDescription }}</p>
+                <p-button label="Add to Cart" icon="pi pi-shopping-cart"></p-button>
+            </template>
+         </p-card>
+        <p-dialog header="Confirmation" v-model:visible="dialogVisible" :modal="true" :style="{width: '50vw'}">
+           Are you sure you want to perform this action?
+           <template #footer>
+             <p-button label="Yes" icon="pi pi-check" @click="closeDialog" class="p-button-success"></p-button>
+             <p-button label="No" icon="pi pi-times" @click="closeDialog" class="p-button-secondary"></p-button>
+           </template>
+       </p-dialog>
+    </div>
     <script>
-    (function() {
+    (function(){
         const { createApp, ref } = Vue;
-        const { PrimeVue } = primevue;
-        const { Button } = primevue.button;
-        const { Menu } = primevue.menu;
-        const { DataTable } = primevue.datatable;
-        const { Column } = primevue.column;
-        const { Dialog } = primevue.dialog;
-        const { InputText } = primevue.inputtext;
-
         const app = createApp({
-            components: {
-                Button,
-                Menu,
-                DataTable,
-                Column,
-                Dialog,
-                InputText
-            },
-            setup() {
-                const products = ref([
-                  {
-                    id: 1,
-                    name: 'Product 1', 
-                    image: 'https://placehold.co/600x400/EEE/31343C', 
-                    price: 19.99,
-                    description: 'This is the first product.',
-                    inventory: 100
-                  },
-                  {
-                    id: 2,
-                    name: 'Product 2',
-                    image: 'https://placehold.co/600x400/EEE/31343C',
-                    price: 29.99,
-                    description: 'This is the second product.',
-                    inventory: 50
-                  },
-                   {
-                    id: 3,
-                    name: 'Product 3',
-                    image: 'https://placehold.co/600x400/EEE/31343C',
-                    price: 49.99,
-                    description: 'This is the third product.',
-                    inventory: 75
-                  },
-                  {
-                    id: 4,
-                    name: 'Product 4',
-                    image: 'https://placehold.co/600x400/EEE/31343C',
-                    price: 9.99,
-                    description: 'This is the fourth product.',
-                    inventory: 200
-                   },
-                   {
-                    id: 5,
-                    name: 'Product 5',
-                    image: 'https://placehold.co/600x400/EEE/31343C',
-                    price: 59.99,
-                    description: 'This is the fifth product.',
-                    inventory: 60
-                   },
-                    {
-                    id: 6,
-                    name: 'Product 6',
-                    image: 'https://placehold.co/600x400/EEE/31343C',
-                    price: 79.99,
-                    description: 'This is the sixth product.',
-                    inventory: 30
-                  },
-                  {
-                    id: 7,
-                    name: 'Product 7',
-                    image: 'https://placehold.co/600x400/EEE/31343C',
-                    price: 129.99,
-                     description: 'This is the seventh product.',
-                    inventory: 12
-                  },
-                  {
-                    id: 8,
-                    name: 'Product 8',
-                    image: 'https://placehold.co/600x400/EEE/31343C',
-                    price: 100.00,
-                    description: 'This is the eighth product.',
-                    inventory: 80
-                  },
-                   {
-                    id: 9,
-                    name: 'Product 9',
-                    image: 'https://placehold.co/600x400/EEE/31343C',
-                    price: 12.00,
-                    description: 'This is the ninth product.',
-                     inventory: 140
-                  },
-                  {
-                    id: 10,
-                    name: 'Product 10',
-                    image: 'https://placehold.co/600x400/EEE/31343C',
-                    price: 22.00,
-                    description: 'This is the tenth product.',
-                     inventory: 20
-                    }
-                ]);
+        setup() {
                 const menuItems = ref([
-                    { label: 'Home', icon: 'pi pi-home', command: () => { alert('Home'); } },
-                    { label: 'Products', icon: 'pi pi-shopping-cart', command: () => { alert('Products'); } },
-                    { label: 'About', icon: 'pi pi-info-circle', command: () => { alert('About'); } },
-                    { label: 'Contact', icon: 'pi pi-envelope', command: () => { alert('Contact'); } }
+                    { label: 'Home', icon: 'pi pi-home' },
+                    { label: 'Products', icon: 'pi pi-list' },
+                    { label: 'Settings', icon: 'pi pi-cog' }
                 ]);
-                const visible = ref(false);
-                const selectedProduct = ref(null);
-                const searchQuery = ref('');
+                 const dropdownOptions = ref([
+                    { label: 'Option 1', value: 1 },
+                    { label: 'Option 2', value: 2 },
+                    { label: 'Option 3', value: 3 }
+                ]);
+                const selectedOption = ref(null);
+                const inputValue = ref('');
+                const dialogVisible = ref(false);
 
-                const filteredProducts = Vue.computed(() => {
-                    if (!searchQuery.value) {
-                        return products.value;
-                    }
-                    const lowerSearch = searchQuery.value.toLowerCase();
-                    return products.value.filter(product => {
-                         return product.name.toLowerCase().includes(lowerSearch) ||
-                         product.description.toLowerCase().includes(lowerSearch)
-                    });
-                });
-                const openDialog = (product) => {
-                    selectedProduct.value = product;
-                    visible.value = true;
+						const toastService = primevue.useToast();
+
+                const productPrice = ref('99.99');
+                const productDescription = ref('This is a sample product description. It shows what a product card can look like. We have more data in the component than usual to have a visual better representation.');
+
+						const showMessage = () => {
+							 toastService.add({ severity: 'success', summary: 'Success Message', detail: 'This is a success message', life: 3000 });
+						};
+
+                const closeDialog = () => {
+                  dialogVisible.value = false;
                 };
-
-                 const closeDialog = () => {
-                    visible.value = false;
-                };
-
                 return {
-                    products,
                     menuItems,
-                    visible,
-                    openDialog,
-                    closeDialog,
-                    selectedProduct,
-                    searchQuery, 
-                    filteredProducts
+                    dropdownOptions,
+                    selectedOption,
+                    inputValue,
+									showMessage,
+                    productPrice,
+                    productDescription,
+                    dialogVisible,
+                    closeDialog
                 };
-            },
-            template: `
-                <div class="container">
-                    <Menu :model="menuItems" />
-                     <InputText v-model="searchQuery" placeholder="Search products..." style="margin: 20px 0;"/>
-                    <DataTable :value="filteredProducts"  responsiveLayout="scroll" >
-                        <Column field="image" header="Image" style="width: 10%;">
-                            <template #body="{data}">
-                                <img :src="data.image" alt="Product Image" style="max-width: 100px; max-height: 80px;" />
-                            </template>
-                        </Column>
-                        <Column field="name" header="Name" style="width: 20%;"></Column>
-                        <Column field="price" header="Price" style="width: 15%;">
-                          <template #body="{data}">
-                                ${{ data.price.toFixed(2) }}
-                           </template>
-                         </Column>
-                        <Column field="description" header="Description" style="width: 40%;"></Column>
-                         <Column style="width: 15%;">
-                          <template #body="{data}">
-                               <Button icon="pi pi-eye" label="View Details" @click="openDialog(data)" />
-                           </template>
-                         </Column>
-                    </DataTable>
-                     <Dialog v-model:visible="visible" header="Product Details" :style="{ width: '50vw' }" :modal="true" @close="closeDialog">
-                        <div v-if="selectedProduct">
-                            <img :src="selectedProduct.image" alt="Product Image" style="max-width: 100%; margin-bottom: 10px;" />
-                            <p><strong>Name:</strong> {{ selectedProduct.name }}</p>
-                            <p><strong>Price:</strong> ${{ selectedProduct.price.toFixed(2) }}</p>
-                            <p><strong>Description:</strong> {{ selectedProduct.description }}</p>
-                             <p><strong>Inventory:</strong> {{ selectedProduct.inventory }}</p>
-                        </div>
-                    </Dialog>
-                </div>
-            `
+            }
         });
 
-        app.use(PrimeVue);
+        app.use(primevue.PrimeVue);
+				app.use(primevue.ToastService);
+        app.component('p-button', primevue.Button);
+        app.component('p-menu', primevue.Menu);
+        app.component('p-dropdown', primevue.Dropdown);
+        app.component('p-inputtext', primevue.InputText);
+        app.component('p-card', primevue.Card);
+        app.component('p-dialog', primevue.Dialog);
+        app.component('p-toast', primevue.Toast);
+
         app.mount('#app');
     })();
     </script>
