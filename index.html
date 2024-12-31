@@ -3,19 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue App with PrimeVue</title>
+    <title>PrimeVue App</title>
     <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-green/theme.css" />
     <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
-    <link rel="stylesheet" href="https://unpkg.com/primeflex/primeflex.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.3.1/primeflex.min.css"/>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
-    <script src="https://unpkg.com/primevue/button/button.min.js"></script>
-    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
-    <script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script>
-     <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
-     <script src="https://unpkg.com/primevue/menubar/menubar.min.js"></script>
-     <script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
+    <script src="https://unpkg.com/primevue/primevue.min.js"></script>
     <script src="https://unpkg.com/@primevue/ripple/ripple.min.js"></script>
+    <script src="https://unpkg.com/@primevue/button/button.min.js"></script>
+    <script src="https://unpkg.com/@primevue/inputtext/inputtext.min.js"></script>
+    <script src="https://unpkg.com/@primevue/menu/menu.min.js"></script>
+    <script src="https://unpkg.com/@primevue/menubar/menubar.min.js"></script>
+    <script src="https://unpkg.com/@primevue/dropdown/dropdown.min.js"></script>
+    <script src="https://unpkg.com/@primevue/card/card.min.js"></script>
+    <script src="https://unpkg.com/@primevue/dialog/dialog.min.js"></script>
+    <script src="https://unpkg.com/@primevue/textarea/textarea.min.js"></script>
+    <script src="https://unpkg.com/@primevue/calendar/calendar.min.js"></script>
+    <script src="https://unpkg.com/@primevue/progressbar/progressbar.min.js"></script>
+    <script src="https://unpkg.com/@primevue/carousel/carousel.min.js"></script>
+    <script src="https://unpkg.com/@primevue/paginator/paginator.min.js"></script>
+    <script src="https://unpkg.com/@primevue/image/image.min.js"></script>
+    <script src="https://unpkg.com/@primevue/panel/panel.min.js"></script>
+    <script src="https://unpkg.com/@primevue/slider/slider.min.js"></script>
+
     <style>
         html, body, div, span, applet, object, iframe,
         h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -26,8 +36,8 @@
         dl, dt, dd, ol, ul, li,
         fieldset, form, label, legend,
         table, caption, tbody, tfoot, thead, tr, th, td,
-        article, aside, canvas, details, embed,
-        figure, figcaption, footer, header, hgroup,
+        article, aside, canvas, details, embed, 
+        figure, figcaption, footer, header, hgroup, 
         menu, nav, output, ruby, section, summary,
         time, mark, audio, video {
             margin: 0;
@@ -37,183 +47,225 @@
             font: inherit;
             vertical-align: baseline;
         }
-        article, aside, details, figcaption, figure,
-        footer, header, hgroup, menu, nav, section {
-            display: block;
-        }
-        body {
-            line-height: 1;
-        }
-        ol, ul {
-            list-style: none;
-        }
-        blockquote, q {
-            quotes: none;
-        }
+        article, aside, details, figcaption, figure, 
+        footer, header, hgroup, menu, nav, section {display: block;}
+        body {line-height: 1;}
+        ol, ul {list-style: none;}
+        blockquote, q {quotes: none;}
         blockquote:before, blockquote:after,
-        q:before, q:after {
-            content: '';
-            content: none;
-        }
-        table {
-            border-collapse: collapse;
-            border-spacing: 0;
+        q:before, q:after {content: '';content: none;}
+        table {border-collapse: collapse;border-spacing: 0;}
+
+        body { font-family: sans-serif; }
+
+        .p-button {
+            margin: 0.25rem;
         }
 
-         .p-button {
-            margin: 5px;
-        }
-        .p-inputtext{
-            margin: 5px;
-        }
+         .p-menuitem-icon {
+            margin-right: 0.5rem;
+         }
+
     </style>
+
 </head>
 <body>
-    <div id="app">    
-    <Menubar :model="menuItems"></Menubar>
-        <div class="p-d-flex p-jc-around p-ai-center">
-            <Button icon="pi pi-plus" label="Add Item" @click="showDialog"></Button>
-            <InputText type="text" v-model="searchQuery" placeholder="Search items" />
-        </div>
-        <Dialog header="Add New Item" v-model:visible="dialogVisible" :style="{ width: '50vw' }">
-            <div class="p-fluid">
-                <div class="p-field">
-                    <label for="name">Name</label>
-                    <InputText id="name" type="text" v-model="newItem.name" />
-                </div>
-                 <div class="p-field">
-                    <label for="category">Category</label>
-                    <Dropdown id="category" :options="categories" v-model="newItem.category" placeholder="Select a Category"/>
-                </div>
-                <div class="p-field">
-                    <label for="description">Description</label>
-                    <InputText id="description" type="text" v-model="newItem.description" />
-                </div>
-                 <div class="p-field">
-                    <label for="imageUrl">Image URL</label>
-                   <InputText id="imageUrl" type="text" v-model="newItem.imageUrl" />
-                </div>
-            </div>
-            <template #footer>
-                <Button label="Cancel" icon="pi pi-times" @click="dialogVisible = false" class="p-button-secondary" />
-                <Button label="Save" icon="pi pi-check" @click="addItem" />
-            </template>
-        </Dialog>
-        <div class="p-grid p-m-3">
-            <div v-for="(item, index) in filteredItems" :key="index" class="p-col-12 p-md-4">
-                <div class="p-shadow-3 p-p-3">
-                     <img :src="item.imageUrl" alt="Item Image" style="width: 100%; height: 200px; object-fit: cover;" />
-                    <h3 class="p-mt-3">{{ item.name }}</h3>
-                     <span class="p-d-block p-mb-2">Category: {{ item.category }}</span>
-                    <p>{{ item.description }}</p>
-                   <Button icon="pi pi-pencil" label="Edit" class="p-button-sm p-mt-2" @click="editItem(item)" />
-                    <Button icon="pi pi-trash" label="Delete" class="p-button-sm p-button-danger p-mt-2" @click="deleteItem(index)" />
-                 </div>
-            </div>
-        </div>
-    </div>
+    <div id="app"></div>
     <script>
-    (function(){
-        const { createApp, ref, computed } = Vue;
-        const { Button } = primevue.button;
-        const { InputText } = primevue.inputtext;
-        const { Dialog } = primevue.dialog;
-        const { Menu } = primevue.menu;
-        const { Menubar } = primevue.menubar;
-        const { Dropdown } = primevue.dropdown;
+        (function() {
+          const { createApp, ref } = Vue;
+          const { Button } = primevue.button;
+          const { InputText } = primevue.inputtext;
+          const { Menu } = primevue.menu;
+          const { Menubar } = primevue.menubar;
+          const { Dropdown } = primevue.dropdown;
+          const { Card } = primevue.card;
+          const { Dialog } = primevue.dialog;
+          const { Textarea } = primevue.textarea;
+          const { Calendar } = primevue.calendar;
+          const { ProgressBar } = primevue.progressbar;
+          const { Carousel } = primevue.carousel;
+          const { Paginator } = primevue.paginator;
+          const { Image } = primevue.image;
+          const { Panel } = primevue.panel;
+          const { Slider } = primevue.slider;
 
-        const app = createApp({
-            components: {
-                Button,
-                InputText,
-                Dialog,
-                Menu,
-                Menubar,
-                Dropdown
-             },
-            setup() {
-                const dialogVisible = ref(false);
-                const searchQuery = ref('');
-                const items = ref([
-                    { name: 'Awesome Granite Chair', category: 'Furniture', description: 'A very comfortable chair made of granite.', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                     { name: 'Incredible Cotton Gloves', category: 'Accessories', description: 'Gloves made of the softest cotton.', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                    { name: 'Practical Metal Pizza', category: 'Food', description: 'A pizza made of metal, perfect for display.', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                     { name: 'Rustic Wooden Car', category: 'Toys', description: 'A toy car made of beautiful rustic wood.', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                    { name: 'Sleek Rubber Keyboard', category: 'Electronics', description: 'A sleek keyboard made of durable rubber.', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                      { name: 'Handmade Plastic Shoes', category: 'Fashion', description: 'Stylish shoes made from recycled plastic.', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                    { name: 'Fantastic Fresh Salad', category: 'Food', description: 'A salad that tastes as good as it looks.', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                     { name: 'Ergonomic Soft Hat', category: 'Accessories', description: 'A hat that feels as good as it looks.', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                     { name: 'Intelligent Concrete Bacon', category: 'Food', description: 'Bacon made of concrete, a modern art piece.', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                     { name: 'Refined Soft Bike', category: 'Toys', description: 'A toy bike that is as soft as a pillow', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                     { name: 'Gorgeous Steel Headphones', category: 'Electronics', description: 'Headphones made of solid steel', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                    { name: 'Practical Metal Shirt', category: 'Fashion', description: 'A shirt made of metal, very durable', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                    { name: 'Tasty Fresh Chicken', category: 'Food', description: 'A delicious and fresh chicken.', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                     { name: 'Awesome Frozen Hat', category: 'Accessories', description: 'A frozen hat that will keep you cool.', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                     { name: 'Licensed Fresh Towels', category: 'Home', description: 'Very soft and absorbent towels', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                      { name: 'Unbranded Wooden Ball', category: 'Toys', description: 'A classic wooden ball', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                    { name: 'Handmade Cotton Watch', category: 'Electronics', description: 'A stylish watch made of cotton', imageUrl: 'https://placehold.co/600x400/EEE/31343C' },
-                    { name: 'Generic Plastic Pants', category: 'Fashion', description: 'Pants made of plastic, quite a unique design', imageUrl: 'https://placehold.co/600x400/EEE/31343C' }
-                ]);
-                const newItem = ref({ name: '', category: null, description: '', imageUrl: '' });
-                const categories = ref(['Furniture','Accessories', 'Food', 'Toys', 'Electronics', 'Fashion', 'Home']);
-                const menuItems = ref([
-                    {label: 'Home', icon: 'pi pi-home'},
-                    {label: 'New', icon: 'pi pi-plus' , command: () => showDialog() },
-                    {label: 'Settings', icon: 'pi pi-cog'},
-                ]);
+          const app = createApp({
+              components: {
+                  'Button': Button,
+                  'InputText': InputText,
+                  'Menu': Menu,
+                  'Menubar': Menubar,
+                  'Dropdown': Dropdown,
+                  'Card': Card,
+                  'Dialog': Dialog,
+                  'Textarea': Textarea,
+                  'Calendar': Calendar,
+                  'ProgressBar': ProgressBar,
+                  'Carousel': Carousel,
+                  'Paginator': Paginator,
+                  'Image': Image,
+                  'Panel': Panel,
+                  'Slider': Slider,
+              },
+              setup() {
+                const menuItems = [
+                  {label: 'Home', icon: 'pi pi-home', command: () => alert('Home') },
+                  {label: 'Products', icon: 'pi pi-shopping-cart', command: () => alert('Products')},
+                  {label: 'Services', icon: 'pi pi-cog', command: () => alert('Services') },
+                  {label: 'Contact', icon: 'pi pi-envelope', command: () => alert('Contact') },
+                ];
 
-                const filteredItems = computed(() => {
-                    if (!searchQuery.value) {
-                        return items.value;
+                const dropdownOptions = ref([
+                    { label: 'Option 1', value: 1 },
+                    { label: 'Option 2', value: 2 },
+                    { label: 'Option 3', value: 3 },
+                    { label: 'Option 4', value: 4 },
+                    { label: 'Option 5', value: 5 },
+                 ]);
+                 const selectedOption = ref(null);
+
+                 const dialogVisible = ref(false);
+                 const toggleDialog = () => { dialogVisible.value = !dialogVisible.value; };
+
+                 const textValue = ref('');
+
+                const dateValue = ref(null);
+                const progressValue = ref(20);
+
+                const carouselItems = ref([
+                  {
+                      src: 'https://placehold.co/600x400/EEE/31343C',
+                      alt: 'Image 1',
+                      title: 'Item 1'
+                  },
+                   {
+                      src: 'https://placehold.co/600x400/CCC/444',
+                      alt: 'Image 2',
+                      title: 'Item 2'
+                  },
+                  {
+                      src: 'https://placehold.co/600x400/AAA/555',
+                      alt: 'Image 3',
+                       title: 'Item 3'
+                  },
+                   {
+                      src: 'https://placehold.co/600x400/999/666',
+                      alt: 'Image 4',
+                      title: 'Item 4'
                     }
-                    return items.value.filter(item => {
-                        return Object.values(item).some(value =>
-                            String(value).toLowerCase().includes(searchQuery.value.toLowerCase())
-                        );
-                    });
-                });
+                  ,  {
+                      src: 'https://placehold.co/600x400/777/777',
+                      alt: 'Image 5',
+                      title: 'Item 5'
+                    }
+                 , {
+                      src: 'https://placehold.co/600x400/666/888',
+                      alt: 'Image 6',
+                      title: 'Item 6'
+                    }
 
-                const showDialog = () => {
-                    newItem.value = { name: '', category: null, description: '', imageUrl: '' };
-                    dialogVisible.value = true;
-                };
+                ]);
 
-                const addItem = () => {
-                     if (newItem.value.name && newItem.value.category && newItem.value.description && newItem.value.imageUrl) {
-                      items.value.push({ ...newItem.value });
-                      dialogVisible.value = false;
-                      newItem.value = { name: '', category: null, description: '', imageUrl: '' };
-                    } else {
-                        alert('Please fill all item fields');
-                   }
-                };
-                const editItem = (item) => {
-                   
-                    newItem.value = { ...item };
-                     dialogVisible.value = true;
-                   
-                };
+                const paginatorTotalRecords = ref(100);
+                const paginatorRows = ref(10);
+                const paginatorFirst = ref(0);
 
-               const deleteItem = (index) => {
-                    items.value.splice(index, 1);
-                };
+                const panelHeader = ref('Panel Header');
+                const panelContent = ref('This is panel content');
+                const sliderValue = ref(20);
+
+
+                  const updateProgress = () => {
+                    let current = progressValue.value;
+                      if(current >= 100) {
+                        current = 0;
+                      }
+                     progressValue.value = current + 10;
+                  }
+
+                  setInterval(updateProgress, 1000);
+
 
                 return {
-                    dialogVisible,
-                    searchQuery,
-                    items,
-                    filteredItems,
-                     newItem,
-                     categories,
-                    showDialog,
-                    addItem,
-                    editItem,
-                    deleteItem,
-                     menuItems
-                };
-            }
-        }).mount('#app');
-    })();
+                  menuItems,
+                  dropdownOptions,
+                  selectedOption,
+                  dialogVisible,
+                  toggleDialog,
+                  textValue,
+                  dateValue,
+                  progressValue,
+                  carouselItems,
+                  paginatorTotalRecords,
+                  paginatorRows,
+                  paginatorFirst,
+                  panelHeader, panelContent,
+                  sliderValue
+
+                }
+              },
+            template: `
+            <Menubar :model="menuItems" > </Menubar>
+              <div class="p-4">
+                 <div class="card">
+                  <div class="flex flex-wrap gap-2">
+                     <Button icon="pi pi-check" label="Click me" @click="() => alert('Button Clicked')" />
+                    <InputText type="text" placeholder="Enter text" v-model="textValue" />
+                  </div>
+                  </div>
+                </div>
+                  <div class="p-4">
+                      <Card title="Dropdown and Calendar">
+                       <div class="flex flex-wrap gap-2">
+                         <Dropdown  v-model="selectedOption" :options="dropdownOptions" optionLabel="label" placeholder="Select an Option" />
+                          <Calendar v-model="dateValue" placeholder="Select Date"></Calendar>
+                        </div>
+                      </Card>
+                   </div>
+                 <div class="p-4">
+                  <Card title="Dialog">
+                    <Button label="Show Dialog" icon="pi pi-external-link" @click="toggleDialog" />
+                     <Dialog v-model:visible="dialogVisible" header="Dialog Header" :modal="true" :style="{width: '50vw'}">
+                       <Textarea v-model="textValue" rows="5" cols="30" placeholder="Enter text here"></Textarea>
+                     </Dialog>
+                    </Card>
+                   </div>
+                  <div class="p-4">
+                   <Card title="Progress bar">
+                    <ProgressBar :value="progressValue"></ProgressBar>
+                   </Card>
+                  </div>
+                 <div class="p-4">
+                   <Card title="Carousel">
+                      <Carousel :value="carouselItems" :numVisible="3" :numScroll="1" :circular="true"  :style="{ maxWidth: '800px' }">
+                        <template #item="{ data }">
+                           <Image :src="data.src" :alt="data.alt" width="200" :preview="true" style="display:block; margin:auto;" />
+                         </template>
+                      </Carousel>
+                    </Card>
+                   </div>
+                  <div class="p-4">
+                      <Card title="Paginator">
+                        <Paginator :rows="paginatorRows" :totalRecords="paginatorTotalRecords" @page="$event => paginatorFirst = $event.first" :first="paginatorFirst" ></Paginator>
+                     </Card>
+                    </div>
+                    <div class="p-4">
+                      <Card :title="panelHeader" >
+                      {{panelContent}}
+                    </Card>
+                    </div>
+                     <div class="p-4">
+                      <Card title="Slider">
+                        <Slider v-model="sliderValue" :style="{width:'200px'}" />
+                        <p>Slider value: {{sliderValue}}</p>
+                      </Card>
+                   </div>
+           `
+          });
+          app.use(primevue.PrimeVue);
+          app.mount('#app');
+        })();
     </script>
 </body>
 </html>
