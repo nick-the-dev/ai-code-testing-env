@@ -1,1 +1,180 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PrimeVue App</title><link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-indigo/theme.css"/><link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css"/><script src="https://unpkg.com/vue@3/dist/vue.global.js"></script><script src="https://unpkg.com/primevue/primevue.min.js"></script><style>body,html{margin:0;padding:0;font-family:sans-serif;box-sizing:border-box}button{cursor:pointer;outline:none}ul{list-style:none;padding:0;margin:0}img{max-width:100%;height:auto}</style></head><body><div id="app">  <div class="card">    <h1>Products</h1>    <p>Explore our amazing products.</p>  <DataTable :value="products"  :loading="loading">  <Column field="image" header="Image" style="width:100px;text-align:center"><template #body="{data}"><img :src="data.image" alt="Product Image" style="max-width:100%;max-height:70px" /></template></Column>  <Column field="name" header="Name"></Column>   <Column field="description" header="Description"></Column>  <Column field="price" header="Price">  <template #body="{data}">${{ data.price.toFixed(2) }}</template></Column>  <Column field="category" header="Category"></Column> <Column header="Actions" style="width:100px;text-align:center">  <template #body="{data}">  <Button icon="pi pi-pencil"  class="p-button-rounded p-button-success p-button-sm" @click="editProduct(data)" style="margin-right:5px"/>  <Button icon="pi pi-trash"  class="p-button-rounded p-button-danger p-button-sm" @click="deleteProduct(data.id)"/>  </template>  </Column>  </DataTable>  <Dialog v-model:visible="dialogVisible" :header="editMode ? 'Edit Product' : 'Add Product'" :style="{ width: '50vw' }" :modal="true" >   <div style="display:flex;flex-direction:column;gap:10px">  <span class="p-float-label">  <InputText v-model="editedProduct.name" id="name" type="text"/>  <label for="name">Name</label></span>  <span class="p-float-label"><InputText v-model="editedProduct.description" id="description" type="text"/>  <label for="description">Description</label>  </span>  <span class="p-float-label"><InputNumber v-model="editedProduct.price" id="price" mode="decimal" :minFractionDigits="2" :maxFractionDigits="2"/>  <label for="price">Price</label></span>   <span class="p-float-label"><InputText v-model="editedProduct.category" id="category" type="text"/>  <label for="category">Category</label>  </span> <span class="p-float-label"><InputText v-model="editedProduct.image" id="image" type="text"/>  <label for="image">Image URL</label></span>   </div>   <template #footer>    <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog" />  <Button label="Save" icon="pi pi-check" class="p-button-text" @click="saveProduct" />  </template></Dialog> <Button label="Add Product" icon="pi pi-plus" class="p-button-raised p-button-primary" @click="showAddDialog" style="margin-top:10px"/>  </div></div><script>(() => { const { createApp, ref, onMounted } = Vue; const { useToast } = PrimeVue; const { DataTable } = primevue.datatable; const { Column } = primevue.column; const { Dialog } = primevue.dialog; const { Button } = primevue.button; const { InputText } = primevue.inputtext; const { InputNumber } = primevue.inputnumber; const app = createApp({  components: {  DataTable,  Column,  Dialog,  Button,   InputText,  InputNumber   }, data() {  return {  products: [],  loading: true,  dialogVisible: false,  editMode: false,  editedProduct: {  id: null,  name: '',  description: '',  price: 0,  category: '',  image: ''  },  toast: useToast() }; }, computed: {},  mounted() {  this.fetchProducts(); }, methods: {  async fetchProducts() {  this.loading = true;  this.products = this.generateMockProducts(20); this.loading = false; }, generateMockProducts(count) { const categories = ['Electronics', 'Books', 'Clothing', 'Home', 'Toys'];  const products = []; for (let i = 1; i <= count; i++) {  products.push({  id: i,  name: `Product ${i}`,  description: `This is a description for product ${i}.`,  price: Math.random() * 100 + 10,  category: categories[Math.floor(Math.random() * categories.length)],  image: `https://placehold.co/300x200/EEE/31343C?text=Product+${i}`  }); }  return products; },  showAddDialog() {  this.editMode = false;  this.editedProduct = {  id: null,  name: '',  description: '',  price: 0,  category: '',  image: ''  };  this.dialogVisible = true;  }, editProduct(product) { this.editMode = true;  this.editedProduct = { ...product };  this.dialogVisible = true; }, hideDialog() {  this.dialogVisible = false; },  saveProduct() {  if (this.editMode) {  const index = this.products.findIndex((p) => p.id === this.editedProduct.id);  if (index !== -1) {  this.products.splice(index, 1, this.editedProduct);  this.showToast({ severity: 'success', summary: 'Success', detail: 'Product Updated' }) }  } else {  this.editedProduct.id = this.products.length + 1;  this.products.push({ ...this.editedProduct });  this.showToast({ severity: 'success', summary: 'Success', detail: 'Product Added' }) }  this.dialogVisible = false; }, deleteProduct(id) { this.products = this.products.filter((p) => p.id !== id);  this.showToast({ severity: 'warn', summary: 'Deleted', detail: 'Product Deleted' }) }, showToast(props) { this.toast.add(props)  }  } }); app.use(PrimeVue); app.mount('#app'); })();</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimeVue Application</title>
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-blue/theme.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.3.1/primeflex.min.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/primevue/primevue.min.js"></script>
+    <style>
+        html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+        article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+        body {
+            line-height: 1;
+        }
+        ol, ul {
+            list-style: none;
+        }
+        blockquote, q {
+            quotes: none;
+        }
+        blockquote:before, blockquote:after, q:before, q:after {
+            content: '';
+            content: none;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        .p-button {
+          margin: 4px;
+        }
+        .custom-menu {
+           border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">   
+        <div class="card">
+            <h1>PrimeVue Demo Application</h1>
+              <p>Welcome to our demo application built with Vue.js and PrimeVue components.</p>
+
+            <div class="flex flex-wrap gap-2">
+                <Button icon="pi pi-plus" label="Add" @click="addItem"></Button>
+                <Button icon="pi pi-refresh" label="Refresh" @click="refreshItems"></Button>
+                <Button icon="pi pi-download" label="Download" @click="downloadItems"></Button>
+              <Button icon="pi pi-trash" label="Remove All" @click="removeAllItems"></Button>
+            </div>
+         <br/>
+
+
+            <DataTable :value="items" stripedRows responsiveLayout="scroll">
+              <Column field="id" header="ID"></Column>
+              <Column field="name" header="Name"></Column>
+              <Column field="description" header="Description"></Column>
+              <Column field="image" header="Image">
+                  <template #body="slotProps">
+                    <img :src="slotProps.data.image" alt="Item Image" width="100" />
+                  </template>
+              </Column>
+           </DataTable>
+        
+           <Menu model="menuItems" class="custom-menu" />
+
+        </div>
+    </div>
+    <script>
+      (function(){
+        const { createApp, ref } = Vue;
+        const { Button } = primevue.button;
+        const { DataTable } = primevue.datatable;
+        const { Column } = primevue.column;
+        const { Menu } = primevue.menu;
+
+        const app = createApp({
+            components: {
+                Button,
+                DataTable,
+                Column,
+                Menu
+            },
+            setup() {
+                const items = ref([{
+                    id: 1,
+                    name: 'Product 1',
+                    description: 'Description of Product 1', image: 'https://placehold.co/600x400/EEE/31343C'
+                }, {
+                    id: 2,
+                    name: 'Product 2',
+                    description: 'Description of Product 2', image: 'https://placehold.co/600x400/CCC/31343C'
+                }, {
+                    id: 3,
+                    name: 'Product 3',
+                    description: 'Description of Product 3', image: 'https://placehold.co/600x400/AAA/31343C'
+                }, {
+                    id: 4,
+                    name: 'Product 4',
+                    description: 'Description of Product 4', image: 'https://placehold.co/600x400/DDD/31343C'
+                }, {
+                  id: 5,
+                  name: 'Product 5',
+                  description: 'Description of Product 5', image: 'https://placehold.co/600x400/BBB/31343C'
+              }, {
+                  id: 6,
+                  name: 'Product 6',
+                  description: 'Description of Product 6', image: 'https://placehold.co/600x400/EEE/31343C'
+              },{
+                  id: 7,
+                  name: 'Product 7',
+                  description: 'Description of Product 7', image: 'https://placehold.co/600x400/CCC/31343C'
+              }, {
+                id: 8,
+                  name: 'Product 8',
+                  description: 'Description of Product 8', image: 'https://placehold.co/600x400/AAA/31343C'
+              }, {
+                  id: 9,
+                  name: 'Product 9',
+                  description: 'Description of Product 9', image: 'https://placehold.co/600x400/DDD/31343C'
+              }, {
+                id: 10,
+                name: 'Product 10',
+                description: 'Description of Product 10', image: 'https://placehold.co/600x400/BBB/31343C'
+            }]);
+
+                const menuItems = ref([
+                    {label: 'Options', icon: 'pi pi-cog',
+                        items: [
+                            {label: 'Save', icon: 'pi pi-save', command: () => {alert('Data saved');} },
+                            {label: 'Edit', icon: 'pi pi-pencil', command: () => {alert('Edit mode');} },
+                            {label: 'Settings', icon: 'pi pi-cog', command: () => {alert('Settings dialog');} }
+                         ]
+                    },
+                    {label: 'Navigation', icon: 'pi pi-compass',
+                        items: [
+                            {label: 'Home', icon: 'pi pi-home', command: () => {alert('Navigated to Home');} },
+                            {label: 'Dashboard', icon: 'pi pi-th-large', command: () => {alert('Navigated to Dashboard');} }
+                        ]},
+                    {label: 'Help', icon: 'pi pi-question', command: () => {alert('Help dialog');} }
+                    ]);
+
+                const addItem = () => {
+                    items.value.push({
+                        id: items.value.length + 1,
+                        name: 'New Product',
+                        description: 'Description of New Product',
+                        image: 'https://placehold.co/600x400/EEE/31343C'
+                    });
+                };
+                const refreshItems = () => {
+                    items.value = items.value.map(item => ({ ...item, image: `https://placehold.co/600x400/${Math.random().toString(16).slice(2,5).toUpperCase()}/31343C` }));
+                };
+               const downloadItems = () => {
+                   alert('Downloading data...');
+               };
+              const removeAllItems = () => {
+                items.value = [];
+              };
+
+                return { items, menuItems, addItem, refreshItems, downloadItems, removeAllItems };
+            }
+        });
+
+        app.use(primevue.config.default);
+        app.mount('#app');
+      })();
+    </script>
+</body>
+</html>
