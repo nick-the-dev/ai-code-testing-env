@@ -9,434 +9,396 @@
     <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
     <script src="https://unpkg.com/primevue/umd/menu.min.js"></script>
     <script src="https://unpkg.com/primevue/umd/sidebar.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/button.min.js"></script>
     <script src="https://unpkg.com/primevue/umd/badge.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/avatar.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/button.min.js"></script>
     <script src="https://unpkg.com/primevue/umd/inputtext.min.js"></script>
     <script src="https://unpkg.com/primevue/umd/chart.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/card.min.js"></script>
     <script src="https://unpkg.com/primevue/umd/listbox.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/avatar.min.js"></script>
     <script src="https://unpkg.com/primevue/umd/progressspinner.min.js"></script>
-        <script src="https://unpkg.com/primevue/umd/dropdown.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/tooltip.min.js"></script>
-        <script src="https://unpkg.com/@primevue/core/umd/core.min.js"></script>
+    <script src="https://unpkg.com/@primevue/core/umd/core.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body, html {
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
             margin: 0;
             padding: 0;
-            font-family: sans-serif;
-            background-color: #f4f6f8;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+            box-sizing: border-box;
+        }
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+        body {
+            line-height: 1;
+        }
+        ol, ul {
+            list-style: none;
+        }
+        blockquote, q {
+            quotes: none;
+        }
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
             color: #333;
         }
         #app {
             display: flex;
-            min-height: 100vh;
+            height: 100vh;
         }
-        .layout-sidebar {
-            background-color: #fff;
+        .sidebar {
             width: 250px;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            background-color: #fff;
+            border-right: 1px solid #ddd;
+            padding: 20px 0;
             display: flex;
             flex-direction: column;
         }
-        .layout-main {
-            flex: 1;
+        .sidebar-menu {
+            flex-grow: 1;
+        }
+        .sidebar-menu ul {
+             padding: 0; margin: 0; 
+        }
+        .sidebar-menu li {
+           padding: 0; margin: 0; 
+        }
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            transition: background-color 0.2s ease;
+        }
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+             background-color: #e9ecef; color: #007bff; 
+        }
+         .sidebar-menu a .pi {
+            margin-right: 10px; 
+        }
+        .contact-us-button {
+            padding: 10px 20px; margin: 20px; 
+        }
+        .main-content {
+            flex-grow: 1;
             padding: 20px;
         }
-        .topbar {
-             display: flex;
+        .dashboard-header {
+            display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            padding-bottom: 10px;
-             border-bottom: 1px solid #e1e1e1;
-
         }
-         .topbar .right-elements {
-                display: flex;
-                align-items: center;
-                gap: 15px;
-            }
-        .menu-item.active {
-             background-color: #e9ecef;
-             color: #0d6efd;
+        .user-profile {
+            display: flex;
+            align-items: center;
         }
-        .menu-list {
-                list-style: none;
-                padding: 0;
-                margin-bottom: 20px;
+        .user-profile .p-avatar {
+            margin-right: 10px;
         }
-            .menu-list li {
-                margin-bottom: 10px;
-                border-radius: 4px;
-                padding: 8px 12px;
-                cursor: pointer;
-            }
-         .menu-list li:hover {
-               background-color: #f8f9fa;
+        .notification-icon {
+           position: relative; cursor: pointer; margin-right: 10px; 
+        }
+        .notification-icon .p-badge {
+            position: absolute; top: -5px; right: -5px; 
+        }
+        .widgets-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
         .widget {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-         .widget-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
+        .widget h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
         }
-         .widget-content {
-                padding-top: 10px;
-            }
-         .widget-title {
-            font-size: 1.2em;
-            font-weight: 600;
-            margin: 0 0 10px 0;
+        .widget-header {
+           display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; 
         }
-          .widget-stats {
-                font-size: 2em;
-                 margin: 5px 0;
-            }
-         .widget-stats .change-indicator {
-                font-size: 0.8em;
-                margin-left: 8px;
-                 font-weight: 500;
-                padding: 2px 6px;
-                border-radius: 4px;
-            }
-            .change-indicator.positive {
-                    background-color: #d1fadf;
-                    color: #28a745;
-            }
-              .change-indicator.negative {
-                    background-color: #ffdada;
-                    color: #dc3545;
-             }
-          .balances-container {
-            display: flex;
-            gap: 20px;
+        .widget-value {
+            font-size: 2rem; font-weight: 500; margin-bottom: 5px;
         }
-
-        .balance-item {
-            text-align: center;
+        .widget-percentage {
+           color: #28a745; font-size: 0.9rem; 
         }
-        .balance-amount {
-                 font-size: 1.5em;
-            }
-        .product-list {
-            list-style: none;
-            padding: 0;
+        .widget-percentage.negative {
+            color: #dc3545;
         }
-        .product-item {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-             border-bottom: 1px solid #eee;
-             cursor: pointer;
+         .widget-list ul li {
+            display: flex; align-items: center; padding: 5px 0; cursor: pointer;
         }
-        .product-item:hover {
-                background-color: #f8f9fa;
+         .widget-list ul li .p-avatar {
+            margin-right: 10px; 
         }
-           .product-item .product-icon {
-                margin-right: 10px;
-                font-size: 1.5em;
-            }
-        .product-item .product-details {
-            flex: 1;
+        .widget-list ul li:hover {
+           background-color: #f8f9fa; 
         }
-
-        .product-item .product-category {
-                font-size: 0.8em;
-                color: #999;
-           }
-           .product-item .product-name {
-                font-weight: 500;
-            }
-        .dashboard-container {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 20px;
-            }
-        .upload-button-container {
-            display: flex;
-                justify-content: flex-end;
-            margin-bottom: 20px;
+        .widget-graph {
+             margin-top: 10px; width: 100%; 
         }
-        .responsive-chart {
-                width: 100%;
-                max-width: 100%;
-                height: auto;
-            }
-            .search-container {
-                    display: flex;
-                    align-items: center;
-                    background-color: #f8f9fa;
-                    padding: 5px 10px;
-                    border-radius: 4px;
-                  }
-                .search-container input {
-                   border: none;
-                   background: none;
-                    outline: none;
-                   padding: 5px;
-                }
-          @media (max-width: 768px) {
-               #app {
-                    flex-direction: column;
-                }
-                .layout-sidebar {
-                    width: 100%;
-                    margin-bottom: 20px;
-                }
-                 .dashboard-container {
-                            grid-template-columns: 1fr;
-                 }
-            }
+        .balances-container {
+           display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; 
+        }
+        .balances-container .balance-item {
+             text-align: center; margin-right: 20px; 
+        }
+        .balances-container .balance-item strong {
+            font-size: 1.5rem;
+        }
+        .balances-container .balance-item:last-child { margin-right: 0; }
+         .upload-product-button {
+            margin-right: 10px;
+        }
+        .search-bar {
+           width: 200px; margin-right: 10px; 
+        }
+        .p-button {
+             margin-right: 5px; 
+        }
+        @media (max-width: 768px) {
+             .sidebar { width: 100%; position: fixed; height: 100%; z-index: 100; transform: translateX(-100%); transition: transform 0.3s ease-in-out; }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { padding-top: 80px;}
+            .menu-button { display: block; position: fixed; top: 10px; left: 10px; z-index: 101; }
+            .dashboard-header { flex-direction: column; align-items: flex-start; }
+            .user-profile { margin-bottom: 10px; }
+            .search-bar { margin-top: 10px; width: 100%; }
+            .widgets-container { grid-template-columns: 1fr; }
+        }
+         .menu-button { display: none; }
     </style>
 </head>
 <body>
-<div id="app">
-    <div class="layout-sidebar">
-          <div style="margin-bottom: 30px; text-align: center;">
-            <p-avatar image="https://placehold.co/200x200/EEE/31343C" shape="circle" size="xlarge" style="margin-bottom: 10px;"></p-avatar>
-            <p style="font-size: 1.2em; font-weight: bold;">Lucy Lure</p>
-          </div>
-        <ul class="menu-list">
-            <li class="menu-item active"><i class="pi pi-home" style="margin-right: 8px;"></i>Overview</li>
-            <li class="menu-item"><i class="pi pi-box" style="margin-right: 8px;"></i>Products</li>
-            <li class="menu-item"><i class="pi pi-megaphone" style="margin-right: 8px;"></i>Campaigns</li>
-            <li class="menu-item"><i class="pi pi-calendar" style="margin-right: 8px;"></i>Schedules</li>
-            <li class="menu-item"><i class="pi pi-money-bill" style="margin-right: 8px;"></i>Payouts</li>
-            <li class="menu-item"><i class="pi pi-file" style="margin-right: 8px;"></i>Statements</li>
-           <li class="menu-item"><i class="pi pi-cog" style="margin-right: 8px;"></i>Settings</li>
-        </ul>
-          <p-button icon="pi pi-envelope" label="Contact Us" style="margin-top: auto;"></p-button>
-
-    </div>
-    <div class="layout-main">
-        <div class="topbar">
-            <div class="search-container">
-             <i class="pi pi-search"></i>
-                 <input type="text" placeholder="Search...">
-            </div>
-            <div class="right-elements">
-                <p-badge value="3" severity="danger"></p-badge>
-                <p-avatar icon="pi pi-bell" shape="circle" style="background-color: #e9ecef; color: #495057; "></p-avatar>
-            </div>
+    <div id="app">
+        <div class="menu-button" @click="toggleSidebar">
+             <p-button icon="pi pi-bars"  />
         </div>
-         <div class="upload-button-container">
-                 <p-button icon="pi pi-upload" label="Upload Product"></p-button>
-         </div>
-        <div class="dashboard-container">
-        <div class="widget">
-                <div class="widget-header">
-                    <h2 class="widget-title">Referral Program</h2>
+        <div class="sidebar" :class="{'active': isSidebarActive}">
+            <div class="sidebar-menu">
+                <ul>
+                    <li><a href="#" :class="{ 'active': activePage === 'overview' }" @click.prevent="setActivePage('overview')"><i class="pi pi-home"></i>Overview</a></li>
+                    <li><a href="#" :class="{ 'active': activePage === 'products' }" @click.prevent="setActivePage('products')"><i class="pi pi-box"></i>Products</a></li>
+                    <li><a href="#" :class="{ 'active': activePage === 'campaigns' }" @click.prevent="setActivePage('campaigns')"><i class="pi pi-megaphone"></i>Campaigns</a></li>
+                    <li><a href="#" :class="{ 'active': activePage === 'schedules' }" @click.prevent="setActivePage('schedules')"><i class="pi pi-calendar"></i>Schedules</a></li>
+                    <li><a href="#" :class="{ 'active': activePage === 'payouts' }" @click.prevent="setActivePage('payouts')"><i class="pi pi-credit-card"></i>Payouts</a></li>
+                    <li><a href="#" :class="{ 'active': activePage === 'statements' }" @click.prevent="setActivePage('statements')"><i class="pi pi-file"></i>Statements</a></li>
+                    <li><a href="#" :class="{ 'active': activePage === 'settings' }" @click.prevent="setActivePage('settings')"><i class="pi pi-cog"></i>Settings</a></li>
+                </ul>
+            </div>
+               <p-button label="Contact Us" icon="pi pi-phone" class="contact-us-button" />
+        </div>
+        <div class="main-content">
+            <div class="dashboard-header">
+                <div class="user-profile">
+                      <p-avatar image="https://placehold.co/600x400/EEE/31343C" shape="circle" size="large" />
+                    <div>Lucy Lure</div>
                 </div>
-                <div class="widget-content">
+                <div class="actions">
+                    <span class="notification-icon">
+                        <i class="pi pi-bell" style="font-size: 1.5rem;"></i>
+                         <p-badge value="3" severity="danger" />
+                    </span>
+                     <p-button icon="pi pi-upload" label="Upload Product" class="upload-product-button" />
+                    <span class="search-bar">
+                         <p-inputtext  placeholder="Search..." />
+                    </span>
+                </div>
+            </div>
+            <div class="widgets-container">
+                <div class="widget">
+                   <div class="widget-header">
+                        <h3>Referral Program</h3>
+                    </div>
                     <p>Want some EXTRA Money?</p>
-                    <p-button label="Referral Program" style="margin-top: 10px"></p-button>
-                </div>
-            </div>
-            <div class="widget">
-                <div class="widget-header">
-                    <h2 class="widget-title">Total Products</h2>
-                </div>
-                <div class="widget-content">
-                    <div class="widget-stats">1,134 Items<span class="change-indicator positive">+10% this week</span></div>
-                      <canvas id="productsChart" class="responsive-chart"></canvas>
-                </div>
-            </div>
-             <div class="widget">
-                    <div class="widget-header">
-                        <h2 class="widget-title">Total Earnings</h2>
-                    </div>
-                    <div class="widget-content">
-                        <div class="widget-stats">$4,231<span class="change-indicator negative">-22% this week</span></div>
-                       <canvas id="earningsChart" class="responsive-chart"></canvas>
-                    </div>
+                    <p-button label="Referral Program" />
                 </div>
                 <div class="widget">
-                    <div class="widget-header">
-                         <h2 class="widget-title">Latest Downloads</h2>
-                    </div>
-                    <div class="widget-content">
-                    <canvas id="downloadsChart" class="responsive-chart"></canvas>
+                     <div class="widget-header">
+                         <h3>Total Products</h3>
+                         <span class="widget-percentage">+10% this week</span>
+                     </div>
+                    <div class="widget-value">{{ totalProducts }} Items</div>
+                     <div class="widget-graph">
+                         <p-chart type="line" :data="productChartData" :options="chartOptions" />
+                     </div>
+                </div>
+                <div class="widget">
+                     <div class="widget-header">
+                         <h3>Total Earnings</h3>
+                         <span :class="{'widget-percentage negative': earningsPercentage < 0, 'widget-percentage': earningsPercentage >= 0}">{{earningsPercentage}}% this week</span>
+                     </div>
+                    <div class="widget-value">${{ totalEarnings }}</div>
+                    <div class="widget-graph">
+                        <p-chart type="line" :data="earningChartData" :options="chartOptions" />
                     </div>
                 </div>
                  <div class="widget">
-                <div class="widget-header">
-                    <h2 class="widget-title">Balances</h2>
+                      <div class="widget-header">
+                        <h3>Latest Downloads</h3>
+                    </div>
+                     <div class="widget-graph">
+                         <p-chart type="bar" :data="downloadChartData" :options="chartOptions" />
+                     </div>
                 </div>
-                <div class="widget-content">
+                <div class="widget">
+                     <h3>Balances</h3>
                     <div class="balances-container">
-                        <div class="balance-item">
-                            <div style="font-weight: 500; margin-bottom: 5px;">Available</div>
-                            <div class="balance-amount">$537</div>
+                         <div class="balance-item">
+                            <small>Available</small>
+                             <strong>${{ availableBalance }}</strong>
                         </div>
-                        <div class="balance-item">
-                            <div style="font-weight: 500; margin-bottom: 5px;">Pending</div>
-                            <div class="balance-amount">$234</div>
+                         <div class="balance-item">
+                            <small>Pending</small>
+                             <strong>${{ pendingBalance }}</strong>
                         </div>
                     </div>
-                    <p-button label="Withdraw Money" style="margin-top: 15px;"></p-button>
+                   <p-button label="Withdraw Money" />
+                </div>
+                <div class="widget">
+                      <h3>Top Products</h3>
+                       <div class="widget-list">
+                           <ul >
+                               <li v-for="product in topProducts" :key="product.id">
+                                    <p-avatar :image="product.icon" shape="circle" size="small" />
+                                   <div>
+                                        <div>{{ product.name }}</div>
+                                        <small>{{ product.category }}</small>
+                                   </div>
+                               </li>
+                           </ul>
+                      </div>
                 </div>
             </div>
-                  <div class="widget">
-                   <div class="widget-header">
-                        <h2 class="widget-title">Top Products</h2>
-                    </div>
-                   <div class="widget-content">
-                    <ul class="product-list">
-                        <li class="product-item">
-                                <i class="pi pi-shopping-cart product-icon"></i>
-                                <div class="product-details">
-                                  <div class="product-name">Product A</div>
-                                    <div class="product-category">Category X</div>
-                                </div>
-                            </li>
-                        <li class="product-item">
-                                <i class="pi pi-shopping-cart product-icon"></i>
-                            <div class="product-details">
-                                    <div class="product-name">Product B</div>
-                                  <div class="product-category">Category Y</div>
-                                </div>
-                            </li>
-                        <li class="product-item">
-                            <i class="pi pi-shopping-cart product-icon"></i>
-                            <div class="product-details">
-                                 <div class="product-name">Product C</div>
-                                    <div class="product-category">Category Z</div>
-                                </div>
-                            </li>
-                             <li class="product-item">
-                            <i class="pi pi-shopping-cart product-icon"></i>
-                            <div class="product-details">
-                                 <div class="product-name">Product D</div>
-                                    <div class="product-category">Category X</div>
-                                </div>
-                            </li>
-                        </ul>
-                   </div>
-               </div>
         </div>
     </div>
-</div>
-<script>
- const { createApp, ref, onMounted } = Vue;
+    <script>
+        const { createApp, ref, onMounted, computed } = Vue;
+        const app = createApp({
+            setup() {
+                const isSidebarActive = ref(false);
+                const activePage = ref('overview');
+                const totalProducts = ref(1134);
+                const totalEarnings = ref(4231);
+                const earningsPercentage = ref(-22);
+                const availableBalance = ref(537);
+                const pendingBalance = ref(234);
 
-  const app = createApp({
-        setup() {
-            const productsChartData = ref({
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                datasets: [
-                    {
+                const toggleSidebar = () => { isSidebarActive.value = !isSidebarActive.value };
+                const setActivePage = (page) => { activePage.value = page; if (window.innerWidth <= 768) { isSidebarActive.value = false } };
+
+                const productChartData = ref({
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
                         label: 'Products', data: [65, 59, 80, 81, 56, 55, 40],
-                        borderColor: '#42A5F5', backgroundColor: '#42A5F5',
-                        fill: false,
-                    }
-                ],
-            });
-
-              const earningsChartData = ref({
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                datasets: [
-                    {
-                        label: 'Earnings', data: [40, 50, 60, 45, 55, 65, 70],
-                        borderColor: '#66BB6A', backgroundColor: '#66BB6A',
-                        fill: false
-                    }
-                ],
-            });
-               const downloadsChartData = ref({
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                datasets: [
-                    {
+                        fill: false, borderColor: '#42A5F5', tension: 0.4
+                    }]
+                });
+                 const earningChartData = ref({
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Earnings', data: [200, 150, 300, 250, 220, 180, 350],
+                        fill: false, borderColor: '#66BB6A', tension: 0.4
+                    }]
+                });
+                 const downloadChartData = ref({
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
                         label: 'Downloads', data: [100, 120, 150, 359, 200, 180, 220],
-                        borderColor: '#FFA726', backgroundColor: '#FFA726', fill: false,
-                        pointRadius: 5,
-                         pointBackgroundColor: (context) => {
-                             if(context.dataIndex === 3) return '#FFA726';
-                             return 'transparent';
-                         },
-                        pointBorderColor: (context) => {
-                             if(context.dataIndex === 3) return '#FFA726';
-                             return 'transparent';
-                         }
-                    }
-                ],
-            });
-               const chartOptions = ref({
-                    responsive: true,
+                        backgroundColor: '#FFA726',  borderColor: '#FFA726'
+                    }]
+                 });
+
+
+                 const topProducts = ref([
+                    { id: 1, name: 'Product A', category: 'Category X', icon: 'https://placehold.co/600x400/007bff/ffffff' },
+                    { id: 2, name: 'Product B', category: 'Category Y', icon: 'https://placehold.co/600x400/28a745/ffffff' },
+                    { id: 3, name: 'Product C', category: 'Category Z', icon: 'https://placehold.co/600x400/dc3545/ffffff' },
+                    { id: 4, name: 'Product D', category: 'Category X', icon: 'https://placehold.co/600x400/ffc107/000000' },
+                     { id: 5, name: 'Product E', category: 'Category Y', icon: 'https://placehold.co/600x400/17a2b8/ffffff'},
+                      { id: 6, name: 'Product F', category: 'Category Z', icon: 'https://placehold.co/600x400/007bff/ffffff'},
+                      { id: 7, name: 'Product G', category: 'Category X', icon: 'https://placehold.co/600x400/28a745/ffffff' },
+                      { id: 8, name: 'Product H', category: 'Category Y', icon: 'https://placehold.co/600x400/dc3545/ffffff' },
+                      { id: 9, name: 'Product I', category: 'Category Z', icon: 'https://placehold.co/600x400/ffc107/000000' },
+                      { id: 10, name: 'Product J', category: 'Category X', icon: 'https://placehold.co/600x400/17a2b8/ffffff' },
+
+                ]);
+
+
+                const chartOptions = ref({
+                     responsive: true,
                     maintainAspectRatio: false,
                      scales: {
-                            x: {
-                                grid: {
-                                    display: false,
-                                },
-                            },
-                            y: {
-                                grid: {
-                                   display: false,
-                                },
-                            },
-                     },
-                        plugins: {
-                                legend: {
-                                    display: false,
-                                }
-                            }
-               });
-           const menuItems = ref([
-            { label: 'Overview', icon: 'pi pi-home', active: true },
-            { label: 'Products', icon: 'pi pi-box' },
-            { label: 'Campaigns', icon: 'pi pi-megaphone' },
-            { label: 'Schedules', icon: 'pi pi-calendar' },
-            { label: 'Payouts', icon: 'pi pi-money-bill' },
-            { label: 'Statements', icon: 'pi pi-file' },
-            { label: 'Settings', icon: 'pi pi-cog' }
-        ]);
-         const toggleMenu = () => {
-                menuVisible.value = !menuVisible.value;
-            };
-            return {menuVisible, toggleMenu, productsChartData, earningsChartData, downloadsChartData, chartOptions, menuItems};
-        },
-    });
-    app.use(PrimeVue.Config, { theme: { preset: PrimeVue.Themes.Aura, options: { darkModeSelector: false || 'none', }, }, });
- app.component('p-menu', PrimeVue.Menu);
- app.component('p-sidebar', PrimeVue.Sidebar);
- app.component('p-button', PrimeVue.Button);
-    app.component('p-badge', PrimeVue.Badge);
-     app.component('p-avatar', PrimeVue.Avatar);
-  app.component('p-inputtext', PrimeVue.InputText);
-   app.component('p-chart', PrimeVue.Chart);
-    app.component('p-listbox', PrimeVue.Listbox);
-     app.component('p-progressspinner', PrimeVue.ProgressSpinner);
-  app.component('p-dropdown', PrimeVue.Dropdown);
-   app.component('p-tooltip', PrimeVue.Tooltip);
-    app.mount('#app');
-(function(){
-const ctxProducts = document.getElementById('productsChart').getContext('2d');
-const productsChart = new Chart(ctxProducts, {
-    type: 'line',
-    data: app._instance.setupState.productsChartData,
-      options: app._instance.setupState.chartOptions
-});
-const ctxEarnings = document.getElementById('earningsChart').getContext('2d');
-const earningsChart = new Chart(ctxEarnings, {
-    type: 'line',
-    data: app._instance.setupState.earningsChartData,
-     options: app._instance.setupState.chartOptions
-});
-const ctxDownloads = document.getElementById('downloadsChart').getContext('2d');
-const downloadsChart = new Chart(ctxDownloads, {
-    type: 'line',
-    data: app._instance.setupState.downloadsChartData,
-     options: app._instance.setupState.chartOptions
-});
-})();
-</script>
+                         y: {
+                             beginAtZero: true
+                         }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                });
+
+                return {
+                    isSidebarActive,
+                    activePage,
+                    totalProducts,
+                    totalEarnings,
+                    earningsPercentage,
+                    availableBalance,
+                    pendingBalance,
+                    productChartData,
+                    earningChartData,
+                    downloadChartData,
+                    topProducts,
+                    chartOptions,
+                    toggleSidebar,
+                    setActivePage,
+                };
+            },
+        });
+        app.use(PrimeVue.Config, { theme: { preset: PrimeVue.Themes.Aura, options: { darkModeSelector: false || 'none', }, }, });
+        app.component('p-menu', PrimeVue.Menu);
+        app.component('p-sidebar', PrimeVue.Sidebar);
+        app.component('p-badge', PrimeVue.Badge);
+        app.component('p-button', PrimeVue.Button);
+        app.component('p-inputtext', PrimeVue.InputText);
+        app.component('p-chart', PrimeVue.Chart);
+         app.component('p-card', PrimeVue.Card);
+         app.component('p-listbox', PrimeVue.Listbox);
+          app.component('p-avatar', PrimeVue.Avatar);
+          app.component('p-progressspinner', PrimeVue.ProgressSpinner);
+        app.mount('#app');
+    </script>
 </body>
 </html>
