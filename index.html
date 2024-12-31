@@ -3,12 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue App with PrimeVue</title>
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-indigo/theme.css" />
-    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
+    <title>PrimeVue App</title>
+    <link rel="stylesheet" href="https://unpkg.com/@primevue/themes/aura/theme.css" />
     <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
     <style>
-        html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+        /* reset.css-like styles */
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup, 
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
             margin: 0;
             padding: 0;
             border: 0;
@@ -16,7 +29,9 @@
             font: inherit;
             vertical-align: baseline;
         }
-        article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+        /* HTML5 display-role reset for older browsers */
+        article, aside, details, figcaption, figure, 
+        footer, header, hgroup, menu, nav, section {
             display: block;
         }
         body {
@@ -37,120 +52,92 @@
             border-collapse: collapse;
             border-spacing: 0;
         }
-        *, *::before, *::after {
-          box-sizing: border-box;
+        /* end reset */
+        body {
+            font-family: sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        #app {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
     </style>
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <div id="app">
+            <p>PrimeVue App with mock data</p>
+            <p>Use icon on buttons!</p>
+            <div style="margin-bottom: 20px;">
+                <Button label="Add New Item" icon="pi pi-plus" @click="addItem" style="margin-right:10px"></Button>
+                <Button label="Delete Item" icon="pi pi-trash" @click="deleteItem"></Button>
+            </div>
+
+            <DataTable :value="items">
+                <Column field="id" header="ID"></Column>
+                <Column field="name" header="Name"></Column>
+                <Column field="description" header="Description"></Column>
+                <Column header="Image">
+                    <template #body="{ data }">
+                       <img :src="data.image" alt="item image" style="width:100px; height: auto;" />
+                    </template>
+                </Column>
+            </DataTable>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/primevue/core/core.min.js"></script>
-    <script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
     <script src="https://unpkg.com/primevue/button/button.min.js"></script>
-    <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
-    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
-    <script src="https://unpkg.com/primevue/card/card.min.js"></script>
-    <script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script>
-    <script src="https://unpkg.com/primevue/textarea/textarea.min.js"></script>
-    <script src="https://unpkg.com/primevue/progressbar/progressbar.min.js"></script>
+    <script src="https://unpkg.com/primevue/datatable/datatable.min.js"></script>
+    <script src="https://unpkg.com/primevue/column/column.min.js"></script>
 
     <script>
-        (function() {
-            const { createApp, ref, onMounted } = Vue;
-            const app = createApp({
-                setup() {
-                    const items = ref([
-                        { label: 'Item 1', icon: 'pi pi-home' },
-                        { label: 'Item 2', icon: 'pi pi-calendar' },
-                        { label: 'Item 3', icon: 'pi pi-cog' },
-                        { label: 'Item 4', icon: 'pi pi-user' }
-                     ]);
-                     const dialogVisible = ref(false);
-                     const inputText = ref('');
-                     const textArea = ref('');
-                     const progressValue = ref(0);
-                     const selectedCity = ref(null);
-                     const cities = ref([
-                            {name: 'New York', code: 'NY'},
-                            {name: 'Rome', code: 'RM'},
-                            {name: 'London', code: 'LDN'},
-                            {name: 'Istanbul', code: 'IST'},
-                            {name: 'Paris', code: 'PRS'}
-                     ]);
+    (function(){
+        const { createApp, ref } = Vue;
+        const { Button } = primevue.button;
+        const { DataTable } = primevue.datatable;
+        const { Column } = primevue.column;
+        
+        const app = createApp({
+            components: { Button, DataTable, Column },
+            setup() {
+                const items = ref([
+                   {id: 1, name: 'Item 1', description: 'Description 1', image: 'https://placehold.co/600x400/EEE/31343C'},
+                   {id: 2, name: 'Item 2', description: 'Description 2', image: 'https://placehold.co/600x400/EEE/31343C'},
+                   {id: 3, name: 'Item 3', description: 'Description 3', image: 'https://placehold.co/600x400/EEE/31343C'},
+                   {id: 4, name: 'Item 4', description: 'Description 4', image: 'https://placehold.co/600x400/EEE/31343C'},
+                   {id: 5, name: 'Item 5', description: 'Description 5', image: 'https://placehold.co/600x400/EEE/31343C'},
+                   {id: 6, name: 'Item 6', description: 'Description 6', image: 'https://placehold.co/600x400/EEE/31343C'},
+                   {id: 7, name: 'Item 7', description: 'Description 7', image: 'https://placehold.co/600x400/EEE/31343C'},
+                   {id: 8, name: 'Item 8', description: 'Description 8', image: 'https://placehold.co/600x400/EEE/31343C'},
+                   {id: 9, name: 'Item 9', description: 'Description 9', image: 'https://placehold.co/600x400/EEE/31343C'},
+                   {id: 10, name: 'Item 10', description: 'Description 10', image: 'https://placehold.co/600x400/EEE/31343C'},
+                   {id: 11, name: 'Item 11', description: 'Description 11', image: 'https://placehold.co/600x400/EEE/31343C'},
+                   {id: 12, name: 'Item 12', description: 'Description 12', image: 'https://placehold.co/600x400/EEE/31343C'}
+                ]);
 
-                    const mockData = ref([
-                        { id: 1, title: 'Product A', description: 'This is product A', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$19.99' },
-                        { id: 2, title: 'Product B', description: 'This is product B', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$29.99' },
-                        { id: 3, title: 'Product C', description: 'This is product C', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$39.99' },
-                        { id: 4, title: 'Product D', description: 'This is product D', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$49.99' },
-                        { id: 5, title: 'Product E', description: 'This is product E', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$59.99' },
-                        { id: 6, title: 'Product F', description: 'This is product F', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$69.99' },
-                        { id: 7, title: 'Product G', description: 'This is product G', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$79.99' },
-                        { id: 8, title: 'Product H', description: 'This is product H', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$89.99' },
-                        { id: 9, title: 'Product I', description: 'This is product I', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$99.99' },
-                        { id: 10, title: 'Product J', description: 'This is product J', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$109.99' }
-                    ]);
+                const addItem = () => {
+                  const nextId = items.value.length + 1;
+                  items.value.push({id: nextId, name: `Item ${nextId}`, description: `Description ${nextId}`, image: 'https://placehold.co/600x400/EEE/31343C'});
+                };
 
-                   const openDialog = () => {
-                         dialogVisible.value = true;
-                    };
+                const deleteItem = () => {
+                    if (items.value.length > 0) {
+                        items.value.pop();
+                    }
+                };
 
-                   const closeDialog = () => {
-                     dialogVisible.value = false;
-                    };
-
-                    onMounted(() => {
-                      let progress = 0;
-                      const interval = setInterval(() => {
-                        progress += 10;
-                        progressValue.value = progress;
-                        if(progress >= 100) {
-                          clearInterval(interval);
-                        }
-                      }, 200);
-                    });
-
-                    return {
-                        items,
-                        dialogVisible,
-                        inputText,
-                        textArea,
-                        progressValue,
-                        mockData,
-                        openDialog,
-                        closeDialog,
-                        selectedCity,
-                        cities
-                    };
-                },
-                template: `
-                    <div style="padding: 20px;">
-                      <Menu :model="items" />
-                        <h1>Welcome to Vue App with PrimeVue</h1>
-                         <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a City" style="margin-bottom: 20px;" />
-                         <InputText type="text" v-model="inputText" placeholder="Enter text" style="margin-bottom: 20px; display: block;" />
-                         <Button label="Open Dialog" icon="pi pi-external-link" @click="openDialog"  style="margin-bottom: 20px;" />
-                         <Dialog header="Dialog Header" v-model:visible="dialogVisible" :style="{ width: '50vw' }">
-                           <p>This is dialog content</p>
-                            <Textarea v-model="textArea" rows="5" cols="30" placeholder="Enter Text Here" style="margin-bottom: 20px; display: block;" />
-                            <Button label="Close" icon="pi pi-times" @click="closeDialog" />
-                         </Dialog>
-                         <ProgressBar :value="progressValue" style="margin-bottom: 20px;" />
-                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                            <Card v-for="item in mockData" :key="item.id" :header="item.title">
-                              <img :src="item.imageUrl" style="width: 100%;" alt="Product Image"/>
-                                <template #content>
-                                   <p>{{item.description}}</p>
-                                    <p style="font-weight: bold;">{{item.price}}</p>
-                                </template>
-                            </Card>
-                         </div>
-                    </div>
-                `
-            });
-            app.use(PrimeVue.default).mount('#app');
-        })();
+                return { items, addItem, deleteItem };
+            }
+        });
+        
+        app.use(primevue.config.default);
+        app.mount('#app');
+    })();
     </script>
 </body>
 </html>
