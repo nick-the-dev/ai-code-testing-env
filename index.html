@@ -1,1 +1,223 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Vue App with PrimeVue</title><link rel="stylesheet" href="https://unpkg.com/@primevue/themes/aura/aura.min.css"><link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css"><link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css"><style>body,html{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}body{line-height:1;}ol,ul{list-style:none;}blockquote,q{quotes:none;}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}table{border-collapse:collapse;border-spacing:0;}button{cursor:pointer;}input,textarea,select{outline:none;}.p-button{margin:0.5rem;}.p-menuitem-icon{margin-right:0.5rem;}.p-card-content{padding:1rem;}.p-card-title{margin-bottom:0.5rem;font-size:1.2rem;}.p-card-subtitle{margin-bottom:1rem;color:#666;font-size:0.9rem;}#app{font-family:'Arial',sans-serif;padding:20px;}</style><script src="https://unpkg.com/vue@3/dist/vue.global.js"></script><script src="https://unpkg.com/primevue/core/core.min.js"></script><script src="https://unpkg.com/primevue/button/button.min.js"></script><script src="https://unpkg.com/primevue/menu/menu.min.js"></script><script src="https://unpkg.com/primevue/card/card.min.js"></script><script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script><script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script><script src="https://unpkg.com/primevue/textarea/textarea.min.js"></script><script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script><script src="https://unpkg.com/primevue/calendar/calendar.min.js"></script><script src="https://unpkg.com/primevue/toast/toast.min.js"></script><script src="https://unpkg.com/primevue/progressbar/progressbar.min.js"></script><script src="https://unpkg.com/primevue/divider/divider.min.js"></script><script src="https://unpkg.com/primevue/icons/icons.min.js"></script></head><body><div id="app"></div><script>(()=>{const { createApp, ref, onMounted } = Vue;const { useToast } = primevue.usetoast;const app = createApp({setup(){const toast = useToast();const visible = ref(false);const progressValue= ref(0);const showDialog = () => {visible.value = true;};const hideDialog = () => {visible.value = false;};const formData = ref({name: '',email: '',category: null,dueDate: null,description: ''});const categories = ref(['Technology', 'Home', 'Travel', 'Books', 'Other']);const handleSubmit = () => {toast.add({severity: 'success', summary: 'Form Submitted', detail: `Name: ${formData.value.name}, Email: ${formData.value.email}`, life: 3000});formData.value={name: '',email: '',category: null,dueDate: null,description: ''};hideDialog();};const menuItems = ref([{label: 'Home',icon: 'pi pi-home',command:()=>{toast.add({severity: 'info', summary: 'Home Clicked', life: 1500});}},{label: 'About',icon: 'pi pi-info',command:()=>{toast.add({severity: 'info', summary: 'About Clicked', life: 1500});}},{label: 'Contact',icon: 'pi pi-envelope',command:()=>{toast.add({severity: 'info', summary: 'Contact Clicked', life: 1500});}}]);const cardData = ref([{title: 'Card 1',subtitle: 'First Card',image:'https://placehold.co/600x400/EEE/31343C',content: 'This is the first card content. Lorem ipsum dolor sit amet.'},{title: 'Card 2',subtitle: 'Second Card',image:'https://placehold.co/600x400/EEE/31343C',content: 'This is the second card content. Consectetur adipiscing elit.'},{title: 'Card 3',subtitle: 'Third Card',image:'https://placehold.co/600x400/EEE/31343C',content: 'This is the third card content. Sed do eiusmod tempor incididunt.'},{title: 'Card 4',subtitle: 'Fourth Card',image:'https://placehold.co/600x400/EEE/31343C',content: 'This is the fourth card content. Ut enim ad minim veniam.'}]);const handleProgress =()=>{let intervalId;progressValue.value = 0;intervalId = setInterval(() => {progressValue.value += 10;if (progressValue.value >= 100) {clearInterval(intervalId);}}, 100);};onMounted(()=>{handleProgress();});return {progressValue,visible,showDialog,hideDialog,formData,categories,handleSubmit,menuItems,cardData,toast}}});app.use(primevue.PrimeVue);app.component('Button', primevue.Button);app.component('Menu', primevue.Menu);app.component('Card', primevue.Card);app.component('Dialog', primevue.Dialog);app.component('InputText', primevue.InputText);app.component('Textarea', primevue.Textarea);app.component('Dropdown', primevue.Dropdown);app.component('Calendar', primevue.Calendar);app.component('Toast', primevue.Toast);app.component('ProgressBar', primevue.ProgressBar);app.component('Divider', primevue.Divider);app.mount('#app');const vm=app._instance;vm.render=()=>{const _ctx = vm.ctx;const _component_Button = Vue.resolveComponent("Button");const _component_Menu = Vue.resolveComponent("Menu");const _component_Card = Vue.resolveComponent("Card");const _component_Dialog = Vue.resolveComponent("Dialog");const _component_InputText = Vue.resolveComponent("InputText");const _component_Textarea = Vue.resolveComponent("Textarea");const _component_Dropdown = Vue.resolveComponent("Dropdown");const _component_Calendar = Vue.resolveComponent("Calendar");const _component_Toast = Vue.resolveComponent("Toast");const _component_ProgressBar = Vue.resolveComponent("ProgressBar");const _component_Divider = Vue.resolveComponent("Divider");return (Vue.openBlock(),Vue.createElementBlock("div",null,[Vue.createElementVNode("div",{style:{"margin-bottom":"20px"}},[Vue.createVNode(_component_Menu,{model:_ctx.menuItems})]),Vue.createElementVNode("div",null,[Vue.createVNode(_component_ProgressBar,{value:_ctx.progressValue})]),Vue.createElementVNode("div",{style:{"margin":"20px 0"}},[Vue.createVNode(_component_Button,{label:"Show Dialog",icon:"pi pi-plus",onClick:_ctx.showDialog})]),(Vue.openBlock(true),Vue.createElementBlock(Vue.Fragment,null,Vue.renderList(_ctx.cardData,(card)=>{return(Vue.openBlock(),Vue.createVNode(_component_Card,{key:card.title,style:{"margin":"10px","width":"300px","display":"inline-block"}},{header:()=>(Vue.createElementVNode("img",{alt:card.title,src:card.image,style:{"width":"100%"}})),title:()=>(Vue.createElementVNode("span",{class:"p-card-title"},Vue.toDisplayString(card.title),1)),subtitle:()=>(Vue.createElementVNode("span",{class:"p-card-subtitle"},Vue.toDisplayString(card.subtitle),1)),content:()=>(Vue.createElementVNode("p",null,Vue.toDisplayString(card.content),1)),_:1},8,["key"]))}),128)),Vue.createElementVNode("div",null,[Vue.createVNode(_component_Divider)]),Vue.createVNode(_component_Dialog,{header:"New Form",visible:_ctx.visible,style:{"width":"50vw"},modal:true,onHide:_ctx.hideDialog}, {default:()=>(Vue.createElementBlock("div",null,[Vue.createElementVNode("div",{class:"p-field"},[Vue.createElementVNode("label",{for:"name"},"Name"),Vue.createVNode(_component_InputText,{id:"name",modelValue:_ctx.formData.name,"onUpdate:modelValue":($event=>_ctx.formData.name=$event)})]),Vue.createElementVNode("div",{class:"p-field"},[Vue.createElementVNode("label",{for:"email"},"Email"),Vue.createVNode(_component_InputText,{id:"email",modelValue:_ctx.formData.email,"onUpdate:modelValue":($event=>_ctx.formData.email=$event)})]),Vue.createElementVNode("div",{class:"p-field"},[Vue.createElementVNode("label",{for:"category"},"Category"),Vue.createVNode(_component_Dropdown,{id:"category",modelValue:_ctx.formData.category,"onUpdate:modelValue":($event=>_ctx.formData.category=$event),options:_ctx.categories,placeholder:"Select Category"})]),Vue.createElementVNode("div",{class:"p-field"},[Vue.createElementVNode("label",{for:"dueDate"},"Due Date"),Vue.createVNode(_component_Calendar,{id:"dueDate",modelValue:_ctx.formData.dueDate,"onUpdate:modelValue":($event=>_ctx.formData.dueDate=$event)})]),Vue.createElementVNode("div",{class:"p-field"},[Vue.createElementVNode("label",{for:"description"},"Description"),Vue.createVNode(_component_Textarea,{id:"description",rows:5,modelValue:_ctx.formData.description,"onUpdate:modelValue":($event=>_ctx.formData.description=$event)})]),Vue.createElementVNode("div",null,[Vue.createVNode(_component_Button,{label:"Submit",icon:"pi pi-check",onClick:_ctx.handleSubmit})])])),_:1},8,["visible","onHide"]),Vue.createVNode(_component_Toast)]))};})();</script></body></html>
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue App</title>
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-indigo/theme.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
+    <script src="https://unpkg.com/primevue/button/button.min.js"></script>
+    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
+    <script src="https://unpkg.com/primevue/card/card.min.js"></script>
+    <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
+    <script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
+    <script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script>
+    <script src="https://unpkg.com/primevue/datatable/datatable.min.js"></script>
+    <script src="https://unpkg.com/primevue/column/column.min.js"></script>
+
+
+    <style>
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed, 
+        figure, figcaption, footer, header, hgroup, 
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+        article, aside, details, figcaption, figure, 
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+        body {
+            line-height: 1;
+        }
+        ol, ul {
+            list-style: none;
+        }
+        blockquote, q {
+            quotes: none;
+        }
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+         body {
+            font-family: sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 20px;
+        }
+        #app {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .p-button {
+          margin-right: 5px;
+        }
+        .p-card {
+            margin-bottom: 20px;
+        }
+         .p-menu {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+         .p-dialog {
+            width: 80%;
+            max-width: 600px;
+        }
+        .p-dropdown {
+            min-width: 150px;
+        }
+         .p-datatable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p-card title="User Profile">
+            <template #content>
+              <img src="https://placehold.co/600x400/EEE/31343C" alt="User Avatar" style="width: 100%; max-width: 200px; display: block; margin-bottom: 10px;">
+              <p><b>Name:</b> John Doe</p>
+              <p><b>Email:</b> john.doe@example.com</p>
+              <p><b>Status:</b> Active</p>
+              <p-button icon="pi pi-user-edit" label="Edit Profile"></p-button>
+            </template>
+        </p-card>
+          <p-card title="Interactive Elements">
+            <template #content>
+                 <p-button icon="pi pi-plus" label="Add" @click="showDialog"></p-button>
+                <p-button icon="pi pi-trash" label="Delete" class="p-button-danger"></p-button>
+                <p-button icon="pi pi-search" label="Search"></p-button>
+                <p-inputtext type="text" placeholder="Search" style="margin-left: 10px;"></p-inputtext>
+
+                <p-menu :model="menuItems"></p-menu>
+                <p-dropdown :options="dropdownOptions" v-model="selectedOption" placeholder="Select an Option"></p-dropdown>
+            </template>
+         </p-card>
+          <p-card title="Data Table">
+            <template #content>
+                <p-datatable :value="users">
+                    <p-column field="id" header="ID"></p-column>
+                    <p-column field="name" header="Name"></p-column>
+                    <p-column field="email" header="Email"></p-column>
+                    <p-column field="status" header="Status"></p-column>
+                </p-datatable>
+            </template>
+          </p-card>
+         <p-dialog header="Add New Item" v-model:visible="dialogVisible" :modal="true" :style="{ width: '50vw' }">
+             <p>Some dialog content here</p>
+             <p-button label="Save" icon="pi pi-check"></p-button>
+         </p-dialog>
+    </div>
+
+    <script>
+    (function() {
+    const { createApp, ref } = Vue;
+    const { PrimeVue } = primevue;
+    const { Button } = primevue.button;
+    const { InputText } = primevue.inputtext;
+    const { Card } = primevue.card;
+    const { Menu } = primevue.menu;
+    const { Dropdown } = primevue.dropdown;
+     const { Dialog } = primevue.dialog;
+     const { DataTable } = primevue.datatable;
+      const { Column } = primevue.column;
+
+
+        const app = createApp({
+            components: {
+                'p-button': Button,
+                'p-inputtext': InputText,
+                'p-card': Card,
+                'p-menu': Menu,
+                'p-dropdown': Dropdown,
+                 'p-dialog': Dialog,
+                  'p-datatable': DataTable,
+                  'p-column': Column
+            },
+            setup() {
+                const dialogVisible = ref(false);
+
+                 const showDialog = () => {
+                    dialogVisible.value = true;
+                };
+
+                const menuItems = ref([
+                    {label: 'Dashboard', icon: 'pi pi-home'},
+                    {label: 'Settings', icon: 'pi pi-cog'},
+                    {label: 'Sign out', icon: 'pi pi-sign-out'},
+                ]);
+                 const dropdownOptions = ref([
+                    {label: 'Option 1', value: 'option1'},
+                    {label: 'Option 2', value: 'option2'},
+                    {label: 'Option 3', value: 'option3'},
+                ]);
+
+                const selectedOption = ref('');
+
+                const users = ref([
+                     { id: 1, name: 'User 1', email: 'user1@example.com', status: 'Active' },
+                     { id: 2, name: 'User 2', email: 'user2@example.com', status: 'Inactive' },
+                     { id: 3, name: 'User 3', email: 'user3@example.com', status: 'Pending' },
+                     { id: 4, name: 'User 4', email: 'user4@example.com', status: 'Active' },
+                     { id: 5, name: 'User 5', email: 'user5@example.com', status: 'Inactive' },
+                     { id: 6, name: 'User 6', email: 'user6@example.com', status: 'Pending' },
+                     { id: 7, name: 'User 7', email: 'user7@example.com', status: 'Active' },
+                     { id: 8, name: 'User 8', email: 'user8@example.com', status: 'Inactive' },
+                     { id: 9, name: 'User 9', email: 'user9@example.com', status: 'Pending' },
+                     { id: 10, name: 'User 10', email: 'user10@example.com', status: 'Active' },
+                     { id: 11, name: 'User 11', email: 'user11@example.com', status: 'Inactive' },
+                     { id: 12, name: 'User 12', email: 'user12@example.com', status: 'Pending' }
+
+                ]);
+
+                return {
+                    dialogVisible,
+                    showDialog,
+                    menuItems,
+                    dropdownOptions,
+                    selectedOption,
+                    users
+                };
+            }
+        });
+
+         app.use(PrimeVue);
+        app.mount('#app');
+    })();
+    </script>
+</body>
+</html>
+```
