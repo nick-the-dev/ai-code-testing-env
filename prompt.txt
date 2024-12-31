@@ -1,0 +1,110 @@
+Objective: Develop a fully functional, production-ready application based on the provided UI design screenshot. The application should replicate the user interface and include all necessary features and functionality to deliver an optimal user experience.Design image for reference:https://miro.medium.com/v2/resize:fit:1400/1*kUNjz9dmnrcOIbtdG_-VBA.png
+
+Key Requirements
+
+1. Authentication & User Profile
+
+Implement user authentication to allow users to log in and access their dashboards.
+
+Display user-specific data, such as the user’s name (e.g., “Lucy Lure”) and personalized metrics.
+
+Include a notification system, as indicated by the notification icon with the count badge.
+
+2. Navigation Menu
+
+Create a sidebar menu with the following items:
+
+Overview (default landing page after login)
+
+Products
+
+Campaigns
+
+Schedules
+
+Payouts
+
+Statements
+
+Settings
+
+Ensure the active page is visually highlighted (“Overview” in the provided image).
+
+Include a “Contact Us” button in the sidebar for customer support access.
+
+3. Dashboard Overview Page
+
+Build the following widgets on the dashboard page:
+
+a. Referral Program Section
+
+Include a section with promotional text (e.g., “Want some EXTRA Money?”) and a call-to-action button (“Referral Program”).
+b. Total Product Widget
+
+Display the total number of products (e.g., “1,134 Items”).
+
+Show a percentage change indicator (“+10% this week”).
+
+Include a line chart displaying trends.
+c. Total Earnings Widget
+
+Display total earnings (e.g., “$4,231”).
+
+Show a percentage change indicator (“-22% this week”).
+
+Include a line chart displaying earnings trends.
+d. Latest Downloads Widget
+
+Display a graph indicating download trends over a week.
+
+Highlight specific points on the graph (e.g., “359” on Thursday).
+e. Balances Widget
+
+Display “Available” and “Pending” balances (e.g., “$537” and “$234”).
+
+Include a button for withdrawing money (“Withdraw Money”).
+f. Top Products Widget
+
+List top-performing products with their names, categories, and icons.
+
+Ensure items are clickable for more detailed information.
+
+4. Functional Buttons and Actions
+
+Implement an “Upload Product” button that allows users to upload new products.
+
+Integrate a search bar for quick navigation and data search.
+
+Ensure all buttons and interactive elements have hover effects and animations for better user experience.
+
+5. Data Integration
+
+Fetch dynamic data for metrics, charts, and lists using APIs or a mock database.
+
+Ensure data updates in real time or upon user interaction.
+
+6. Responsive Design
+
+Ensure the application is fully responsive and optimized for various screen sizes, including desktops, tablets, and mobile devices.
+
+7. Error Handling and Validation
+
+Implement error handling for all user actions (e.g., invalid input for “Upload Product” or unsuccessful data fetch).
+
+Provide user-friendly error messages and feedback.
+
+8. Performance Optimization
+
+Optimize page load times, data fetch speeds, and rendering performance.
+
+Implement lazy loading for non-critical elements, such as charts and lists.
+
+9. Security Measures
+
+Ensure secure handling of user data and API requests.
+
+Protect against common vulnerabilities, such as XSS and CSRF.
+
+Deliverables
+
+Fully functional web application with all features and UI elements as outlined above.
