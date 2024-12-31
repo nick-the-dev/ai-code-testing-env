@@ -3,25 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
-    <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/menu.min.js"></script>
-     <script src="https://unpkg.com/primevue/umd/menubar.min.js"></script>
-      <script src="https://unpkg.com/primevue/umd/button.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/badge.min.js"></script>
-      <script src="https://unpkg.com/primevue/umd/avatar.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/inputtext.min.js"></script>
-      <script src="https://unpkg.com/primevue/umd/chart.min.js"></script>
-       <script src="https://unpkg.com/primevue/umd/card.min.js"></script>
-         <script src="https://unpkg.com/primevue/umd/progressbar.min.js"></script>
-            <script src="https://unpkg.com/primevue/umd/listbox.min.js"></script>
-
-           <script src="https://unpkg.com/primevue/umd/sidebar.min.js"></script>
-    <script src="https://unpkg.com/@primevue/core/umd/core.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Vue App with PrimeVue</title>
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-indigo/theme.css" />
     <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css" />
     <style>
         html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
             margin: 0;
@@ -31,604 +16,141 @@
             font: inherit;
             vertical-align: baseline;
         }
-        article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
-        body { line-height: 1; }
-        ol, ul { list-style: none; }
-        blockquote, q { quotes: none; }
-        blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
-        table { border-collapse: collapse; border-spacing: 0; }
-
+        article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
-             margin: 0;
-            padding: 0;
+            line-height: 1;
         }
-
-        #app {
-            display: flex;
-            height: 100vh;
+        ol, ul {
+            list-style: none;
         }
-
-        .sidebar {
-            width: 250px;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
+        blockquote, q {
+            quotes: none;
         }
-        .sidebar ul {
-            margin-top: 20px;
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
         }
-
-        .sidebar li {
-            padding: 10px 15px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            border-radius: 4px;
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
         }
-        .sidebar li:hover,
-        .sidebar li.active {
-            background-color: #e9ecef;
+        *, *::before, *::after {
+          box-sizing: border-box;
         }
-        .sidebar li.active {
-           background-color: #d5dbe1; 
-        }
-
-
-
-        .sidebar .contact-button {
-            margin-top: auto;
-            padding: 10px 15px;
-             border-radius: 4px;
-            text-align: center;
-             transition: background-color 0.2s;
-             border: none;
-             background-color: #f0f2f5;
-            cursor: pointer;
-             margin-bottom: 10px;
-
-        }
-        .sidebar .contact-button:hover {
-           background-color: #e9ecef;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        .topbar {
-             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-right: 10px;
-        }
-       .topbar-right-content {
-         display: flex;
-            align-items: center;
-       }
-       .topbar-right-content > * {
-          margin-left: 10px;
-       }
-       .topbar .search-bar {
-            padding: 8px;
-            border: 1px solid #ddd;
-             border-radius: 4px;
-        }
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .widget {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .widget-header {
-            display: flex;
-            justify-content: space-between;
-             align-items: center;
-             margin-bottom: 15px;
-        }
-
-        .widget-header h2 {
-           font-size: 1.2rem;
-        }
-        .widget-body {
-            text-align: center;
-        }
-        .widget-body .metric {
-           font-size: 2rem;
-           margin-bottom: 5px;
-        }
-        .widget-body .change {
-           font-size: 0.9rem;
-           color: #777;
-        }
-          .widget-body .change.positive {
-           color: green;
-        }
-         .widget-body .change.negative {
-            color: red;
-         }
-        .widget .chart-container {
-             width: 100%;
-              height: 150px;
-             display: flex;
-             justify-content: center;
-             align-items: center;
-            margin-top: 20px;
-        }
-
-         .widget .chart-container canvas {
-            max-width: 100% !important;  
-        }
-
-          .widget .download-chart-container {
-            width: 100%;
-            height: 200px;
-             margin-top: 20px;
-             display: flex;
-             justify-content: center;
-            align-items: center;
-         }
-        .widget .download-chart-container canvas {
-            max-width: 100% !important;
-        }
-        .balances-container {
-           display: flex;
-           justify-content: space-around;
-            margin-bottom: 20px;
-        }
-        .balance-item {
-           text-align: center;
-        }
-        .balance-item .balance-label {
-             font-size: 0.9rem;
-             color: #777;
-             margin-bottom: 5px;
-        }
-          .balance-item .balance-amount {
-              font-size: 1.5rem;
-          }
-        .top-products-list li {
-              display: flex;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
-             transition: background-color 0.2s;
-        }
-
-           .top-products-list li:last-child {
-            border-bottom: none;
-        }
-          .top-products-list li:hover {
-            background-color: #f9f9f9;
-        }
-
-        .top-products-list li .product-info {
-             margin-left: 10px;
-               flex: 1;
-        }
-           .top-products-list li .product-name {
-             font-weight: 500;
-        }
-
-        .top-products-list li .product-category {
-           color: #777;
-           font-size: 0.9rem;
-        }
-
-        .top-products-list li img {
-           width: 30px;
-            height: 30px;
-            border-radius: 4px;
-             margin-right: 10px;
-        }
-          .referral-section {
-              background-color: #f0f2f5;
-              padding: 20px;
-              border-radius: 4px;
-              text-align: center;
-               margin-bottom: 20px;
-          }
-          .referral-section p {
-               margin-bottom: 10px;
-               font-size: 1.1rem;
-          }
-           .referral-section button {
-                 padding: 10px 15px;
-                border: none;
-                background-color: #007bff;
-                color: #fff;
-                 border-radius: 4px;
-                cursor: pointer;
-               transition: background-color 0.2s;
-           }
-            .referral-section button:hover {
-              background-color: #0056b3;
-          }
-         .progress-bar-container {
-            margin-top: 10px;
-         }
-          .progress-bar-container .p-progressbar {
-            height: 8px;
-             border-radius: 4px;
-             background-color: #e9ecef;
-        }
-         .progress-bar-container .p-progressbar-value {
-              background-color: #007bff;
-         }
-         .upload-button-container {
-              margin-bottom: 20px;
-         }
-         .upload-button-container .p-button {
-              margin-bottom: 20px;
-         }
-         @media (max-width: 768px) {
-                .sidebar {
-                  width: 100%;
-                   position: fixed;
-                   top: 0;
-                    left: 0;
-                   height: 100%;
-                   z-index: 100;
-                   transition: transform 0.3s ease-in-out;
-                    transform: translateX(-100%);
-                }
-                 .sidebar.active {
-                   transform: translateX(0);
-                 }
-                .main-content {
-                   padding-left: 10px;
-                   padding-right: 10px;
-                  }
-               .topbar .search-bar {
-                   width: 100%;
-                   margin-bottom: 10px;
-               }
-
-
-               .topbar-right-content {
-                 display: flex;
-                   flex-direction: column;
-                  align-items: flex-start;
-                }
-
-                 .topbar-right-content > * {
-                    margin-left: 0;
-                      margin-bottom: 10px;
-                 }
-
-                  .dashboard-grid {
-                        grid-template-columns: 1fr;
-                   }
-           }
     </style>
 </head>
 <body>
-    <div id="app">
-      <div :class="['sidebar', {active: sidebarVisible}]">
-            <div style="display:flex; align-items:center; justify-content: space-between;">
-               <h2>Menu</h2>
-                 <button v-if="sidebarVisible" @click="toggleSidebar" style=" background: none; border: none; cursor: pointer; font-size:1.2rem;"><i class="pi pi-times"></i></button>
-           </div>
-            <ul>
-                <li :class="{ active: activePage === 'overview' }" @click="setActivePage('overview')"><i class="pi pi-home" style="margin-right:5px;"></i>Overview</li>
-                <li :class="{ active: activePage === 'products' }" @click="setActivePage('products')"><i class="pi pi-box"  style="margin-right:5px;"></i>Products</li>
-                <li :class="{ active: activePage === 'campaigns' }" @click="setActivePage('campaigns')"><i class="pi pi-megaphone"  style="margin-right:5px;"></i>Campaigns</li>
-                <li :class="{ active: activePage === 'schedules' }" @click="setActivePage('schedules')"><i class="pi pi-calendar" style="margin-right:5px;"></i>Schedules</li>
-                <li :class="{ active: activePage === 'payouts' }" @click="setActivePage('payouts')"><i class="pi pi-money-bill"  style="margin-right:5px;"></i>Payouts</li>
-                <li :class="{ active: activePage === 'statements' }" @click="setActivePage('statements')"><i class="pi pi-file"  style="margin-right:5px;"></i>Statements</li>
-                <li :class="{ active: activePage === 'settings' }" @click="setActivePage('settings')"><i class="pi pi-cog" style="margin-right:5px;"></i>Settings</li>
-            </ul>
-            <button class="contact-button" @click="contactUs"><i class="pi pi-envelope" style="margin-right:5px;"></i>Contact Us</button>
-        </div>
-        <div class="main-content">
-            <div class="topbar">
-                <button v-if="!sidebarVisible" @click="toggleSidebar" style=" background: none; border: none; cursor: pointer; font-size:1.5rem;"><i class="pi pi-bars"></i></button>
-                 <input type="text" class="search-bar" placeholder="Search..." />
-                <div class="topbar-right-content">
-                  <p-badge severity="danger" value="3" style="margin-right:5px;"></p-badge> <i class="pi pi-bell" style="font-size: 1.5rem; cursor:pointer"></i>
-                   <p-avatar image="https://placehold.co/600x400/EEE/31343C" shape="circle" style="cursor: pointer;"></p-avatar>
-                    <span>Lucy Lure</span>
-                </div>
-            </div>
-             <div v-if="activePage === 'overview'">
-                 <div class="upload-button-container">
-                 <p-button icon="pi pi-upload" label="Upload Product"></p-button>
-                </div>
-                <div class="referral-section">
-                    <p>Want some EXTRA Money?</p>
-                    <button>Referral Program</button>
-                </div>
-
-                <div class="dashboard-grid">
-                  <div class="widget">
-                      <div class="widget-header">
-                            <h2>Total Products</h2>
-                      </div>
-                      <div class="widget-body">
-                          <div class="metric">{{ totalProducts }} Items</div>
-                           <div :class="['change', totalProductsChange >= 0 ? 'positive' : 'negative']">{{ totalProductsChange }}% this week</div>
-                             <div class="chart-container">
-                                    <canvas ref="productsChart"></canvas>
-                            </div>
-                      </div>
-                  </div>
-                   <div class="widget">
-                       <div class="widget-header">
-                            <h2>Total Earnings</h2>
-                        </div>
-                       <div class="widget-body">
-                            <div class="metric">${{ totalEarnings }}</div>
-                            <div  :class="['change', totalEarningsChange >= 0 ? 'positive' : 'negative']">{{ totalEarningsChange }}% this week</div>
-                              <div class="chart-container">
-                                    <canvas ref="earningsChart"></canvas>
-                            </div>
-                        </div>
-                   </div>
-                   <div class="widget">
-                     <div class="widget-header">
-                          <h2>Latest Downloads</h2>
-                       </div>
-                       <div class="widget-body">
-                           <div class="download-chart-container">
-                               <canvas ref="downloadsChart"></canvas>
-                            </div>
-                       </div>
-                   </div>
-                   <div class="widget">
-                       <div class="widget-header">
-                            <h2>Balances</h2>
-                        </div>
-                        <div class="widget-body">
-                            <div class="balances-container">
-                                <div class="balance-item">
-                                    <div class="balance-label">Available</div>
-                                    <div class="balance-amount">${{ availableBalance }}</div>
-                                </div>
-                                <div class="balance-item">
-                                    <div class="balance-label">Pending</div>
-                                    <div class="balance-amount">${{ pendingBalance }}</div>
-                                </div>
-                            </div>
-                             <p-button label="Withdraw Money"></p-button>
-                        </div>
-                   </div>
-                    <div class="widget">
-                       <div class="widget-header">
-                           <h2>Top Products</h2>
-                      </div>
-                      <div class="widget-body">
-                           <ul class="top-products-list">
-                                 <li v-for="(product, index) in topProducts" :key="index">
-                                      <img :src="product.image" :alt="product.name" />
-                                        <div class="product-info">
-                                          <div class="product-name">{{ product.name }}</div>
-                                          <div class="product-category">{{ product.category }}</div>
-                                        </div>
-                                  </li>
-                           </ul>
-                     </div>
-                   </div>
-               </div>
-            </div>
-             <div v-else>
-                 <h2>{{ activePage.toUpperCase() }} Page</h2>
-                  <p>Content for {{ activePage }} page goes here</p>
-             </div>
-        </div>
-    </div>
+    <div id="app"></div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
+    <script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
+    <script src="https://unpkg.com/primevue/button/button.min.js"></script>
+    <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
+    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
+    <script src="https://unpkg.com/primevue/card/card.min.js"></script>
+    <script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script>
+    <script src="https://unpkg.com/primevue/textarea/textarea.min.js"></script>
+    <script src="https://unpkg.com/primevue/progressbar/progressbar.min.js"></script>
 
     <script>
-        const { createApp, ref, onMounted } = Vue;
-        const {FilterMatchMode} = PrimeVue;
-        const app = createApp({
-            setup() {
-                const activePage = ref('overview');
-                 const sidebarVisible = ref(false);
-                const totalProducts = ref(1134);
-                const totalProductsChange = ref(10);
-                const totalEarnings = ref(4231);
-                const totalEarningsChange = ref(-22);
-                const availableBalance = ref(537);
-                const pendingBalance = ref(234);
-                 const productsChart = ref(null);
-                const earningsChart = ref(null);
-                const downloadsChart = ref(null);
-                const topProducts = ref([
-                    {
-                        name: 'Product A', category: 'Category 1',
-                        image: 'https://placehold.co/600x400/EEE/31343C' },
-                    {
-                        name: 'Product B', category: 'Category 2',
-                        image: 'https://placehold.co/600x400/EEE/31343C' },
-                    {
-                         name: 'Product C', category: 'Category 3',
-                         image: 'https://placehold.co/600x400/EEE/31343C'
-                    },
-                    {
-                         name: 'Product D', category: 'Category 4',
-                         image: 'https://placehold.co/600x400/EEE/31343C'
-                    },
-                     {
-                         name: 'Product E', category: 'Category 5',
-                         image: 'https://placehold.co/600x400/EEE/31343C'
-                    },
-                       {
-                         name: 'Product F', category: 'Category 6',
-                         image: 'https://placehold.co/600x400/EEE/31343C'
-                    }
-                ]);
+        (function() {
+            const { createApp, ref, onMounted } = Vue;
+            const app = createApp({
+                setup() {
+                    const items = ref([
+                        { label: 'Item 1', icon: 'pi pi-home' },
+                        { label: 'Item 2', icon: 'pi pi-calendar' },
+                        { label: 'Item 3', icon: 'pi pi-cog' },
+                        { label: 'Item 4', icon: 'pi pi-user' }
+                     ]);
+                     const dialogVisible = ref(false);
+                     const inputText = ref('');
+                     const textArea = ref('');
+                     const progressValue = ref(0);
+                     const selectedCity = ref(null);
+                     const cities = ref([
+                            {name: 'New York', code: 'NY'},
+                            {name: 'Rome', code: 'RM'},
+                            {name: 'London', code: 'LDN'},
+                            {name: 'Istanbul', code: 'IST'},
+                            {name: 'Paris', code: 'PRS'}
+                     ]);
 
-               const setActivePage = (page) => {
-                  activePage.value = page;
-                  if (window.innerWidth <= 768) {
-                        sidebarVisible.value = false;
-                    }
-                };
-                const toggleSidebar = () => {
-                    sidebarVisible.value = !sidebarVisible.value;
-                };
-                const contactUs = () => {
-                  alert('Contact us button clicked');
-                };
+                    const mockData = ref([
+                        { id: 1, title: 'Product A', description: 'This is product A', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$19.99' },
+                        { id: 2, title: 'Product B', description: 'This is product B', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$29.99' },
+                        { id: 3, title: 'Product C', description: 'This is product C', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$39.99' },
+                        { id: 4, title: 'Product D', description: 'This is product D', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$49.99' },
+                        { id: 5, title: 'Product E', description: 'This is product E', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$59.99' },
+                        { id: 6, title: 'Product F', description: 'This is product F', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$69.99' },
+                        { id: 7, title: 'Product G', description: 'This is product G', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$79.99' },
+                        { id: 8, title: 'Product H', description: 'This is product H', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$89.99' },
+                        { id: 9, title: 'Product I', description: 'This is product I', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$99.99' },
+                        { id: 10, title: 'Product J', description: 'This is product J', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$109.99' }
+                    ]);
 
-                onMounted(() => {
-                      (function(){
-                         const productsChartCtx = productsChart.value.getContext('2d');
-                                new Chart(productsChartCtx, {
-                                    type: 'line',
-                                    data: {
-                                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                                        datasets: [{
-                                            label: 'Products Trend',
-                                            data: [50, 60, 75, 80, 90, 100, 110],
-                                            borderColor: '#007bff',
-                                             tension: 0.4,
-                                            fill: false,
-                                          },
-                                          ],
-                                      },
-                                    options: {
-                                         responsive: true,
-                                          maintainAspectRatio: false,
-                                          plugins: {
-                                                legend: { display: false },
-                                            },
-                                           scales: {
-                                              x: {
-                                               display: false,  // Hide x-axis labels
-                                               grid: {
-                                                  display: false  // Hide x-axis grid lines
-                                                  },
-                                             },
-                                                y: {
-                                                display: false,  // Hide y-axis labels
-                                                grid: {
-                                                     display: false   // Hide y-axis grid lines
-                                                  }
-                                                 },
-                                            },
+                   const openDialog = () => {
+                         dialogVisible.value = true;
+                    };
 
-                                    },
-                                });
-                      })();
-                    (function(){
-                        const earningsChartCtx = earningsChart.value.getContext('2d');
-                           new Chart(earningsChartCtx, {
-                                type: 'line',
-                                data: {
-                                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                                    datasets: [{
-                                        label: 'Earnings Trend',
-                                        data: [100, 90, 80, 120, 130, 140, 150],
-                                        borderColor: '#28a745',
-                                         tension: 0.4,
-                                        fill: false,
-                                      },
-                                    ],
-                                },
-                                 options: {
-                                       responsive: true,
-                                        maintainAspectRatio: false,
-                                          plugins: {
-                                                legend: { display: false },
-                                            },
-                                       scales: {
-                                          x: {
-                                           display: false,  // Hide x-axis labels
-                                           grid: {
-                                              display: false  // Hide x-axis grid lines
-                                            },
-                                         },
-                                            y: {
-                                            display: false,  // Hide y-axis labels
-                                            grid: {
-                                                 display: false  // Hide y-axis grid lines
-                                              }
-                                             },
-                                        },
-                                  },
-                            });
-                       })();
-                       (function(){
-                            const downloadsChartCtx = downloadsChart.value.getContext('2d');
-                                new Chart(downloadsChartCtx, {
-                                    type: 'bar',
-                                    data: {
-                                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                                        datasets: [{
-                                            label: 'Downloads',
-                                            data: [200, 250, 300, 359, 320, 400, 420],
-                                            backgroundColor: '#ffc107',
-                                             borderRadius: 5,
-                                          },
-                                        ],
-                                    },
-                                   options: {
-                                        responsive: true,
-                                        maintainAspectRatio: false,
-                                          plugins: {
-                                                legend: { display: false },
-                                            },
-                                        scales: {
-                                                y: {
-                                                     display: false,
-                                                    },
-                                           },
-                                           layout: {
-                                                padding: {
-                                                    top: 10,
-                                                    bottom:10,
-                                                }
-                                            },
-                                           },    
-                                  });
-                       })();
+                   const closeDialog = () => {
+                     dialogVisible.value = false;
+                    };
 
-                });
+                    onMounted(() => {
+                      let progress = 0;
+                      const interval = setInterval(() => {
+                        progress += 10;
+                        progressValue.value = progress;
+                        if(progress >= 100) {
+                          clearInterval(interval);
+                        }
+                      }, 200);
+                    });
 
-                return {
-                    activePage,
-                     sidebarVisible,
-                     toggleSidebar,
-                    totalProducts,
-                    totalProductsChange,
-                    totalEarnings,
-                    totalEarningsChange,
-                     availableBalance,
-                    pendingBalance,
-                    topProducts,
-                    productsChart,
-                    earningsChart,
-                    downloadsChart,
-                    setActivePage,
-                    contactUs
-                };
-            }
-        });
-        app.use(PrimeVue.Config, { theme: { preset: PrimeVue.Themes.Aura, options: { darkModeSelector: false || 'none', }, }, });
-        app.component('p-badge', PrimeVue.Badge);
-        app.component('p-avatar', PrimeVue.Avatar);
-         app.component('p-button', PrimeVue.Button);
-        app.component('p-inputtext', PrimeVue.InputText);
-        app.component('p-chart', PrimeVue.Chart);
-          app.component('p-card', PrimeVue.Card);
-          app.component('p-progressbar', PrimeVue.ProgressBar);
-            app.component('p-listbox', PrimeVue.Listbox);
-             app.component('p-sidebar', PrimeVue.Sidebar);
-
-        app.mount('#app');
+                    return {
+                        items,
+                        dialogVisible,
+                        inputText,
+                        textArea,
+                        progressValue,
+                        mockData,
+                        openDialog,
+                        closeDialog,
+                        selectedCity,
+                        cities
+                    };
+                },
+                template: `
+                    <div style="padding: 20px;">
+                      <Menu :model="items" />
+                        <h1>Welcome to Vue App with PrimeVue</h1>
+                         <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a City" style="margin-bottom: 20px;" />
+                         <InputText type="text" v-model="inputText" placeholder="Enter text" style="margin-bottom: 20px; display: block;" />
+                         <Button label="Open Dialog" icon="pi pi-external-link" @click="openDialog"  style="margin-bottom: 20px;" />
+                         <Dialog header="Dialog Header" v-model:visible="dialogVisible" :style="{ width: '50vw' }">
+                           <p>This is dialog content</p>
+                            <Textarea v-model="textArea" rows="5" cols="30" placeholder="Enter Text Here" style="margin-bottom: 20px; display: block;" />
+                            <Button label="Close" icon="pi pi-times" @click="closeDialog" />
+                         </Dialog>
+                         <ProgressBar :value="progressValue" style="margin-bottom: 20px;" />
+                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                            <Card v-for="item in mockData" :key="item.id" :header="item.title">
+                              <img :src="item.imageUrl" style="width: 100%;" alt="Product Image"/>
+                                <template #content>
+                                   <p>{{item.description}}</p>
+                                    <p style="font-weight: bold;">{{item.price}}</p>
+                                </template>
+                            </Card>
+                         </div>
+                    </div>
+                `
+            });
+            app.use(PrimeVue.default).mount('#app');
+        })();
     </script>
 </body>
 </html>
