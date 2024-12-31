@@ -1,1 +1,540 @@
-test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
+    <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/menu.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/sidebar.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/badge.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/avatar.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/button.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/inputtext.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/chart.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/card.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/listbox.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/progressspinner.min.js"></script>
+    <script src="https://unpkg.com/@primevue/core/umd/core.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        body, h1, h2, h3, h4, h5, h6, p, ul, li {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            height: 100vh;
+        }
+
+        #app {
+           display: flex;
+           flex: 1;
+        }
+
+        .app-sidebar {
+            width: 250px;
+            background-color: #fff;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+       .app-content {
+           flex: 1;
+           padding: 20px;
+           overflow-y: auto;
+       }
+
+       .menu-item {
+           display: flex;
+           align-items: center;
+           padding: 10px 15px;
+           text-decoration: none;
+           color: #333;
+           border-radius: 6px;
+           transition: background-color 0.3s;
+           margin-bottom: 5px;
+       }
+
+       .menu-item.active {
+           background-color: #e9ecef;
+           color: #007bff;
+       }
+
+        .menu-item i {
+           margin-right: 10px;
+        }
+
+       .menu-item:hover {
+           background-color: #f8f9fa;
+       }
+
+        .sidebar-footer {
+            margin-top: auto;
+        }
+
+        .contact-us-btn {
+            width: 100%;
+            margin-bottom: 10px;
+            border-radius: 6px;
+        }
+        .user-profile {
+           display: flex;
+           align-items: center;
+           justify-content: space-between;
+           margin-bottom: 20px;
+        }
+       .user-profile-info {
+           display: flex;
+           align-items: center;
+       }
+       .user-profile-name {
+           margin-left: 10px;
+           font-weight: bold;
+       }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-header h2 {
+            margin-right: 10px;
+        }
+        .dashboard-widgets {
+           display: grid;
+           grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+           gap: 20px;
+       }
+
+        .widget-card {
+           background-color: #fff;
+           border-radius: 8px;
+           padding: 20px;
+           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+           display: flex;
+           flex-direction: column;
+        }
+
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .widget-header h3 {
+           margin-bottom: 0;
+        }
+
+        .widget-content {
+            margin-top: 10px;
+        }
+
+        .total-products-widget, .total-earnings-widget {
+            align-items: center;
+        }
+        .widget-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .widget-change {
+           font-size: 0.9rem;
+           color: #888;
+        }
+        .widget-change.positive {
+            color: green;
+        }
+
+        .widget-change.negative {
+            color: red;
+        }
+
+       .widget-line-chart {
+           margin-top: 10px;
+        }
+
+        .balances-widget .widget-content {
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+       }
+
+       .balances-widget .balance-item {
+            text-align: center;
+       }
+
+        .balances-widget .balance-label {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .balances-widget .balance-value {
+            font-size: 1.3rem;
+        }
+       .balances-widget .withdraw-button {
+            margin-top: 10px;
+            width: 100%;
+       }
+        .top-products-widget .product-list {
+            list-style: none;
+            padding: 0;
+       }
+       .top-products-widget .product-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+       }
+       .top-products-widget .product-item:last-child {
+            border-bottom: none;
+       }
+
+       .top-products-widget .product-icon {
+           margin-right: 10px;
+           width: 30px;
+           height: 30px;
+           border-radius: 50%;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           background-color: #f0f0f0;
+       }
+       .top-products-widget .product-icon img {
+           max-width: 100%;
+           max-height: 100%;
+           border-radius: 50%;
+       }
+       .top-products-widget .product-info {
+            flex: 1;
+        }
+
+        .top-products-widget .product-category {
+            font-size: 0.8rem;
+            color: #888;
+        }
+       .top-products-widget .product-name {
+            font-weight: bold;
+        }
+       .upload-button {
+            border-radius: 6px;
+        }
+       .search-input {
+            margin-left: 10px;
+            border-radius: 6px;
+        }
+
+       .dashboard-actions {
+           display: flex;
+           align-items: center;
+       }
+       .notification-badge {
+           position: relative;
+           margin-right: 15px;
+       }
+
+       .notification-badge .p-badge {
+           position: absolute;
+           top: -5px;
+           right: -5px;
+       }
+       .latest-downloads-widget .chart-container {
+         margin-top: 10px;
+         position: relative;
+       }
+       .latest-downloads-widget .chart-container .point-label {
+            position: absolute;
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            pointer-events: none;
+        }
+       @media (max-width: 768px) {
+           .app-sidebar {
+               width: 100%;
+               height: auto;
+           }
+           .dashboard-header {
+               flex-direction: column;
+               align-items: flex-start;
+           }
+
+           .dashboard-actions {
+               flex-direction: column;
+               align-items: flex-start;
+           }
+           .search-input {
+                margin-left: 0;
+               margin-top: 10px;
+           }
+           .dashboard-widgets {
+               grid-template-columns: 1fr;
+            }
+       }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="app-sidebar">
+            <div class="user-profile">
+                <div class="user-profile-info">
+                     <p-avatar icon="ri-user-fill" shape="circle" style="background-color:#dee2e6;color:#495057;" ></p-avatar>
+                    <span class="user-profile-name">Lucy Lure</span>
+                </div>
+                <div class="notification-badge">
+                   <i class="ri-notification-fill" style="font-size: 1.5rem;"></i>
+                    <p-badge value="3"></p-badge>
+                </div>
+            </div>
+            <a href="#" class="menu-item active">
+                <i class="ri-home-line"></i> Overview
+            </a>
+            <a href="#" class="menu-item">
+                <i class="ri-shopping-bag-line"></i> Products
+            </a>
+            <a href="#" class="menu-item">
+                <i class="ri-campaign-line"></i> Campaigns
+            </a>
+            <a href="#" class="menu-item">
+                <i class="ri-calendar-line"></i> Schedules
+            </a>
+            <a href="#" class="menu-item">
+                 <i class="ri-money-dollar-circle-line"></i> Payouts
+            </a>
+            <a href="#" class="menu-item">
+                 <i class="ri-file-text-line"></i> Statements
+            </a>
+             <a href="#" class="menu-item">
+                <i class="ri-settings-line"></i> Settings
+            </a>
+            <div class="sidebar-footer">
+                <p-button class="contact-us-btn" label="Contact Us" icon="ri-customer-service-2-line" />
+            </div>
+        </div>
+        <div class="app-content">
+            <div class="dashboard-header">
+               <h2>Overview</h2>
+                <div class="dashboard-actions">
+                    <p-button class="upload-button" label="Upload Product" icon="ri-upload-2-line" />
+                    <p-inputtext class="search-input" type="text" placeholder="Search..." />
+                </div>
+            </div>
+            <div class="dashboard-widgets">
+                <div class="widget-card">
+                    <div class="widget-header">
+                        <h3>Referral Program</h3>
+                    </div>
+                    <div class="widget-content">
+                        <p>Want some EXTRA Money?</p>
+                        <p-button label="Referral Program"  />
+                    </div>
+                </div>
+                <div class="widget-card total-products-widget">
+                   <div class="widget-header">
+                       <h3>Total Products</h3>
+                   </div>
+                   <div class="widget-content">
+                        <div class="widget-value">{{ totalProducts }} Items</div>
+                        <div class="widget-change" :class="{'positive': productChange > 0, 'negative': productChange < 0}">
+                            {{ productChange > 0 ? '+' : '' }}{{ productChange }}% this week
+                       </div>
+                       <div class="widget-line-chart">
+                         <p-chart type="line" :data="productChartData" :options="chartOptions"/>
+                       </div>
+                   </div>
+               </div>
+                <div class="widget-card total-earnings-widget">
+                   <div class="widget-header">
+                        <h3>Total Earnings</h3>
+                    </div>
+                    <div class="widget-content">
+                         <div class="widget-value">${{ totalEarnings }}</div>
+                         <div class="widget-change" :class="{'positive': earningsChange > 0, 'negative': earningsChange < 0}">
+                            {{ earningsChange > 0 ? '+' : '' }}{{ earningsChange }}% this week
+                        </div>
+                        <div class="widget-line-chart">
+                            <p-chart type="line" :data="earningsChartData" :options="chartOptions"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-card latest-downloads-widget">
+                    <div class="widget-header">
+                        <h3>Latest Downloads</h3>
+                    </div>
+                    <div class="widget-content">
+                         <div class="chart-container">
+                            <p-chart type="bar" :data="downloadsChartData" :options="downloadsChartOptions"/>
+                              <div class="point-label" style="top: 20px; left: 45%;" v-if="downloadsChartData.datasets[0].data[3]">{{ downloadsChartData.datasets[0].data[3] }}</div>
+                         </div>
+                     </div>
+                </div>
+                 <div class="widget-card balances-widget">
+                    <div class="widget-header">
+                        <h3>Balances</h3>
+                    </div>
+                    <div class="widget-content">
+                       <div class="balance-item">
+                          <div class="balance-label">Available</div>
+                          <div class="balance-value">${{ availableBalance }}</div>
+                       </div>
+                       <div class="balance-item">
+                            <div class="balance-label">Pending</div>
+                           <div class="balance-value">${{ pendingBalance }}</div>
+                       </div>
+                   </div>
+                   <p-button label="Withdraw Money" class="withdraw-button"/>
+                 </div>
+                <div class="widget-card top-products-widget">
+                    <div class="widget-header">
+                       <h3>Top Products</h3>
+                    </div>
+                    <div class="widget-content">
+                        <ul class="product-list">
+                             <li class="product-item" v-for="product in topProducts" :key="product.id" @click="() => alert('Go to product detail')">
+                                 <div class="product-icon"><img :src="product.icon" alt="Product Icon" /></div>
+                                <div class="product-info">
+                                     <div class="product-name">{{ product.name }}</div>
+                                    <div class="product-category">{{ product.category }}</div>
+                                 </div>
+                             </li>
+                         </ul>
+                   </div>
+               </div>
+            </div>
+        </div>
+    </div>
+   <script>
+    const { createApp, ref, onMounted } = Vue;
+    const app = createApp({
+        setup() {
+             const totalProducts = ref(1134);
+            const productChange = ref(10);
+            const totalEarnings = ref(4231);
+            const earningsChange = ref(-22);
+            const availableBalance = ref(537);
+            const pendingBalance = ref(234);
+            const topProducts = ref([
+                {
+                   id: 1,
+                   name: 'Awesome T-Shirt',
+                   category: 'Clothing',
+                   icon: 'https://placehold.co/600x400/EEE/31343C'
+                },
+                 {
+                    id: 2,
+                    name: 'Amazing Laptop',
+                    category: 'Electronics',
+                    icon: 'https://placehold.co/600x400/EEE/31343C'
+                },
+                {
+                   id: 3,
+                    name: 'Cool Backpack',
+                   category: 'Accessories',
+                   icon: 'https://placehold.co/600x400/EEE/31343C'
+               }
+           ]);
+            const productChartData = ref({
+               labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+               datasets: [{
+                    label: 'Product Count',
+                    backgroundColor: '#42A5F5',
+                   borderColor: '#1E88E5',
+                  data: [50, 70, 90, 80, 110, 130, 120]
+                }]
+            });
+            const earningsChartData = ref({
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Earnings',
+                    backgroundColor: '#66BB6A',
+                    borderColor: '#43A047',
+                    data: [200, 250, 180, 300, 280, 290, 320]
+                }]
+            });
+
+           const downloadsChartData = ref({
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Downloads',
+                    backgroundColor: '#FFA726',
+                    borderColor: '#FB8C00',
+                   data: [300, 320, 310, 359, 330, 340, 350],
+                }]
+            });
+
+           const downloadsChartOptions = ref({
+               plugins: {
+                  legend: { display: false },
+               },
+              scales: {
+                   x: { grid: { display: false } },
+                   y: { grid: { display: false }, beginAtZero: true, ticks: { display: false } },
+               },
+               responsive: true, // Ensure chart is responsive
+              maintainAspectRatio: false, // Allow custom aspect ratio
+            });
+
+            const chartOptions = ref({
+              plugins: {
+                  legend: { display: false },
+              },
+               scales: {
+                  x: { grid: { display: false } },
+                  y: { grid: { display: false }, beginAtZero: true, ticks: { display: false } },
+              },
+              responsive: true,
+              maintainAspectRatio: false,
+            });
+
+            onMounted(() => {
+                 });
+            return {
+                totalProducts,
+                productChange,
+               totalEarnings,
+                earningsChange,
+                availableBalance,
+               pendingBalance,
+               topProducts,
+                productChartData,
+               earningsChartData,
+               downloadsChartData,
+                downloadsChartOptions,
+                chartOptions,
+            };
+        }
+    });
+     app.use(PrimeVue.Config, { theme: { preset: PrimeVue.Themes.Aura, options: { darkModeSelector: false || 'none', }, }, });
+    app.component('p-badge', PrimeVue.Badge);
+    app.component('p-menu', PrimeVue.Menu);
+    app.component('p-sidebar', PrimeVue.Sidebar);
+    app.component('p-avatar', PrimeVue.Avatar);
+     app.component('p-button', PrimeVue.Button);
+    app.component('p-inputtext', PrimeVue.InputText);
+    app.component('p-chart', PrimeVue.Chart);
+     app.component('p-card', PrimeVue.Card);
+     app.component('p-listbox', PrimeVue.Listbox);
+     app.component('p-progressspinner', PrimeVue.ProgressSpinner);
+     app.mount('#app');
+   </script>
+</body>
+</html>
