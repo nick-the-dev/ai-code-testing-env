@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeVue Application</title>
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-blue/theme.css" />
-    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
-    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.3.1/primeflex.min.css" />
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/primevue/primevue.min.js"></script>
+    <title>Vue App with PrimeVue</title>
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-indigo/theme.css">
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
     <style>
         html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
             margin: 0;
@@ -38,143 +36,155 @@
             border-collapse: collapse;
             border-spacing: 0;
         }
-        .p-button {
-          margin: 4px;
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
         }
-        .custom-menu {
-           border-radius: 8px;
+        .card {
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .centered {
+             text-align: center;   
+        }
+        .p-button {
+           margin-right: 10px;
+        }
+        .p-menu {
+            margin-top: 10px;   
         }
     </style>
 </head>
 <body>
-    <div id="app">   
-        <div class="card">
-            <h1>PrimeVue Demo Application</h1>
-              <p>Welcome to our demo application built with Vue.js and PrimeVue components.</p>
-
-            <div class="flex flex-wrap gap-2">
-                <Button icon="pi pi-plus" label="Add" @click="addItem"></Button>
-                <Button icon="pi pi-refresh" label="Refresh" @click="refreshItems"></Button>
-                <Button icon="pi pi-download" label="Download" @click="downloadItems"></Button>
-              <Button icon="pi pi-trash" label="Remove All" @click="removeAllItems"></Button>
-            </div>
-         <br/>
-
-
-            <DataTable :value="items" stripedRows responsiveLayout="scroll">
-              <Column field="id" header="ID"></Column>
-              <Column field="name" header="Name"></Column>
-              <Column field="description" header="Description"></Column>
-              <Column field="image" header="Image">
-                  <template #body="slotProps">
-                    <img :src="slotProps.data.image" alt="Item Image" width="100" />
-                  </template>
-              </Column>
-           </DataTable>
-        
-           <Menu model="menuItems" class="custom-menu" />
-
-        </div>
-    </div>
+    <div id="app"></div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
+    <script src="https://unpkg.com/primevue/button/button.min.js"></script>
+    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
+    <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
+    <script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
+    <script src="https://unpkg.com/primevue/card/card.min.js"></script>
+    <script src="https://unpkg.com/primevue/progressbar/progressbar.min.js"></script>
+    <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
     <script>
-      (function(){
-        const { createApp, ref } = Vue;
-        const { Button } = primevue.button;
-        const { DataTable } = primevue.datatable;
-        const { Column } = primevue.column;
-        const { Menu } = primevue.menu;
-
+        const { createApp, ref, onMounted } = Vue;
         const app = createApp({
-            components: {
-                Button,
-                DataTable,
-                Column,
-                Menu
-            },
             setup() {
-                const items = ref([{
-                    id: 1,
-                    name: 'Product 1',
-                    description: 'Description of Product 1', image: 'https://placehold.co/600x400/EEE/31343C'
-                }, {
-                    id: 2,
-                    name: 'Product 2',
-                    description: 'Description of Product 2', image: 'https://placehold.co/600x400/CCC/31343C'
-                }, {
-                    id: 3,
-                    name: 'Product 3',
-                    description: 'Description of Product 3', image: 'https://placehold.co/600x400/AAA/31343C'
-                }, {
-                    id: 4,
-                    name: 'Product 4',
-                    description: 'Description of Product 4', image: 'https://placehold.co/600x400/DDD/31343C'
-                }, {
-                  id: 5,
-                  name: 'Product 5',
-                  description: 'Description of Product 5', image: 'https://placehold.co/600x400/BBB/31343C'
-              }, {
-                  id: 6,
-                  name: 'Product 6',
-                  description: 'Description of Product 6', image: 'https://placehold.co/600x400/EEE/31343C'
-              },{
-                  id: 7,
-                  name: 'Product 7',
-                  description: 'Description of Product 7', image: 'https://placehold.co/600x400/CCC/31343C'
-              }, {
-                id: 8,
-                  name: 'Product 8',
-                  description: 'Description of Product 8', image: 'https://placehold.co/600x400/AAA/31343C'
-              }, {
-                  id: 9,
-                  name: 'Product 9',
-                  description: 'Description of Product 9', image: 'https://placehold.co/600x400/DDD/31343C'
-              }, {
-                id: 10,
-                name: 'Product 10',
-                description: 'Description of Product 10', image: 'https://placehold.co/600x400/BBB/31343C'
-            }]);
-
+                const searchQuery = ref('');
+                const searchResults = ref([]);
+                const loading = ref(false);
                 const menuItems = ref([
-                    {label: 'Options', icon: 'pi pi-cog',
-                        items: [
-                            {label: 'Save', icon: 'pi pi-save', command: () => {alert('Data saved');} },
-                            {label: 'Edit', icon: 'pi pi-pencil', command: () => {alert('Edit mode');} },
-                            {label: 'Settings', icon: 'pi pi-cog', command: () => {alert('Settings dialog');} }
-                         ]
-                    },
-                    {label: 'Navigation', icon: 'pi pi-compass',
-                        items: [
-                            {label: 'Home', icon: 'pi pi-home', command: () => {alert('Navigated to Home');} },
-                            {label: 'Dashboard', icon: 'pi pi-th-large', command: () => {alert('Navigated to Dashboard');} }
-                        ]},
-                    {label: 'Help', icon: 'pi pi-question', command: () => {alert('Help dialog');} }
-                    ]);
-
-                const addItem = () => {
-                    items.value.push({
-                        id: items.value.length + 1,
-                        name: 'New Product',
-                        description: 'Description of New Product',
-                        image: 'https://placehold.co/600x400/EEE/31343C'
-                    });
+                    { label: 'Home', icon: 'pi pi-home', command: () => { window.location.href = '#'; } },
+                    { label: 'About', icon: 'pi pi-info-circle', command: () => { window.location.href = '#about'; } },
+                    { label: 'Contact', icon: 'pi pi-envelope', command: () => { window.location.href = '#contact'; } }
+                ]);
+                 const dropdownOptions = ref([
+                   { label: 'Option 1', value: 1 },
+                   { label: 'Option 2', value: 2 },
+                   { label: 'Option 3', value: 3 }
+                ]);
+                 const selectedOption = ref(null);
+                 const progressValue = ref(0);
+                const mockData = ref([
+                    { id: 1, title: 'Product A', description: 'This is a description for Product A.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$19.99' },
+                    { id: 2, title: 'Product B', description: 'This is a description for Product B.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$29.99' },
+                     { id: 3, title: 'Product C', description: 'This is a description for Product C.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$39.99' },
+                    { id: 4, title: 'Product D', description: 'This is a description for Product D.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$49.99' },
+                    { id: 5, title: 'Product E', description: 'This is a description for Product E.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$59.99' },
+                    { id: 6, title: 'Product F', description: 'This is a description for Product F.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$69.99' },
+                     { id: 7, title: 'Product G', description: 'This is a description for Product G.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$79.99' },
+                    { id: 8, title: 'Product H', description: 'This is a description for Product H.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$89.99' },
+                    { id: 9, title: 'Product I', description: 'This is a description for Product I.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$99.99' },
+                     { id: 10, title: 'Product J', description: 'This is a description for Product J.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$109.99' },
+                    { id: 11, title: 'Product K', description: 'This is a description for Product K.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$119.99' },
+                     { id: 12, title: 'Product L', description: 'This is a description for Product L.', imageUrl: 'https://placehold.co/600x400/EEE/31343C', price: '$129.99' }
+                ]);
+                const handleSearch = () => {
+                    loading.value = true;
+                    setTimeout(() => {
+                        if(searchQuery.value) {
+                             searchResults.value = mockData.value.filter(item => item.title.toLowerCase().includes(searchQuery.value.toLowerCase()));
+                         } else {
+                            searchResults.value = [];
+                         }
+                         loading.value = false;
+                    }, 500);
                 };
-                const refreshItems = () => {
-                    items.value = items.value.map(item => ({ ...item, image: `https://placehold.co/600x400/${Math.random().toString(16).slice(2,5).toUpperCase()}/31343C` }));
-                };
-               const downloadItems = () => {
-                   alert('Downloading data...');
-               };
-              const removeAllItems = () => {
-                items.value = [];
-              };
-
-                return { items, menuItems, addItem, refreshItems, downloadItems, removeAllItems };
-            }
+                 const handleOptionChange = (event) => {
+                    selectedOption.value = event.value;
+                   };
+                  const updateProgress = () => {
+                     let val = progressValue.value;
+                      const interval = setInterval(() => {
+                         val += 5;
+                            if(val <= 100) {
+                                progressValue.value = val;
+                            } else {
+                                clearInterval(interval);
+                                progressValue.value = 0;
+                            };
+                      }, 50);
+                  };
+                onMounted(() => {
+                     updateProgress();
+                });
+                return {searchQuery, searchResults, loading, handleSearch, menuItems, dropdownOptions, selectedOption, handleOptionChange, progressValue, mockData, updateProgress};
+            },
+            template: `
+                <div class="container">
+                    <div class="card">
+                        <div class="centered">
+                          <h1>Welcome to the Application</h1>
+                          <p>This is a sample application demonstrating PrimeVue components.</p>
+                          <p>Progress: {{progressValue}} % </p>
+                          <ProgressBar :value="progressValue" style="width: 50%; margin: 20px auto;"></ProgressBar>
+                           <Button icon="pi pi-refresh" label="Refresh Progress" @click="updateProgress" />
+                        </div>
+                    </div>
+                     <div class="card">
+                     <Menu :model="menuItems" />
+                     </div>
+                    <div class="card">
+                        <div style="display: flex; align-items:center; margin-bottom: 20px;">
+                           <InputText v-model="searchQuery" placeholder="Search products..." style="margin-right: 10px;"/>
+                           <Button label="Search" icon="pi pi-search" @click="handleSearch" :loading="loading" />
+                        </div>
+                       <div v-if="searchResults.length > 0">
+                         <h2>Search Results:</h2>
+                         <div class="card" v-for="(item, index) in searchResults" :key="index" style="margin-bottom: 10px;">
+                           <img :src="item.imageUrl" alt="Product Image" style="max-width: 100%;"/>
+                            <h3>{{ item.title }}</h3>
+                             <p>{{ item.description }}</p>
+                            <p>Price: {{item.price}}</p>
+                         </div>
+                     </div>
+                     <div v-else-if="searchQuery && !loading">
+                         <p>No matching products found.</p>
+                     </div>
+                    </div>
+                     <div class="card">
+                       <Dropdown v-model="selectedOption" :options="dropdownOptions" optionLabel="label" placeholder="Select an option" @change="handleOptionChange" />
+                        <div v-if="selectedOption">
+                            <p>Selected option value: {{ selectedOption }}</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                         <h2>Product List</h2>
+                         <div class="card" v-for="(item, index) in mockData" :key="index" style="margin-bottom: 10px;">
+                           <img :src="item.imageUrl" alt="Product Image" style="max-width: 100%;"/>
+                            <h3>{{ item.title }}</h3>
+                             <p>{{ item.description }}</p>
+                            <p>Price: {{item.price}}</p>
+                         </div>
+                    </div>
+                </div>
+            `
         });
-
-        app.use(primevue.config.default);
-        app.mount('#app');
-      })();
+        app.use(PrimeVue.default).mount('#app');
     </script>
 </body>
 </html>
