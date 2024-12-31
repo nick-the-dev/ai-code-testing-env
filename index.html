@@ -1,1 +1,270 @@
-{{ $json.output }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
+    <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/menu.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/menubar.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/button.min.js"></script>
+     <script src="https://unpkg.com/primevue/umd/badge.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/inputtext.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/chart.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/card.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/listbox.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/tag.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/avatar.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/divider.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/progressbar.min.js"></script>
+    <script src="https://unpkg.com/@primevue/core/umd/core.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body, html { margin: 0; padding: 0; font-family: sans-serif; }
+        #app { display: flex; height: 100vh; }
+        .sidebar { width: 250px; background-color: #f8f9fa; padding: 20px; display: flex; flex-direction: column; }
+        .sidebar-menu { flex-grow: 1; }
+        .sidebar-menu ul { list-style: none; padding: 0; margin: 0; }
+        .sidebar-menu li { padding: 10px 0; cursor: pointer; display: flex; align-items: center; }
+        .sidebar-menu li.active { background-color: #e9ecef; border-radius: 5px; }
+        .sidebar-menu li i { margin-right: 10px; }
+        .sidebar .contact-us-button { margin-top: 20px; }
+        .main-content { flex-grow: 1; padding: 20px; background-color: #ffffff; }
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .dashboard-header h2 { margin: 0; }
+         .dashboard-header .p-badge { margin-left: 10px; }
+        .widgets-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .widget { background-color: #f8f9fa; padding: 20px; border-radius: 8px; }
+        .widget h3 { margin-top: 0; margin-bottom: 15px; }
+        .widget .metric-value { font-size: 2rem; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center;}
+        .widget .metric-value .percentage { font-size: 1rem; margin-left: 5px;  }
+        .widget .metric-value .percentage.positive { color: green; }
+         .widget .metric-value .percentage.negative { color: red; }
+        .widget .chart-container { width: 100%; height: 150px; }
+        .widget .balances-container { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .widget .balances-container .balance-item { flex: 1; }
+        .widget .top-products-list { margin: 0; padding: 0; list-style: none; }
+        .widget .top-products-list li { display: flex; align-items: center; padding: 10px 0; cursor: pointer; }
+        .widget .top-products-list li .product-icon { margin-right: 10px; }
+        .widget .top-products-list li:hover { background-color: #e9ecef; border-radius: 5px }
+        .product-avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; background-color: #dee2e6; color: #495057; }
+        .product-avatar i { font-size: 1rem; }
+        .widget .latest-downloads-graph { width: 100%; height: 150px; margin-bottom: 15px; }
+        .widget .latest-downloads-graph canvas { width: 100% !important; height: 100% !important; }
+        .widget .balances-container .withdraw-button { margin-top: 10px; }
+        .upload-button, .search-bar { margin-right: 10px; }
+        .search-bar input { padding: 8px; border: 1px solid #ced4da; border-radius: 4px; }
+        .notification-icon { position: relative; cursor: pointer;  }
+         .notification-icon .p-badge { position: absolute; top: -5px; right: -5px; }
+         .responsive-menu-button { display: none; padding: 10px; border-radius: 5px; cursor: pointer; background-color: #e9ecef; margin-bottom: 10px; }
+         .responsive-menu-button i { font-size: 1.5rem; }
+         @media (max-width: 768px) { #app { flex-direction: column;  } .sidebar { width: 100%; padding: 10px; display: none; } .responsive-menu-button { display: block; }  .main-content { padding: 10px; } .widgets-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div id="app">
+    <div class="responsive-menu-button" @click="toggleMenu"><i class="fas fa-bars"></i></div>
+        <div class="sidebar" :style="menuVisible ? 'display: flex;' : 'display: none;'">
+            <div class="sidebar-menu">
+                <ul>
+                    <li :class="{ active: activePage === 'overview' }" @click="setActivePage('overview')">
+                        <i class="fas fa-home"></i> Overview
+                    </li>
+                     <li :class="{ active: activePage === 'products' }" @click="setActivePage('products')">
+                        <i class="fas fa-box"></i> Products
+                    </li>
+                    <li :class="{ active: activePage === 'campaigns' }" @click="setActivePage('campaigns')">
+                        <i class="fas fa-bullhorn"></i> Campaigns
+                    </li>
+                    <li :class="{ active: activePage === 'schedules' }" @click="setActivePage('schedules')">
+                        <i class="fas fa-calendar-alt"></i> Schedules
+                    </li>
+                     <li :class="{ active: activePage === 'payouts' }" @click="setActivePage('payouts')">
+                        <i class="fas fa-money-bill-wave"></i> Payouts
+                    </li>
+                     <li :class="{ active: activePage === 'statements' }" @click="setActivePage('statements')">
+                         <i class="fas fa-file-invoice"></i> Statements
+                    </li>
+                    <li :class="{ active: activePage === 'settings' }" @click="setActivePage('settings')">
+                        <i class="fas fa-cog"></i> Settings
+                    </li>
+                </ul>
+            </div>
+             <p-button class="contact-us-button" icon="pi pi-envelope" label="Contact Us" />
+        </div>
+        <div class="main-content">
+            <div class="dashboard-header">
+                <h2>Welcome, Lucy Lure</h2>
+                  <div style="display: flex; align-items:center;">
+                <p-button class="upload-button" icon="pi pi-upload" label="Upload Product" />
+                <div class="search-bar">
+                    <p-inputtext placeholder="Search..."/>
+                </div>
+                  <div class="notification-icon" @click="showNotifications = !showNotifications">
+                       <i class="fas fa-bell"></i>
+                      <p-badge value="3" severity="danger" />
+                  </div>
+                 </div>
+            </div>
+              <div v-if="showNotifications" style="position: absolute; top: 60px; right: 20px; background: white; border: 1px solid #ddd; padding: 10px; z-index: 100;">
+                <p>Notification 1</p>
+                <p>Notification 2</p>
+                <p>Notification 3</p>
+             </div>
+           <div class="widgets-grid">
+                <div class="widget">
+                  <h3>Referral Program</h3>
+                  <p>Want some EXTRA Money?</p>
+                   <p-button icon="pi pi-users" label="Referral Program" />
+                </div>
+                <div class="widget">
+                    <h3>Total Products</h3>
+                     <div class="metric-value">
+                         1,134 Items
+                      <span class="percentage positive">+10% this week</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="productsChart"></canvas>
+                    </div>
+                </div>
+                 <div class="widget">
+                    <h3>Total Earnings</h3>
+                    <div class="metric-value">
+                        $4,231
+                      <span class="percentage negative">-22% this week</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="earningsChart"></canvas>
+                    </div>
+                </div>
+                  <div class="widget">
+                        <h3>Latest Downloads</h3>
+                      <div class="latest-downloads-graph">
+                       <canvas id="downloadsChart"></canvas>
+                   </div>
+                   <p style="text-align: center"> 359 on Thursday</p>
+               </div>
+                 <div class="widget">
+                    <h3>Balances</h3>
+                    <div class="balances-container">
+                        <div class="balance-item">
+                          <p>Available</p>
+                            <p class="metric-value">$537</p>
+                        </div>
+                        <div class="balance-item">
+                          <p>Pending</p>
+                           <p class="metric-value">$234</p>
+                       </div>
+                    </div>
+                     <p-button class="withdraw-button" icon="pi pi-money-bill" label="Withdraw Money" />
+                </div>
+                  <div class="widget">
+                      <h3>Top Products</h3>
+                        <ul class="top-products-list">
+                          <li v-for="(product, index) in topProducts" :key="index">
+                                <span class="product-avatar"><i :class="product.icon"></i></span>
+                                <span>{{ product.name }} <p-tag :value="product.category" severity="info" style="margin-left: 5px;"/></span>
+                            </li>
+                         </ul>
+                    </div>
+            </div>
+        </div>
+    </div>
+     <script>
+      (function() {
+        const { createApp, ref, onMounted } = Vue;
+        const app = createApp({
+            setup() {
+                const activePage = ref('overview');
+                const menuVisible = ref(true);
+                const showNotifications = ref(false);
+                const topProducts = ref([
+                  { name: 'Product A', category: 'Category 1', icon: 'fas fa-cube' },
+                  { name: 'Product B', category: 'Category 2', icon: 'fas fa-box' },
+                  { name: 'Product C', category: 'Category 1', icon: 'fas fa-shopping-cart' },
+                  { name: 'Product D', category: 'Category 3', icon: 'fas fa-gift'},
+                   { name: 'Product E', category: 'Category 2', icon: 'fas fa-gem' }
+                ]);
+
+                const setActivePage = (page) => {
+                  activePage.value = page;
+                };
+                 const toggleMenu = () => {
+                     menuVisible.value = !menuVisible.value;
+                 }
+
+
+                 onMounted(() => {
+                   const productsChartCanvas = document.getElementById('productsChart');
+                   if (productsChartCanvas) {
+                       new Chart(productsChartCanvas, {
+                           type: 'line',
+                           data: {
+                               labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                               datasets: [{
+                                   label: 'Products',
+                                   data: [100, 120, 150, 130, 180, 160, 200],
+                                   borderColor: 'rgb(75, 192, 192)',
+                                   tension: 0.1
+                               }]
+                           }
+                       });
+                   }
+                     const earningsChartCanvas = document.getElementById('earningsChart');
+                       if (earningsChartCanvas) {
+                          new Chart(earningsChartCanvas, {
+                                type: 'line',
+                               data: {
+                                   labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                                    datasets: [{
+                                        label: 'Earnings',
+                                       data: [2000, 2200, 2500, 2300, 2800, 2600, 3000],
+                                        borderColor: 'rgb(255, 99, 132)',
+                                        tension: 0.1
+                                   }]
+                               }
+                            });
+                     }
+                      const downloadsChartCanvas = document.getElementById('downloadsChart');
+                    if(downloadsChartCanvas){
+                      new Chart(downloadsChartCanvas, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                                datasets: [{
+                                    label: 'Downloads',
+                                    data: [100, 120, 150, 359, 180, 160, 200],
+                                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    borderWidth: 1
+                                }]
+                            }
+                        });
+                    }
+                 });
+
+
+                return { activePage, topProducts, menuVisible, toggleMenu,  setActivePage, showNotifications };
+            }
+        });
+
+           app.use(PrimeVue.Config, { theme: { preset: PrimeVue.Themes.Aura, options: { darkModeSelector: false || 'none' } } });
+            app.component('p-menu', PrimeVue.Menu);
+           app.component('p-menubar', PrimeVue.Menubar);
+            app.component('p-button', PrimeVue.Button);
+             app.component('p-badge', PrimeVue.Badge);
+            app.component('p-inputtext', PrimeVue.InputText);
+            app.component('p-chart', PrimeVue.Chart);
+           app.component('p-card', PrimeVue.Card);
+           app.component('p-listbox', PrimeVue.Listbox);
+           app.component('p-tag', PrimeVue.Tag);
+            app.component('p-avatar', PrimeVue.Avatar);
+             app.component('p-divider', PrimeVue.Divider);
+               app.component('p-progressbar', PrimeVue.ProgressBar);
+        app.mount('#app');
+      })();
+    </script>
+</body>
+</html>
