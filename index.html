@@ -3,28 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeVue App</title>
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-green/theme.css" />
-    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
-    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.3.1/primeflex.min.css"/>
+    <title>Vue App</title>
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-indigo/theme.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/primevue/primevue.min.js"></script>
-    <script src="https://unpkg.com/@primevue/ripple/ripple.min.js"></script>
-    <script src="https://unpkg.com/@primevue/button/button.min.js"></script>
-    <script src="https://unpkg.com/@primevue/inputtext/inputtext.min.js"></script>
-    <script src="https://unpkg.com/@primevue/menu/menu.min.js"></script>
-    <script src="https://unpkg.com/@primevue/menubar/menubar.min.js"></script>
-    <script src="https://unpkg.com/@primevue/dropdown/dropdown.min.js"></script>
-    <script src="https://unpkg.com/@primevue/card/card.min.js"></script>
-    <script src="https://unpkg.com/@primevue/dialog/dialog.min.js"></script>
-    <script src="https://unpkg.com/@primevue/textarea/textarea.min.js"></script>
-    <script src="https://unpkg.com/@primevue/calendar/calendar.min.js"></script>
-    <script src="https://unpkg.com/@primevue/progressbar/progressbar.min.js"></script>
-    <script src="https://unpkg.com/@primevue/carousel/carousel.min.js"></script>
-    <script src="https://unpkg.com/@primevue/paginator/paginator.min.js"></script>
-    <script src="https://unpkg.com/@primevue/image/image.min.js"></script>
-    <script src="https://unpkg.com/@primevue/panel/panel.min.js"></script>
-    <script src="https://unpkg.com/@primevue/slider/slider.min.js"></script>
+    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
+    <script src="https://unpkg.com/primevue/button/button.min.js"></script>
+    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
+    <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
+    <script src="https://unpkg.com/primevue/menubar/menubar.min.js"></script>
+    <script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
+    <script src="https://unpkg.com/primevue/card/card.min.js"></script>
+    <script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script>
+    <script src="https://unpkg.com/primevue/textarea/textarea.min.js"></script>
+    <script src="https://unpkg.com/primevue/message/message.min.js"></script>
 
     <style>
         html, body, div, span, applet, object, iframe,
@@ -36,8 +29,8 @@
         dl, dt, dd, ol, ul, li,
         fieldset, form, label, legend,
         table, caption, tbody, tfoot, thead, tr, th, td,
-        article, aside, canvas, details, embed, 
-        figure, figcaption, footer, header, hgroup, 
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
         menu, nav, output, ruby, section, summary,
         time, mark, audio, video {
             margin: 0;
@@ -47,225 +40,177 @@
             font: inherit;
             vertical-align: baseline;
         }
-        article, aside, details, figcaption, figure, 
-        footer, header, hgroup, menu, nav, section {display: block;}
-        body {line-height: 1;}
-        ol, ul {list-style: none;}
-        blockquote, q {quotes: none;}
-        blockquote:before, blockquote:after,
-        q:before, q:after {content: '';content: none;}
-        table {border-collapse: collapse;border-spacing: 0;}
 
-        body { font-family: sans-serif; }
-
-        .p-button {
-            margin: 0.25rem;
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
         }
 
-         .p-menuitem-icon {
-            margin-right: 0.5rem;
-         }
+        body {
+            line-height: 1;
+        }
 
+        ol, ul {
+            list-style: none;
+        }
+
+        blockquote, q {
+            quotes: none;
+        }
+
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        body { font-family: sans-serif; }
+        .p-button { margin: 4px; }
     </style>
-
 </head>
 <body>
     <div id="app"></div>
+
     <script>
-        (function() {
-          const { createApp, ref } = Vue;
-          const { Button } = primevue.button;
-          const { InputText } = primevue.inputtext;
-          const { Menu } = primevue.menu;
-          const { Menubar } = primevue.menubar;
-          const { Dropdown } = primevue.dropdown;
-          const { Card } = primevue.card;
-          const { Dialog } = primevue.dialog;
-          const { Textarea } = primevue.textarea;
-          const { Calendar } = primevue.calendar;
-          const { ProgressBar } = primevue.progressbar;
-          const { Carousel } = primevue.carousel;
-          const { Paginator } = primevue.paginator;
-          const { Image } = primevue.image;
-          const { Panel } = primevue.panel;
-          const { Slider } = primevue.slider;
-
-          const app = createApp({
-              components: {
-                  'Button': Button,
-                  'InputText': InputText,
-                  'Menu': Menu,
-                  'Menubar': Menubar,
-                  'Dropdown': Dropdown,
-                  'Card': Card,
-                  'Dialog': Dialog,
-                  'Textarea': Textarea,
-                  'Calendar': Calendar,
-                  'ProgressBar': ProgressBar,
-                  'Carousel': Carousel,
-                  'Paginator': Paginator,
-                  'Image': Image,
-                  'Panel': Panel,
-                  'Slider': Slider,
-              },
-              setup() {
-                const menuItems = [
-                  {label: 'Home', icon: 'pi pi-home', command: () => alert('Home') },
-                  {label: 'Products', icon: 'pi pi-shopping-cart', command: () => alert('Products')},
-                  {label: 'Services', icon: 'pi pi-cog', command: () => alert('Services') },
-                  {label: 'Contact', icon: 'pi pi-envelope', command: () => alert('Contact') },
-                ];
-
-                const dropdownOptions = ref([
-                    { label: 'Option 1', value: 1 },
-                    { label: 'Option 2', value: 2 },
-                    { label: 'Option 3', value: 3 },
-                    { label: 'Option 4', value: 4 },
-                    { label: 'Option 5', value: 5 },
-                 ]);
-                 const selectedOption = ref(null);
-
-                 const dialogVisible = ref(false);
-                 const toggleDialog = () => { dialogVisible.value = !dialogVisible.value; };
-
-                 const textValue = ref('');
-
-                const dateValue = ref(null);
-                const progressValue = ref(20);
-
-                const carouselItems = ref([
-                  {
-                      src: 'https://placehold.co/600x400/EEE/31343C',
-                      alt: 'Image 1',
-                      title: 'Item 1'
-                  },
-                   {
-                      src: 'https://placehold.co/600x400/CCC/444',
-                      alt: 'Image 2',
-                      title: 'Item 2'
-                  },
-                  {
-                      src: 'https://placehold.co/600x400/AAA/555',
-                      alt: 'Image 3',
-                       title: 'Item 3'
-                  },
-                   {
-                      src: 'https://placehold.co/600x400/999/666',
-                      alt: 'Image 4',
-                      title: 'Item 4'
-                    }
-                  ,  {
-                      src: 'https://placehold.co/600x400/777/777',
-                      alt: 'Image 5',
-                      title: 'Item 5'
-                    }
-                 , {
-                      src: 'https://placehold.co/600x400/666/888',
-                      alt: 'Image 6',
-                      title: 'Item 6'
-                    }
-
+    (function() {
+        const { createApp, ref, onMounted } = Vue;
+        const { Button } = primevue.button;
+        const { InputText } = primevue.inputtext;
+        const { Menu } = primevue.menu;
+        const { Menubar } = primevue.menubar;
+        const { Dropdown } = primevue.dropdown;
+        const { Card } = primevue.card;
+        const { Dialog } = primevue.dialog;
+        const { Textarea } = primevue.textarea;
+        const { Message } = primevue.message;
+        
+        const app = createApp({
+            components: { 
+                "p-button": Button,
+                "p-inputtext": InputText,
+                "p-menu": Menu,
+                "p-menubar": Menubar,
+                "p-dropdown": Dropdown,
+                "p-card": Card,
+                "p-dialog": Dialog,
+                "p-textarea": Textarea,
+                "p-message": Message
+             },
+            setup() {
+                const menuItems = ref([
+                    { label: 'Home', icon: 'pi pi-home' },
+                    { label: 'Products', icon: 'pi pi-shopping-cart', items: [
+                        { label: 'Electronics', icon: 'pi pi-desktop' },
+                        { label: 'Books', icon: 'pi pi-book' },
+                        { label: 'Clothing', icon: 'pi pi-shopping-bag' }
+                    ] },
+                    { label: 'About', icon: 'pi pi-info-circle' },
+                    { label: 'Contact', icon: 'pi pi-envelope' }
                 ]);
 
-                const paginatorTotalRecords = ref(100);
-                const paginatorRows = ref(10);
-                const paginatorFirst = ref(0);
+                const dropdownOptions = ref([
+                    { label: 'Option 1', value: 'option1' },
+                    { label: 'Option 2', value: 'option2' },
+                    { label: 'Option 3', value: 'option3' }
+                ]);
+                const selectedOption = ref(null);
+                
+                const dialogVisible = ref(false);
+                const inputTextValue = ref('');
+                const textareaValue = ref('');
+                const messages = ref([]);
 
-                const panelHeader = ref('Panel Header');
-                const panelContent = ref('This is panel content');
-                const sliderValue = ref(20);
+                const cardData = ref([
+                  {
+                    title: 'Card 1', 
+                    content: 'This is the content for card 1.',
+                    imageUrl: 'https://placehold.co/600x400/EEE/31343C',
+                   },
+                  {
+                    title: 'Card 2', 
+                    content: 'This is the content for card 2. More info here.',
+                    imageUrl: 'https://placehold.co/600x400/EEE/31343C',
+                   },
+                  {
+                    title: 'Card 3', 
+                    content: 'Another card with some info.',
+                    imageUrl: 'https://placehold.co/600x400/EEE/31343C',
+                   },
+                    {
+                    title: 'Card 4', 
+                    content: 'Some additional card details.',
+                    imageUrl: 'https://placehold.co/600x400/EEE/31343C',
+                   },
+                    {
+                    title: 'Card 5', 
+                    content: 'And here is the final card.',
+                    imageUrl: 'https://placehold.co/600x400/EEE/31343C',
+                   },
+                   {
+                    title: 'Card 6', 
+                    content: 'Last card of the bunch. Long content here', 
+                    imageUrl: 'https://placehold.co/600x400/EEE/31343C',
+                   },
+                 ]);
 
 
-                  const updateProgress = () => {
-                    let current = progressValue.value;
-                      if(current >= 100) {
-                        current = 0;
-                      }
-                     progressValue.value = current + 10;
-                  }
+                const showDialog = () => {
+                    dialogVisible.value = true;
+                };
 
-                  setInterval(updateProgress, 1000);
+                const submitForm = () => {
+                    messages.value.push({ severity: 'info', summary: 'Form Submitted', detail: `Input: ${inputTextValue.value}, Textarea: ${textareaValue.value}` });
+                    inputTextValue.value = '';
+                    textareaValue.value = '';
+                    dialogVisible.value = false;
+                };
 
+                const addMessage = () => {
+                    messages.value.push({ severity: 'success', summary: 'Success Message', detail: 'This is a dynamically added message.' });
+                };
 
-                return {
-                  menuItems,
-                  dropdownOptions,
-                  selectedOption,
-                  dialogVisible,
-                  toggleDialog,
-                  textValue,
-                  dateValue,
-                  progressValue,
-                  carouselItems,
-                  paginatorTotalRecords,
-                  paginatorRows,
-                  paginatorFirst,
-                  panelHeader, panelContent,
-                  sliderValue
-
-                }
-              },
+                return { menuItems, dropdownOptions, selectedOption, dialogVisible, inputTextValue, textareaValue, messages, cardData, showDialog, submitForm, addMessage };
+            },
             template: `
-            <Menubar :model="menuItems" > </Menubar>
-              <div class="p-4">
-                 <div class="card">
-                  <div class="flex flex-wrap gap-2">
-                     <Button icon="pi pi-check" label="Click me" @click="() => alert('Button Clicked')" />
-                    <InputText type="text" placeholder="Enter text" v-model="textValue" />
-                  </div>
-                  </div>
+              <p-menubar :model="menuItems" />
+               <div style="padding: 20px;">
+                <p-dropdown v-model="selectedOption" :options="dropdownOptions" placeholder="Select an Option" style="margin-bottom: 20px;" />
+                <p-button label="Open Dialog" @click="showDialog" icon="pi pi-external-link" />
+                <p-button label="Add Message" @click="addMessage" icon="pi pi-plus" class="p-button-success" style="margin-left: 10px;"/>
+                <div style="margin-top: 20px;">
+                     <p-message v-for="(msg, index) in messages" :key="index" :severity="msg.severity" :summary="msg.summary" :detail="msg.detail" style="margin-bottom: 10px;"/>
                 </div>
-                  <div class="p-4">
-                      <Card title="Dropdown and Calendar">
-                       <div class="flex flex-wrap gap-2">
-                         <Dropdown  v-model="selectedOption" :options="dropdownOptions" optionLabel="label" placeholder="Select an Option" />
-                          <Calendar v-model="dateValue" placeholder="Select Date"></Calendar>
-                        </div>
-                      </Card>
-                   </div>
-                 <div class="p-4">
-                  <Card title="Dialog">
-                    <Button label="Show Dialog" icon="pi pi-external-link" @click="toggleDialog" />
-                     <Dialog v-model:visible="dialogVisible" header="Dialog Header" :modal="true" :style="{width: '50vw'}">
-                       <Textarea v-model="textValue" rows="5" cols="30" placeholder="Enter text here"></Textarea>
-                     </Dialog>
-                    </Card>
-                   </div>
-                  <div class="p-4">
-                   <Card title="Progress bar">
-                    <ProgressBar :value="progressValue"></ProgressBar>
-                   </Card>
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
+                    <p-card v-for="(card, index) in cardData" :key="index" :title="card.title" style="width: 300px;">
+                        <img :src="card.imageUrl" alt="Card Image" style="width: 100%; height: auto;" />
+                        <p style="margin-top: 10px;">{{ card.content }}</p>
+                    </p-card>
+                </div>
+               </div>
+
+               <p-dialog header="Form Dialog" v-model:visible="dialogVisible" :style="{ width: '50vw' }">
+                  <div>
+                      <label for="input">Input:</label>
+                      <p-inputtext id="input" v-model="inputTextValue" style="margin-top: 5px;"/>
                   </div>
-                 <div class="p-4">
-                   <Card title="Carousel">
-                      <Carousel :value="carouselItems" :numVisible="3" :numScroll="1" :circular="true"  :style="{ maxWidth: '800px' }">
-                        <template #item="{ data }">
-                           <Image :src="data.src" :alt="data.alt" width="200" :preview="true" style="display:block; margin:auto;" />
-                         </template>
-                      </Carousel>
-                    </Card>
-                   </div>
-                  <div class="p-4">
-                      <Card title="Paginator">
-                        <Paginator :rows="paginatorRows" :totalRecords="paginatorTotalRecords" @page="$event => paginatorFirst = $event.first" :first="paginatorFirst" ></Paginator>
-                     </Card>
-                    </div>
-                    <div class="p-4">
-                      <Card :title="panelHeader" >
-                      {{panelContent}}
-                    </Card>
-                    </div>
-                     <div class="p-4">
-                      <Card title="Slider">
-                        <Slider v-model="sliderValue" :style="{width:'200px'}" />
-                        <p>Slider value: {{sliderValue}}</p>
-                      </Card>
-                   </div>
-           `
-          });
-          app.use(primevue.PrimeVue);
-          app.mount('#app');
-        })();
+                  <div style="margin-top: 10px;">
+                      <label for="textarea">Textarea:</label>
+                      <p-textarea id="textarea" v-model="textareaValue" style="margin-top: 5px;"/>
+                  </div>
+                  <template #footer>
+                      <p-button label="Submit" @click="submitForm" icon="pi pi-check"/>
+                      <p-button label="Cancel" @click="dialogVisible = false" class="p-button-secondary" icon="pi pi-times" />
+                  </template>
+                </p-dialog>
+            `
+        });
+
+        app.mount('#app');
+    })();
     </script>
 </body>
 </html>
