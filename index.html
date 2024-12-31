@@ -3,121 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeVue App</title>
-    <link href="https://unpkg.com/@primevue/themes/aura/aura.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet">
+    <title>Production-Ready Dashboard</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/primevue/primevue.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
+    <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/menu.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/menubar.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/button.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/badge.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/avatar.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/inputtext.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/chart.min.js"></script>
+     <script src="https://unpkg.com/primevue/umd/card.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/listbox.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/divider.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/progressbar.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/dialog.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/overlaypanel.min.js"></script>
+
+    <script src="https://unpkg.com/@primevue/core/umd/core.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: sans-serif;
+        body, html { margin: 0; padding: 0; font-family: sans-serif; }
+        #app { display: flex; height: 100vh; }
+        .sidebar { width: 250px; background-color: #f8f9fa; padding: 20px; display: flex; flex-direction: column; }
+        .sidebar-menu { margin-bottom: 20px; }
+        .sidebar-menu .p-menuitem-link { display: flex; align-items: center; padding: 10px; border-radius: 4px; transition: background-color 0.3s; text-decoration:none; color:black;}
+        .sidebar-menu .p-menuitem-link:hover, .sidebar-menu .p-menuitem-link.active { background-color: #e9ecef; }
+        .sidebar-menu .p-menuitem-icon { margin-right: 10px; }
+        .sidebar-menu .p-menuitem-text { flex: 1; }
+        .sidebar-button { margin-top: auto; }
+        .main-content { flex: 1; padding: 20px; display: flex; flex-direction: column; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .search-bar { margin-left: auto; max-width:300px; }
+        .widgets-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .widget { background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .widget-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+         .widget-header h2 {font-size: 1.2rem; }
+        .widget-content { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .widget-content .value { font-size: 2rem; font-weight: bold; margin-bottom: 5px;}
+        .widget-content .change { font-size: 1rem; color: green; margin-bottom: 5px;}
+        .widget-content .change.negative { color: red; }
+        .widget-content .balance-item { margin: 5px 0; }
+        .widget-content .balance-item span { font-weight: bold; margin-left: 5px}
+        .chart-container { width: 100%; height: 200px; display: flex; justify-content:center; }
+         .top-products { display: flex; flex-direction:column; }
+         .top-products-item { display: flex; align-items: center; margin-bottom:10px;}
+         .top-products-item .p-avatar { margin-right: 10px;}
+        .top-products-item:last-child { margin-bottom:0; }
+         .product-name { font-weight: bold;}
+         .product-category {color: gray;}
+         .top-bar > div { display: flex; align-items:center; gap:10px;}
+         .notification-button { position: relative; display: inline-flex; align-items:center; justify-content:center; padding: 0; border:none; background-color: transparent; cursor:pointer;}
+        .notification-badge { position: absolute; top: -5px; right: -5px; background-color: red; color: white; border-radius: 50%; padding: 2px 5px; font-size: 0.7rem; }
+        .main-content .p-button { margin-bottom:10px; }
+        .dialog-demo .p-dialog-content { padding:20px; }
+         .dialog-demo { width: 500px; max-width:100%; }
+        .p-overlaypanel-content { padding: 20px; display: flex; flex-direction: column; }
+        .p-overlaypanel-content button { margin-top: 10px; }
+        .p-overlaypanel-content > div { margin-bottom: 10px; }
+        .p-overlaypanel-content > div:last-child { margin-bottom: 0;}
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; position: fixed; bottom: 0; height: 80px; flex-direction: row; justify-content: space-around; z-index: 100; padding: 0; background: white;}
+           .sidebar > .p-button { display:none; }
+            .sidebar-menu { margin-bottom: 0; display: flex; flex-direction:row;}
+             .sidebar-menu .p-menuitem-link { padding: 5px; margin: 0 5px; flex-direction:column; align-items: center; }
+              .sidebar-menu .p-menuitem-text { font-size: 0.7rem; margin-top: 5px; margin-right: 0;}
+              .sidebar-menu .p-menuitem-icon { margin-right: 0;}
+            .main-content { padding-bottom: 100px;}
+
         }
-        button {
-          cursor: pointer;
-        }
+        .widget-content.downloads { align-items: flex-start; }
+        .widget-content.downloads .chart-container { height:150px; }
+          .top-products-list { max-height: 300px; overflow-y: auto;}
+         .product-actions { display: flex; align-items: center; justify-content: space-between; margin-top:10px;}
     </style>
 </head>
 <body>
-    <div id="app"></div>
-    <script>
-    (function() {
-        const { createApp, ref, onMounted } = Vue;
-        const { PrimeVue } = primevue;
-        const { Button } = primevue.button;
-        const { DataTable } = primevue.datatable;
-        const { Column } = primevue.column;
-        const { Menu } = primevue.menu;
-        const { Dialog } = primevue.dialog;
-
-        const app = createApp({
-            components: {
-                Button,
-                DataTable,
-                Column,
-                Menu,
-                Dialog
-            },
-            setup() {
-                const products = ref([]);
-                const menuItems = ref([
-                    {label: 'Edit', icon: 'pi pi-pencil'},
-                    {label: 'Delete', icon: 'pi pi-trash'}
-                ]);
-                const dialogVisible = ref(false);
-                const selectedProduct = ref(null);
-
-                const openDialog = (product) => {
-                  selectedProduct.value = product;
-                  dialogVisible.value = true;
-                };
-                const closeDialog = () => {
-                  dialogVisible.value = false;
-                  selectedProduct.value = null;
-                };
-
-                onMounted(() => {
-                    (function() {
-                    const generateMockData = (count) => {
-                        const mockData = [];
-                        for (let i = 0; i < count; i++) {
-                            mockData.push({
-                                id: i + 1,
-                                name: `Product ${i + 1}`,
-                                description: `This is a description for product ${i + 1}`,
-                                price: (Math.random() * 100).toFixed(2),
-                                imageUrl: `https://placehold.co/200x150/EEE/31343C`,
-                                quantity: Math.floor(Math.random() * 100),
-                                category: ['Electronics', 'Clothing', 'Books', 'Home'][Math.floor(Math.random() * 4)],
-                                rating: Math.floor(Math.random() * 5) + 1,
-                                addedDate: new Date(Date.now() - Math.random() * 31536000000).toLocaleDateString()
-                            });
-                        }
-                        return mockData;
-                    };
-                    products.value = generateMockData(30);
-                  })();
-                });
-                return {products, menuItems, dialogVisible, openDialog, closeDialog, selectedProduct};
-            },
-            template: `
-            <Dialog v-model:visible="dialogVisible" header="Product Details" :style="{ width: '50vw' }" :modal="true">
-              <template v-if="selectedProduct">
-                <div style="display: flex; gap: 20px;">
-                    <img :src="selectedProduct.imageUrl" alt="Product Image" style="max-width: 200px;" />
-                    <div>
-                       <h2>{{ selectedProduct.name }}</h2>
-                       <p><strong>Description:</strong> {{ selectedProduct.description }}</p>
-                       <p><strong>Price:</strong> ${{ selectedProduct.price }}</p>
-                       <p><strong>Quantity:</strong> {{ selectedProduct.quantity }}</p>
-                       <p><strong>Category:</strong> {{ selectedProduct.category }}</p>
-                       <p><strong>Rating:</strong> {{ selectedProduct.rating }} / 5</p>
-                       <p><strong>Added Date:</strong> {{ selectedProduct.addedDate }}</p>
-                     </div>
+    <div id="app">
+        <div class="sidebar">
+            <div class="sidebar-menu">
+              <ul class="p-menu-list">
+                <li class="p-menuitem"><a  class="p-menuitem-link" :class="{ active: activePage === 'overview' }" href="#" @click.prevent="setActivePage('overview')"> <i class="pi pi-home p-menuitem-icon"></i><span class="p-menuitem-text">Overview</span></a></li>
+                <li class="p-menuitem"><a class="p-menuitem-link" :class="{ active: activePage === 'products' }" href="#"  @click.prevent="setActivePage('products')"><i class="pi pi-box p-menuitem-icon"></i><span class="p-menuitem-text">Products</span></a></li>
+                <li class="p-menuitem"><a class="p-menuitem-link" :class="{ active: activePage === 'campaigns' }" href="#" @click.prevent="setActivePage('campaigns')"><i class="pi pi-megaphone p-menuitem-icon"></i><span class="p-menuitem-text">Campaigns</span></a></li>
+                <li class="p-menuitem"><a class="p-menuitem-link" :class="{ active: activePage === 'schedules' }" href="#" @click.prevent="setActivePage('schedules')"><i class="pi pi-calendar p-menuitem-icon"></i><span class="p-menuitem-text">Schedules</span></a></li>
+                <li class="p-menuitem"><a class="p-menuitem-link" :class="{ active: activePage === 'payouts' }" href="#" @click.prevent="setActivePage('payouts')"><i class="pi pi-money-bill p-menuitem-icon"></i><span class="p-menuitem-text">Payouts</span></a></li>
+                <li class="p-menuitem"><a class="p-menuitem-link" :class="{ active: activePage === 'statements' }" href="#" @click.prevent="setActivePage('statements')"><i class="pi pi-file p-menuitem-icon"></i><span class="p-menuitem-text">Statements</span></a></li>
+                <li class="p-menuitem"><a class="p-menuitem-link" :class="{ active: activePage === 'settings' }" href="#" @click.prevent="setActivePage('settings')"><i class="pi pi-cog p-menuitem-icon"></i><span class="p-menuitem-text">Settings</span></a></li>
+             </ul>
+            </div>
+             <p-button  icon="pi pi-envelope" label="Contact Us" class="sidebar-button" @click="showContactOverlay"  />
+        </div>
+        <div class="main-content">
+            <div class="top-bar">
+                <div>
+                  <p-avatar image="https://placehold.co/600x400/EEE/31343C" size="small" shape="circle" />
+                 <span>Lucy Lure</span>
                 </div>
-              </template>
-              <template #footer>
-                 <Button label="Close" icon="pi pi-times" @click="closeDialog" class="p-button-secondary" />
-               </template>
-            </Dialog>
-                <DataTable :value="products">
-                    <Column field="id" header="ID"></Column>
-                    <Column field="name" header="Name"></Column>
-                    <Column field="price" header="Price"></Column>
-                    <Column field="category" header="Category"></Column>
-                    <Column header="Actions">
-                       <template #body="{ data }">
-                         <Button icon="pi pi-info-circle" @click="openDialog(data)" class="p-button-sm p-button-secondary"></Button>
-                       </template>
-                    </Column>
-                </DataTable>
-            `
+
+                <div style="display:flex; align-items:center;">
+                    <p-button icon="pi pi-bell" class="notification-button" @click="showNotifications" >
+                       <span class="notification-badge">3</span>
+                      </p-button>
+                    <p-inputtext class="search-bar" placeholder="Search..." />
+                </div>
+            </div>
+               <p-button label="Upload Product" icon="pi pi-upload" @click="showDialog" />
+             <div class="widgets-container">
+                <div class="widget">
+                      <div class="widget-header">
+                        <h2>Referral Program</h2>
+                      </div>
+                    <div class="widget-content">
+                    <p>Want some EXTRA Money?</p>
+                   <p-button label="Referral Program" />
+                  </div>
+                </div>
+                  <div class="widget">
+                    <div class="widget-header">
+                        <h2>Total Products</h2>
+                    </div>
+                    <div class="widget-content">
+                        <span class="value">{{ totalProducts }} Items</span>
+                         <span :class="['change', productChange >= 0 ? '' : 'negative']">{{ productChange }}% this week</span>
+                        <div class="chart-container"><p-chart type="line" :data="productChartData" :options="chartOptions" /></div>
+                   </div>
+                  </div>
+                   <div class="widget">
+                    <div class="widget-header">
+                        <h2>Total Earnings</h2>
+                    </div>
+                    <div class="widget-content">
+                        <span class="value">${{ totalEarnings }}</span>
+                        <span :class="['change', earningChange >= 0 ? '' : 'negative']">{{ earningChange }}% this week</span>
+                       <div class="chart-container"><p-chart type="line" :data="earningChartData" :options="chartOptions" /></div>
+                  </div>
+                 </div>
+                 <div class="widget">
+                    <div class="widget-header">
+                     <h2>Latest Downloads</h2>
+                    </div>
+                    <div class="widget-content downloads">
+                       <div class="chart-container"><p-chart type="bar" :data="downloadChartData" :options="downloadChartOptions" /></div>
+                   </div>
+                </div>
+                <div class="widget">
+                    <div class="widget-header">
+                       <h2>Balances</h2>
+                    </div>
+                    <div class="widget-content">
+                       <div class="balance-item">Available: <span >${{ availableBalance }}</span></div>
+                        <div class="balance-item">Pending: <span>${{ pendingBalance }}</span></div>
+                        <p-button label="Withdraw Money" icon="pi pi-money-bill" />
+                   </div>
+               </div>
+                <div class="widget">
+                    <div class="widget-header">
+                      <h2>Top Products</h2>
+                     </div>
+                    <div class="widget-content">
+                       <ul class="top-products top-products-list">
+                        <li class="top-products-item" v-for="product in topProducts" :key="product.id">
+                          <p-avatar :image="product.image" shape="circle" size="small"/>
+                          <div>
+                              <div class="product-name">{{ product.name }}</div>
+                            <div class="product-category">{{ product.category }}</div>
+                            </div>
+
+                        </li>
+                    </ul>
+                 </div>
+               </div>
+            </div>
+        </div>
+        <p-dialog header="Upload Product" v-model:visible="dialogVisible" :style="{width: '50vw'}" :breakpoints="{'960px': '75vw', '640px': '90vw'}" >
+                <div class="dialog-demo">
+                    <p>Select Product Image</p>
+                 <input type="file" accept="image/*">
+                 <p>Product Name</p>
+                 <p-inputtext placeholder="Enter product name" />
+                  <p>Product Description</p>
+                    <textarea placeholder="Enter product description" style="width:100%; padding:10px;"></textarea>
+                    <p-button label="Upload" style="margin-top:10px;" />
+                </div>
+
+        </p-dialog>
+          <p-overlaypanel ref="notificationPanel" :breakpoints="{'960px': '75vw', '640px': '90vw'}">
+                <div >
+                    <div>
+                        <b>Notification 1</b>
+                         <p> New message from user</p>
+                        </div>
+                    <div>
+                        <b>Notification 2</b>
+                          <p> Campaign is completed</p>
+                        </div>
+                       <div>
+                           <b>Notification 3</b>
+                          <p> Your product uploaded successfully</p>
+                      </div>
+                   </div>
+            </p-overlaypanel>
+           <p-overlaypanel ref="contactPanel"  :breakpoints="{'960px': '75vw', '640px': '90vw'}">
+                 <div>
+                     <div>
+                        <p>Our support team is available to help you.</p>
+                        <p>Please submit your question below</p>
+                      </div>
+                     <p><input placeholder="Enter your email address" style="width:100%; padding:10px;"/></p>
+                       <p><textarea placeholder="Enter your question" style="width:100%; padding:10px;"></textarea></p>
+                      <p-button label="Send" />
+                   </div>
+            </p-overlaypanel>
+    </div>
+     <script>
+        const { createApp, ref, onMounted, computed } = Vue;
+        const app = createApp({
+            setup() {
+                const activePage = ref('overview');
+                const totalProducts = ref(1134);
+                const productChange = ref(10);
+                const totalEarnings = ref(4231);
+                const earningChange = ref(-22);
+                const availableBalance = ref(537);
+                const pendingBalance = ref(234);
+                const dialogVisible = ref(false);
+                 const notificationPanel = ref(null);
+                const contactPanel = ref(null);
+                const showNotifications = (event) => {
+                    notificationPanel.value.toggle(event);
+                    };
+                const showContactOverlay = (event) => {
+                    contactPanel.value.toggle(event);
+                  }
+                 const productChartData = ref({
+                  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                   datasets: [
+                       {
+                          data: [50, 70, 90, 120, 100, 130, 150],
+                           borderColor: '#4299E1',
+                            fill: false
+                       }
+                    ]
+                 });
+                  const earningChartData = ref({
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [
+                        {
+                           data: [100, 90, 80, 70, 60, 50, 40],
+                            borderColor: '#48BB78',
+                           fill: false
+                        }
+                    ]
+                  });
+                const downloadChartData = ref({
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                  datasets: [
+                       {
+                           label: 'Downloads', 
+                         backgroundColor: '#CBD5E0',
+                           data: [150, 200, 250, 359, 300, 280, 400],
+                         }
+                    ]
+                });
+
+                const downloadChartOptions = ref({
+                     responsive: true,    
+                     maintainAspectRatio:false,
+                        scales: {
+                            y: { beginAtZero: true },
+                       }
+                });
+                  const chartOptions = ref({
+                    responsive: true, 
+                     maintainAspectRatio:false, 
+                   scales: {
+                     y: {
+                            beginAtZero: true
+                     }
+                   }
+                  });
+                   const topProducts = ref([
+                       { id: 1, name: 'Product A', category: 'Category X', image: 'https://placehold.co/600x400/4A5568/FFF' },
+                       { id: 2, name: 'Product B', category: 'Category Y', image: 'https://placehold.co/600x400/718096/FFF' },
+                      { id: 3, name: 'Product C', category: 'Category Z', image: 'https://placehold.co/600x400/A0AEC0/FFF' },
+                        { id: 4, name: 'Product D', category: 'Category X', image: 'https://placehold.co/600x400/CBD5E0/FFF' },
+                    ]);
+                   const setActivePage = (page) => {
+                        activePage.value = page;
+                   };
+                   const showDialog = () => {
+                        dialogVisible.value = true;
+                    };
+                 return {activePage,totalProducts, productChange,totalEarnings, earningChange, availableBalance,pendingBalance, productChartData, earningChartData, chartOptions, topProducts, setActivePage, showDialog, dialogVisible, downloadChartData, downloadChartOptions,showNotifications, notificationPanel, contactPanel, showContactOverlay};
+            }
         });
-        app.use(PrimeVue);
-        app.mount('#app');
-    })();
+        app.use(PrimeVue.Config, { theme: { preset: PrimeVue.Themes.Aura, options: { darkModeSelector: false || 'none', }, }, });
+        app.component('p-menu', PrimeVue.Menu);
+        app.component('p-menubar', PrimeVue.Menubar);
+        app.component('p-button', PrimeVue.Button);
+        app.component('p-badge', PrimeVue.Badge);
+         app.component('p-avatar', PrimeVue.Avatar);
+          app.component('p-inputtext', PrimeVue.InputText);
+           app.component('p-chart', PrimeVue.Chart);
+        app.component('p-card', PrimeVue.Card);
+        app.component('p-listbox', PrimeVue.Listbox);
+         app.component('p-divider', PrimeVue.Divider);
+          app.component('p-progressbar', PrimeVue.ProgressBar);
+        app.component('p-dialog', PrimeVue.Dialog);
+        app.component('p-overlaypanel', PrimeVue.OverlayPanel);
+         app.mount('#app');
     </script>
 </body>
 </html>
