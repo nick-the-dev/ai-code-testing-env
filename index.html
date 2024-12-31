@@ -3,48 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue.js App with PrimeVue</title>
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/aura-light-green/theme.css" />
-    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
+    <title>Dashboard</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
-    <script src="https://unpkg.com/primevue/button/button.min.js"></script>
-    <script src="https://unpkg.com/primevue/menu/menu.min.js"></script>
-    <script src="https://unpkg.com/primevue/inputtext/inputtext.min.js"></script>
-    <script src="https://unpkg.com/primevue/dialog/dialog.min.js"></script>
-     <script src="https://unpkg.com/primevue/card/card.min.js"></script>
-    <script src="https://unpkg.com/primevue/dropdown/dropdown.min.js"></script>
-    <script src="https://unpkg.com/primevue/selectbutton/selectbutton.min.js"></script>
-    <script src="https://unpkg.com/primevue/textarea/textarea.min.js"></script>
-    <script src="https://unpkg.com/primevue/slider/slider.min.js"></script>
-    <script src="https://unpkg.com/primevue/checkbox/checkbox.min.js"></script>
-    <script src="https://unpkg.com/primevue/rating/rating.min.js"></script>
-    <script src="https://unpkg.com/primevue/progressbar/progressbar.min.js"></script>
-     <script src="https://unpkg.com/primevue/avatar/avatar.min.js"></script>
-     <script src="https://unpkg.com/primevue/badge/badge.min.js"></script>
-    <script src="https://unpkg.com/primevue/toast/toast.min.js"></script>
-    <script src="https://unpkg.com/primevue/ripple/ripple.min.js"></script>
-    <script src="https://unpkg.com/primevue/confirmdialog/confirmdialog.min.js"></script>
-    <script src="https://unpkg.com/primevue/confirmationservice/confirmationservice.min.js"></script>
-     <script src="https://unpkg.com/primevue/overlaypanel/overlaypanel.min.js"></script>
-     <script src="https://unpkg.com/primevue/tooltip/tooltip.min.js"></script>
-     <script src="https://unpkg.com/primevue/divider/divider.min.js"></script>
-    <script src="https://unpkg.com/primevue/paginator/paginator.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
     <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
-     <style>
-        html, body, div, span, applet, object, iframe,
-        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-        a, abbr, acronym, address, big, cite, code,
-        del, dfn, em, img, ins, kbd, q, s, samp,
-        small, strike, strong, sub, sup, tt, var,
-        b, u, i, center,
-        dl, dt, dd, ol, ul, li,
-        fieldset, form, label, legend,
-        table, caption, tbody, tfoot, thead, tr, th, td,
-        article, aside, canvas, details, embed,
-        figure, figcaption, footer, header, hgroup,
-        menu, nav, output, ruby, section, summary,
-        time, mark, audio, video {
+    <script src="https://unpkg.com/primevue/umd/menu.min.js"></script>
+     <script src="https://unpkg.com/primevue/umd/menubar.min.js"></script>
+      <script src="https://unpkg.com/primevue/umd/button.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/badge.min.js"></script>
+      <script src="https://unpkg.com/primevue/umd/avatar.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/inputtext.min.js"></script>
+      <script src="https://unpkg.com/primevue/umd/chart.min.js"></script>
+       <script src="https://unpkg.com/primevue/umd/card.min.js"></script>
+         <script src="https://unpkg.com/primevue/umd/progressbar.min.js"></script>
+            <script src="https://unpkg.com/primevue/umd/listbox.min.js"></script>
+
+           <script src="https://unpkg.com/primevue/umd/sidebar.min.js"></script>
+    <script src="https://unpkg.com/@primevue/core/umd/core.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
+    <style>
+        html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
             margin: 0;
             padding: 0;
             border: 0;
@@ -52,238 +31,604 @@
             font: inherit;
             vertical-align: baseline;
         }
-        article, aside, details, figcaption, figure,
-        footer, header, hgroup, menu, nav, section {
-            display: block;
-        }
+        article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+        body { line-height: 1; }
+        ol, ul { list-style: none; }
+        blockquote, q { quotes: none; }
+        blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+        table { border-collapse: collapse; border-spacing: 0; }
+
         body {
-            line-height: 1;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+             margin: 0;
+            padding: 0;
         }
-        ol, ul {
-            list-style: none;
+
+        #app {
+            display: flex;
+            height: 100vh;
         }
-        blockquote, q {
-            quotes: none;
-        }
-        blockquote:before, blockquote:after,
-        q:before, q:after {
-            content: '';
-            content: none;
-        }
-        table {
-            border-collapse: collapse;
-            border-spacing: 0;
-        }
-        .p-button {
-             margin: 5px;   
-        }
-        .p-card {
-            margin: 10px;
-        }
-        .p-menu {
-            margin-top: 10px;
-        }
-        .p-inputtext {
-            margin-bottom: 10px;
-        }
-        
-        .container {
+
+        .sidebar {
+            width: 250px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
+        .sidebar ul {
+            margin-top: 20px;
+        }
+
+        .sidebar li {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-radius: 4px;
+        }
+        .sidebar li:hover,
+        .sidebar li.active {
+            background-color: #e9ecef;
+        }
+        .sidebar li.active {
+           background-color: #d5dbe1; 
+        }
+
+
+
+        .sidebar .contact-button {
+            margin-top: auto;
+            padding: 10px 15px;
+             border-radius: 4px;
+            text-align: center;
+             transition: background-color 0.2s;
+             border: none;
+             background-color: #f0f2f5;
+            cursor: pointer;
+             margin-bottom: 10px;
+
+        }
+        .sidebar .contact-button:hover {
+           background-color: #e9ecef;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .topbar {
+             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+       .topbar-right-content {
+         display: flex;
+            align-items: center;
+       }
+       .topbar-right-content > * {
+          margin-left: 10px;
+       }
+       .topbar .search-bar {
+            padding: 8px;
+            border: 1px solid #ddd;
+             border-radius: 4px;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .widget {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+             align-items: center;
+             margin-bottom: 15px;
+        }
+
+        .widget-header h2 {
+           font-size: 1.2rem;
+        }
+        .widget-body {
+            text-align: center;
+        }
+        .widget-body .metric {
+           font-size: 2rem;
+           margin-bottom: 5px;
+        }
+        .widget-body .change {
+           font-size: 0.9rem;
+           color: #777;
+        }
+          .widget-body .change.positive {
+           color: green;
+        }
+         .widget-body .change.negative {
+            color: red;
+         }
+        .widget .chart-container {
+             width: 100%;
+              height: 150px;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+            margin-top: 20px;
+        }
+
+         .widget .chart-container canvas {
+            max-width: 100% !important;  
+        }
+
+          .widget .download-chart-container {
+            width: 100%;
+            height: 200px;
+             margin-top: 20px;
+             display: flex;
+             justify-content: center;
+            align-items: center;
+         }
+        .widget .download-chart-container canvas {
+            max-width: 100% !important;
+        }
+        .balances-container {
+           display: flex;
+           justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .balance-item {
+           text-align: center;
+        }
+        .balance-item .balance-label {
+             font-size: 0.9rem;
+             color: #777;
+             margin-bottom: 5px;
+        }
+          .balance-item .balance-amount {
+              font-size: 1.5rem;
+          }
+        .top-products-list li {
+              display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+             transition: background-color 0.2s;
+        }
+
+           .top-products-list li:last-child {
+            border-bottom: none;
+        }
+          .top-products-list li:hover {
+            background-color: #f9f9f9;
+        }
+
+        .top-products-list li .product-info {
+             margin-left: 10px;
+               flex: 1;
+        }
+           .top-products-list li .product-name {
+             font-weight: 500;
+        }
+
+        .top-products-list li .product-category {
+           color: #777;
+           font-size: 0.9rem;
+        }
+
+        .top-products-list li img {
+           width: 30px;
+            height: 30px;
+            border-radius: 4px;
+             margin-right: 10px;
+        }
+          .referral-section {
+              background-color: #f0f2f5;
+              padding: 20px;
+              border-radius: 4px;
+              text-align: center;
+               margin-bottom: 20px;
+          }
+          .referral-section p {
+               margin-bottom: 10px;
+               font-size: 1.1rem;
+          }
+           .referral-section button {
+                 padding: 10px 15px;
+                border: none;
+                background-color: #007bff;
+                color: #fff;
+                 border-radius: 4px;
+                cursor: pointer;
+               transition: background-color 0.2s;
+           }
+            .referral-section button:hover {
+              background-color: #0056b3;
+          }
+         .progress-bar-container {
+            margin-top: 10px;
+         }
+          .progress-bar-container .p-progressbar {
+            height: 8px;
+             border-radius: 4px;
+             background-color: #e9ecef;
+        }
+         .progress-bar-container .p-progressbar-value {
+              background-color: #007bff;
+         }
+         .upload-button-container {
+              margin-bottom: 20px;
+         }
+         .upload-button-container .p-button {
+              margin-bottom: 20px;
+         }
+         @media (max-width: 768px) {
+                .sidebar {
+                  width: 100%;
+                   position: fixed;
+                   top: 0;
+                    left: 0;
+                   height: 100%;
+                   z-index: 100;
+                   transition: transform 0.3s ease-in-out;
+                    transform: translateX(-100%);
+                }
+                 .sidebar.active {
+                   transform: translateX(0);
+                 }
+                .main-content {
+                   padding-left: 10px;
+                   padding-right: 10px;
+                  }
+               .topbar .search-bar {
+                   width: 100%;
+                   margin-bottom: 10px;
+               }
+
+
+               .topbar-right-content {
+                 display: flex;
+                   flex-direction: column;
+                  align-items: flex-start;
+                }
+
+                 .topbar-right-content > * {
+                    margin-left: 0;
+                      margin-bottom: 10px;
+                 }
+
+                  .dashboard-grid {
+                        grid-template-columns: 1fr;
+                   }
+           }
     </style>
 </head>
 <body>
-    <div id="app" class="container">
-        <p-toast></p-toast>
-        <p-confirmdialog></p-confirmdialog>
-        <p-menu :model="menuItems" ref="menu" popup></p-menu>
-         <p-button icon="pi pi-bars" @click="toggleMenu($event)" label="Menu"></p-button>
-
-        <h1>Welcome to My Vue.js App</h1>
-
-        <p-card title="User Profile" style="width: 300px">
-            <template #header>
-            <img alt="user header" src="https://placehold.co/200x100/EEE/31343C" >
-            </template>
-            <div>
-                <p-avatar image="https://placehold.co/50x50/EEE/31343C" shape="circle"></p-avatar>
-                <p><strong>Name:</strong> {{user.name}}</p>
-                <p><strong>Email:</strong> {{user.email}}</p>
-                 <p><strong>Status:</strong> <p-badge :value="user.status" severity="success" v-if="user.status === 'Active'"></p-badge> <p-badge :value="user.status" severity="danger" v-else></p-badge></p>
-            </div>
-             <template #footer>
-                <p-button icon="pi pi-user-edit" label="Edit" @click="editProfile()"></p-button>
-            </template>
-
-        </p-card>
-        <p-divider></p-divider>
-         <h2>Products</h2>
-           <p-card v-for="(product, index) in products" :key="index" style="width: 300px">
-            <template #header>
-              <img alt="product header" :src="product.imageUrl" style="width: 100%; height: auto;">
-            </template>
-                <div>
-                <h3>{{ product.name }}</h3>
-                <p>{{ product.description }}</p>
-                <p><strong>Price:</strong> {{ product.price }}</p>
-                <p><strong>Rating:</strong><p-rating :modelValue="product.rating" :readonly="true" :stars="5" :cancel="false" ></p-rating></p>
-                <p><strong>Availability:</strong><p-progressbar :value="product.availability" :showValue="false" v-if="product.availability < 100"></p-progressbar><span v-else>In Stock</span> </p>
+    <div id="app">
+      <div :class="['sidebar', {active: sidebarVisible}]">
+            <div style="display:flex; align-items:center; justify-content: space-between;">
+               <h2>Menu</h2>
+                 <button v-if="sidebarVisible" @click="toggleSidebar" style=" background: none; border: none; cursor: pointer; font-size:1.2rem;"><i class="pi pi-times"></i></button>
+           </div>
+            <ul>
+                <li :class="{ active: activePage === 'overview' }" @click="setActivePage('overview')"><i class="pi pi-home" style="margin-right:5px;"></i>Overview</li>
+                <li :class="{ active: activePage === 'products' }" @click="setActivePage('products')"><i class="pi pi-box"  style="margin-right:5px;"></i>Products</li>
+                <li :class="{ active: activePage === 'campaigns' }" @click="setActivePage('campaigns')"><i class="pi pi-megaphone"  style="margin-right:5px;"></i>Campaigns</li>
+                <li :class="{ active: activePage === 'schedules' }" @click="setActivePage('schedules')"><i class="pi pi-calendar" style="margin-right:5px;"></i>Schedules</li>
+                <li :class="{ active: activePage === 'payouts' }" @click="setActivePage('payouts')"><i class="pi pi-money-bill"  style="margin-right:5px;"></i>Payouts</li>
+                <li :class="{ active: activePage === 'statements' }" @click="setActivePage('statements')"><i class="pi pi-file"  style="margin-right:5px;"></i>Statements</li>
+                <li :class="{ active: activePage === 'settings' }" @click="setActivePage('settings')"><i class="pi pi-cog" style="margin-right:5px;"></i>Settings</li>
+            </ul>
+            <button class="contact-button" @click="contactUs"><i class="pi pi-envelope" style="margin-right:5px;"></i>Contact Us</button>
+        </div>
+        <div class="main-content">
+            <div class="topbar">
+                <button v-if="!sidebarVisible" @click="toggleSidebar" style=" background: none; border: none; cursor: pointer; font-size:1.5rem;"><i class="pi pi-bars"></i></button>
+                 <input type="text" class="search-bar" placeholder="Search..." />
+                <div class="topbar-right-content">
+                  <p-badge severity="danger" value="3" style="margin-right:5px;"></p-badge> <i class="pi pi-bell" style="font-size: 1.5rem; cursor:pointer"></i>
+                   <p-avatar image="https://placehold.co/600x400/EEE/31343C" shape="circle" style="cursor: pointer;"></p-avatar>
+                    <span>Lucy Lure</span>
                 </div>
-             <template #footer>
-                  <p-button icon="pi pi-shopping-cart" label="Add to Cart" @click="addToCart(product)"></p-button>
-             </template>
-        </p-card>
-        
-        
-       
-        <p-dialog header="Edit Profile" v-model:visible="editDialogVisible" :modal="true" :style="{width: '50vw'}" :maximizable="true" >
-            <p>Name: <p-inputtext v-model="editedUser.name" /></p>
-            <p>Email: <p-inputtext v-model="editedUser.email" /></p>
-             <p>Status: <p-selectbutton :modelValue="editedUser.status" @update:modelValue="(val) => editedUser.status = val" :options="statusOptions" /></p>
-             <p>Bio:<p-textarea v-model="editedUser.bio" :rows="5" :cols="30" /></p>
-               <p>Preferences:<p-slider v-model="editedUser.preferences" :min="0" :max="100" /></p>
-               <p>Notifications:<p-checkbox v-model="editedUser.notifications" :binary="true" /></p>
-             <template #footer>
-                <p-button label="Save" icon="pi pi-check" @click="saveProfile()" class="p-button-success" />
-                <p-button label="Cancel" icon="pi pi-times" @click="editDialogVisible = false" class="p-button-secondary" />
-             </template>
-        </p-dialog>
-    
-         <p-overlaypanel ref="op" >
-            <div>{{ overlayContent }}</div>
-        </p-overlaypanel>
-       <p-paginator :rows="3" :totalRecords="100" @page="onPageChange" :rowsPerPageOptions="[3,6,9]" ></p-paginator>
-      <p-button @click="showConfirm($event)" label="Confirm Action" icon="pi pi-exclamation-triangle"></p-button>  
+            </div>
+             <div v-if="activePage === 'overview'">
+                 <div class="upload-button-container">
+                 <p-button icon="pi pi-upload" label="Upload Product"></p-button>
+                </div>
+                <div class="referral-section">
+                    <p>Want some EXTRA Money?</p>
+                    <button>Referral Program</button>
+                </div>
+
+                <div class="dashboard-grid">
+                  <div class="widget">
+                      <div class="widget-header">
+                            <h2>Total Products</h2>
+                      </div>
+                      <div class="widget-body">
+                          <div class="metric">{{ totalProducts }} Items</div>
+                           <div :class="['change', totalProductsChange >= 0 ? 'positive' : 'negative']">{{ totalProductsChange }}% this week</div>
+                             <div class="chart-container">
+                                    <canvas ref="productsChart"></canvas>
+                            </div>
+                      </div>
+                  </div>
+                   <div class="widget">
+                       <div class="widget-header">
+                            <h2>Total Earnings</h2>
+                        </div>
+                       <div class="widget-body">
+                            <div class="metric">${{ totalEarnings }}</div>
+                            <div  :class="['change', totalEarningsChange >= 0 ? 'positive' : 'negative']">{{ totalEarningsChange }}% this week</div>
+                              <div class="chart-container">
+                                    <canvas ref="earningsChart"></canvas>
+                            </div>
+                        </div>
+                   </div>
+                   <div class="widget">
+                     <div class="widget-header">
+                          <h2>Latest Downloads</h2>
+                       </div>
+                       <div class="widget-body">
+                           <div class="download-chart-container">
+                               <canvas ref="downloadsChart"></canvas>
+                            </div>
+                       </div>
+                   </div>
+                   <div class="widget">
+                       <div class="widget-header">
+                            <h2>Balances</h2>
+                        </div>
+                        <div class="widget-body">
+                            <div class="balances-container">
+                                <div class="balance-item">
+                                    <div class="balance-label">Available</div>
+                                    <div class="balance-amount">${{ availableBalance }}</div>
+                                </div>
+                                <div class="balance-item">
+                                    <div class="balance-label">Pending</div>
+                                    <div class="balance-amount">${{ pendingBalance }}</div>
+                                </div>
+                            </div>
+                             <p-button label="Withdraw Money"></p-button>
+                        </div>
+                   </div>
+                    <div class="widget">
+                       <div class="widget-header">
+                           <h2>Top Products</h2>
+                      </div>
+                      <div class="widget-body">
+                           <ul class="top-products-list">
+                                 <li v-for="(product, index) in topProducts" :key="index">
+                                      <img :src="product.image" :alt="product.name" />
+                                        <div class="product-info">
+                                          <div class="product-name">{{ product.name }}</div>
+                                          <div class="product-category">{{ product.category }}</div>
+                                        </div>
+                                  </li>
+                           </ul>
+                     </div>
+                   </div>
+               </div>
+            </div>
+             <div v-else>
+                 <h2>{{ activePage.toUpperCase() }} Page</h2>
+                  <p>Content for {{ activePage }} page goes here</p>
+             </div>
+        </div>
     </div>
 
     <script>
-    (function() {
         const { createApp, ref, onMounted } = Vue;
-        const PrimeVue = window.PrimeVue.default;
-        const Button = window.primevue.button;
-        const Menu = window.primevue.menu;
-        const InputText = window.primevue.inputtext;
-        const Dialog = window.primevue.dialog;
-        const Card = window.primevue.card;
-        const Dropdown = window.primevue.dropdown;
-        const SelectButton = window.primevue.selectbutton;
-         const Textarea = window.primevue.textarea;
-         const Slider = window.primevue.slider;
-         const Checkbox = window.primevue.checkbox;
-         const Rating = window.primevue.rating;
-          const ProgressBar = window.primevue.progressbar;
-          const Avatar = window.primevue.avatar;
-          const Badge = window.primevue.badge;
-          const Toast = window.primevue.toast;
-           const Ripple = window.primevue.ripple;
-          const ConfirmDialog = window.primevue.confirmdialog;
-          const ConfirmationService = window.primevue.confirmationservice;
-            const OverlayPanel = window.primevue.overlaypanel;
-           const Tooltip = window.primevue.tooltip;
-           const Divider = window.primevue.divider;
-           const Paginator = window.primevue.paginator;
-
-          
-
+        const {FilterMatchMode} = PrimeVue;
         const app = createApp({
-            components: {
-                'p-button': Button,
-                'p-menu': Menu,
-                'p-inputtext': InputText,
-                'p-dialog': Dialog,
-                 'p-card': Card,
-                 'p-dropdown': Dropdown,
-                  'p-selectbutton': SelectButton,
-                  'p-textarea': Textarea,
-                  'p-slider': Slider,
-                   'p-checkbox': Checkbox,
-                   'p-rating': Rating,
-                   'p-progressbar': ProgressBar,
-                   'p-avatar': Avatar,
-                    'p-badge': Badge,
-                     'p-toast': Toast,
-                     'p-ripple': Ripple,
-                      'p-confirmdialog': ConfirmDialog,
-                    'p-overlaypanel': OverlayPanel,
-                    'p-tooltip': Tooltip,
-                    'p-divider': Divider,
-                    'p-paginator': Paginator,
-                   
-            },
             setup() {
-                 const toast = ref(null);
-                 const confirmationService = ref(null);
-                 const op = ref(null);
-                 const overlayContent = ref('This is some overlay content!');
-                const menu = ref(null);
-                const menuItems = ref([
-                    { label: 'Home', icon: 'pi pi-home', command: () => { console.log('Home clicked'); } },
-                    { label: 'Settings', icon: 'pi pi-cog', command: () => { console.log('Settings clicked'); } },
-                    { label: 'Profile', icon: 'pi pi-user', command: () => { console.log('Profile clicked'); } },
-                    { label: 'Logout', icon: 'pi pi-sign-out', command: () => { console.log('Logout clicked'); } },
+                const activePage = ref('overview');
+                 const sidebarVisible = ref(false);
+                const totalProducts = ref(1134);
+                const totalProductsChange = ref(10);
+                const totalEarnings = ref(4231);
+                const totalEarningsChange = ref(-22);
+                const availableBalance = ref(537);
+                const pendingBalance = ref(234);
+                 const productsChart = ref(null);
+                const earningsChart = ref(null);
+                const downloadsChart = ref(null);
+                const topProducts = ref([
+                    {
+                        name: 'Product A', category: 'Category 1',
+                        image: 'https://placehold.co/600x400/EEE/31343C' },
+                    {
+                        name: 'Product B', category: 'Category 2',
+                        image: 'https://placehold.co/600x400/EEE/31343C' },
+                    {
+                         name: 'Product C', category: 'Category 3',
+                         image: 'https://placehold.co/600x400/EEE/31343C'
+                    },
+                    {
+                         name: 'Product D', category: 'Category 4',
+                         image: 'https://placehold.co/600x400/EEE/31343C'
+                    },
+                     {
+                         name: 'Product E', category: 'Category 5',
+                         image: 'https://placehold.co/600x400/EEE/31343C'
+                    },
+                       {
+                         name: 'Product F', category: 'Category 6',
+                         image: 'https://placehold.co/600x400/EEE/31343C'
+                    }
                 ]);
-                const user = ref({ name: 'John Doe', email: 'john.doe@example.com', status: 'Active', bio: 'A short bio.', preferences: 50, notifications: true });
-                const editedUser = ref({ ...user.value });
-                const editDialogVisible = ref(false);
-                const statusOptions = ref(['Active', 'Inactive']);
-                const products = ref([
-                    { name: 'Product 1', description: 'Description of product 1', price: 29.99, imageUrl: 'https://placehold.co/200x150/EEE/31343C', rating: 4, availability: 80 },
-                      { name: 'Product 2', description: 'Description of product 2', price: 49.99, imageUrl: 'https://placehold.co/200x150/EEE/31343C', rating: 3, availability: 100  },
-                    { name: 'Product 3', description: 'Description of product 3', price: 19.99, imageUrl: 'https://placehold.co/200x150/EEE/31343C', rating: 5,  availability: 20 },
-                    { name: 'Product 4', description: 'Description of product 4', price: 39.99, imageUrl: 'https://placehold.co/200x150/EEE/31343C', rating: 2,  availability: 60  },
-                       { name: 'Product 5', description: 'Description of product 5', price: 59.99, imageUrl: 'https://placehold.co/200x150/EEE/31343C', rating: 4, availability: 90 },
-                    { name: 'Product 6', description: 'Description of product 6', price: 25.99, imageUrl: 'https://placehold.co/200x150/EEE/31343C', rating: 1,  availability: 50 },
-                     { name: 'Product 7', description: 'Description of product 7', price: 79.99, imageUrl: 'https://placehold.co/200x150/EEE/31343C', rating: 5,  availability: 100 },
-                       { name: 'Product 8', description: 'Description of product 8', price: 109.99, imageUrl: 'https://placehold.co/200x150/EEE/31343C', rating: 3, availability: 70  },
 
-                ]);
-
-                 const editProfile = () => {
-                    editedUser.value = { ...user.value };
-                    editDialogVisible.value = true;
+               const setActivePage = (page) => {
+                  activePage.value = page;
+                  if (window.innerWidth <= 768) {
+                        sidebarVisible.value = false;
+                    }
                 };
-
-                 const saveProfile = () => {
-                    user.value = { ...editedUser.value };
-                   editDialogVisible.value = false;
-                   toast.value.add({ severity: 'success', summary: 'Success', detail: 'Profile updated successfully', life: 3000 });
+                const toggleSidebar = () => {
+                    sidebarVisible.value = !sidebarVisible.value;
                 };
-                const toggleMenu = (event) => {
-                    menu.value.toggle(event);
+                const contactUs = () => {
+                  alert('Contact us button clicked');
                 };
-                 const addToCart = (product) => {
-                        overlayContent.value = `Added ${product.name} to the cart`;
-                        op.value.toggle(event)
-                };
-                const showConfirm = (event) => {
-                        confirmationService.value.require({
-                            message: 'Are you sure you want to proceed?',
-                            header: 'Confirmation',
-                            icon: 'pi pi-exclamation-triangle',
-                            accept: () => {
-                               toast.value.add({ severity: 'info', summary: 'Confirmed', detail: 'Action confirmed', life: 3000 });
-                            },
-                            reject: () => {
-                                 toast.value.add({ severity: 'warn', summary: 'Cancelled', detail: 'Action cancelled', life: 3000 });
-                            }
-                        });
-                    };
-                 const onPageChange = (event) => {
-                    console.log('Page Changed',event.page)
-                    }; 
 
                 onMounted(() => {
-                    console.log('Vue app mounted');
+                      (function(){
+                         const productsChartCtx = productsChart.value.getContext('2d');
+                                new Chart(productsChartCtx, {
+                                    type: 'line',
+                                    data: {
+                                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                                        datasets: [{
+                                            label: 'Products Trend',
+                                            data: [50, 60, 75, 80, 90, 100, 110],
+                                            borderColor: '#007bff',
+                                             tension: 0.4,
+                                            fill: false,
+                                          },
+                                          ],
+                                      },
+                                    options: {
+                                         responsive: true,
+                                          maintainAspectRatio: false,
+                                          plugins: {
+                                                legend: { display: false },
+                                            },
+                                           scales: {
+                                              x: {
+                                               display: false,  // Hide x-axis labels
+                                               grid: {
+                                                  display: false  // Hide x-axis grid lines
+                                                  },
+                                             },
+                                                y: {
+                                                display: false,  // Hide y-axis labels
+                                                grid: {
+                                                     display: false   // Hide y-axis grid lines
+                                                  }
+                                                 },
+                                            },
+
+                                    },
+                                });
+                      })();
+                    (function(){
+                        const earningsChartCtx = earningsChart.value.getContext('2d');
+                           new Chart(earningsChartCtx, {
+                                type: 'line',
+                                data: {
+                                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                                    datasets: [{
+                                        label: 'Earnings Trend',
+                                        data: [100, 90, 80, 120, 130, 140, 150],
+                                        borderColor: '#28a745',
+                                         tension: 0.4,
+                                        fill: false,
+                                      },
+                                    ],
+                                },
+                                 options: {
+                                       responsive: true,
+                                        maintainAspectRatio: false,
+                                          plugins: {
+                                                legend: { display: false },
+                                            },
+                                       scales: {
+                                          x: {
+                                           display: false,  // Hide x-axis labels
+                                           grid: {
+                                              display: false  // Hide x-axis grid lines
+                                            },
+                                         },
+                                            y: {
+                                            display: false,  // Hide y-axis labels
+                                            grid: {
+                                                 display: false  // Hide y-axis grid lines
+                                              }
+                                             },
+                                        },
+                                  },
+                            });
+                       })();
+                       (function(){
+                            const downloadsChartCtx = downloadsChart.value.getContext('2d');
+                                new Chart(downloadsChartCtx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                                        datasets: [{
+                                            label: 'Downloads',
+                                            data: [200, 250, 300, 359, 320, 400, 420],
+                                            backgroundColor: '#ffc107',
+                                             borderRadius: 5,
+                                          },
+                                        ],
+                                    },
+                                   options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                          plugins: {
+                                                legend: { display: false },
+                                            },
+                                        scales: {
+                                                y: {
+                                                     display: false,
+                                                    },
+                                           },
+                                           layout: {
+                                                padding: {
+                                                    top: 10,
+                                                    bottom:10,
+                                                }
+                                            },
+                                           },    
+                                  });
+                       })();
+
                 });
 
-                return {  toast,  op, overlayContent, menu, menuItems, user, editDialogVisible, editedUser, statusOptions, products, editProfile, saveProfile, toggleMenu, addToCart, showConfirm, confirmationService, onPageChange };
+                return {
+                    activePage,
+                     sidebarVisible,
+                     toggleSidebar,
+                    totalProducts,
+                    totalProductsChange,
+                    totalEarnings,
+                    totalEarningsChange,
+                     availableBalance,
+                    pendingBalance,
+                    topProducts,
+                    productsChart,
+                    earningsChart,
+                    downloadsChart,
+                    setActivePage,
+                    contactUs
+                };
             }
         });
-        app.use(PrimeVue, { ripple: true });
+        app.use(PrimeVue.Config, { theme: { preset: PrimeVue.Themes.Aura, options: { darkModeSelector: false || 'none', }, }, });
+        app.component('p-badge', PrimeVue.Badge);
+        app.component('p-avatar', PrimeVue.Avatar);
+         app.component('p-button', PrimeVue.Button);
+        app.component('p-inputtext', PrimeVue.InputText);
+        app.component('p-chart', PrimeVue.Chart);
+          app.component('p-card', PrimeVue.Card);
+          app.component('p-progressbar', PrimeVue.ProgressBar);
+            app.component('p-listbox', PrimeVue.Listbox);
+             app.component('p-sidebar', PrimeVue.Sidebar);
+
         app.mount('#app');
-    })();
     </script>
 </body>
 </html>
