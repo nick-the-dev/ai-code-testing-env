@@ -1,491 +1,956 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+  <head>
+    <title>PrimeVue Sortable Table + CDN</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
     <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/menu.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/button.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/badge.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/avatar.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/datatable.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/column.min.js"></script>
     <script src="https://unpkg.com/primevue/umd/inputtext.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/card.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/chart.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/listbox.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/progressbar.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/dialog.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/overlaypanel.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/divider.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/tag.min.js"></script>
-    <script src="https://unpkg.com/primevue/umd/scrollpanel.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/textarea.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/calendar.min.js"></script>
     <script src="https://unpkg.com/primevue/umd/dropdown.min.js"></script>
-        <script src="https://unpkg.com/primevue/umd/toastservice.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/tag.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/dialog.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/button.min.js"></script>
+    <script src="https://unpkg.com/primevue/umd/progressspinner.min.js"></script>
     <script src="https://unpkg.com/@primevue/core/umd/core.min.js"></script>
-
     <style>
-        /* Reset CSS */
-        html, body, div, span, applet, object, iframe,
-        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-        a, abbr, acronym, address, big, cite, code,
-        del, dfn, em, img, ins, kbd, q, s, samp,
-        small, strike, strong, sub, sup, tt, var,
-        b, u, i, center,
-        dl, dt, dd, ol, ul, li,
-        fieldset, form, label, legend,
-        table, caption, tbody, tfoot, thead, tr, th, td,
-        article, aside, canvas, details, embed, 
-        figure, figcaption, footer, header, hgroup, 
-        menu, nav, output, ruby, section, summary,
-        time, mark, audio, video {
-            margin: 0;
-            padding: 0;
-            border: 0;
-            font-size: 100%;
-            font: inherit;
-            vertical-align: baseline;
+            html, body, div, span, applet, object, iframe,
+            h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+            a, abbr, acronym, address, big, cite, code,
+            del, dfn, em, img, ins, kbd, q, s, samp,
+            small, strike, strong, sub, sup, tt, var,
+            b, u, i, center,
+            dl, dt, dd, ol, ul, li,
+            fieldset, form, label, legend,
+            table, caption, tbody, tfoot, thead, tr, th, td,
+            article, aside, canvas, details, embed,
+            figure, figcaption, footer, header, hgroup, 
+            menu, nav, output, ruby, section, summary,
+            time, mark, audio, video {
+                margin: 0;
+                padding: 0;
+                border: 0;
+                font-size: 100%;
+                font: inherit;
+                vertical-align: baseline;
+            }
+            /* HTML5 display-role reset for older browsers */
+            article, aside, details, figcaption, figure, 
+            footer, header, hgroup, menu, nav, section {
+                display: block;
+            }
+            body {
+                line-height: 1;
+            }
+            ol, ul {
+                list-style: none;
+            }
+            blockquote, q {
+                quotes: none;
+            }
+            blockquote:before, blockquote:after,
+            q:before, q:after {
+                content: '';
+                content: none;
+            }
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+      :root {
+        --p-primary-color: var(--main-blue);
+        --p-primary-hover-color: #f5f8ff;
+        --p-button-primary-hover-border-color: var(--main-blue);
+        --p-button-primary-active-background: #f5f8ff;
+        --p-button-primary-active-border-color: var(--main-blue);
+        --p-paginator-nav-button-selected-background: var(--main-blue);
+        --p-paginator-nav-button-selected-color: #fff;
+        --p-datatable-header-cell-padding: 0.4rem 0.6rem;
+        --p-datatable-body-cell-padding: 0.75rem 0.6rem;
+        --p-tag-font-size: 1rem;
+      }
+      #app {
+          direction: ltr;
         }
-        article, aside, details, figcaption, figure, 
-        footer, header, hgroup, menu, nav, section { display: block; }
-        body { line-height: 1; }
-        ol, ul { list-style: none; }
-        blockquote, q { quotes: none; }
-        blockquote:before, blockquote:after,
-        q:before, q:after { content: ''; content: none; }
-        table { border-collapse: collapse; border-spacing: 0; }
 
-        body {
-            font-family: sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
+        .date-filter {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
         }
-        #app {
-            display: flex;
-            height: 100vh;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #ffffff;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-        }
-        .sidebar-menu {
-            margin-bottom: 20px;
-        }
-        .sidebar-menu .p-menuitem-link {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-radius: 6px;
-            color: #555;
-            transition: background-color 0.2s;
-            margin-bottom: 5px;
-        }
-        .sidebar-menu .p-menuitem-link:hover, .sidebar-menu .p-menuitem-link.router-link-active {
-            background-color: #e0e0e0;
-        }
-        .sidebar-menu .p-menuitem-link .p-menuitem-icon {
-           margin-right: 10px; 
-        }
-        .sidebar-footer {
-            margin-top: auto;
-        }
-        .content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .dashboard-header .p-button {
-           margin-left: 10px; 
-        }
-        .dashboard-widgets {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .widget {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .widget-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        .widget-header h2 {
-            font-size: 1.2em;
-            margin: 0;
-        }
-        .widget-content {
-            margin-bottom: 15px;
-        }
-         .widget-content.flex {
-           display: flex;
-           flex-direction: column;   
-         }
-        .widget-content.flex > * {margin-bottom: 5px;}
-         .widget-content.flex > *:last-child {margin-bottom: 0;}
-        .widget-footer {
-            display: flex;
-            justify-content: flex-end;
-        }
-        .chart-container {
-            height: 150px;
-            position: relative;
-        }
-        .top-products-list .p-listbox-list-wrapper {
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        .top-products-list .p-listbox-item {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-        }
-        .top-products-list .p-listbox-item .product-icon {
-            margin-right: 10px;
-        }
-        .top-products-list .p-listbox-item .product-details {
-          flex: 1; 
-        }
-        .top-products-list .p-listbox-item .product-details .category {
-            font-size: 0.8em;
-            color: #888;
-        }
-           .percentage {
-            font-size: 0.9em;   
-         }
-         .positive { color: green; }
-        .negative { color: red; }
 
-        .balance-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-         .balance-item:last-child { margin-bottom: 0; }
-        .notification-badge { position: relative; display: inline-block; }
-        .notification-badge .p-badge { position: absolute; top: -5px; right: -5px;  }
-        .dashboard-header .p-avatar-group { display: flex; align-items: center; }
-         .dashboard-header .p-avatar-group > *:first-child { margin-right: 10px; }
-        .p-dialog .p-dialog-content { padding: 20px; }
-         .dashboard-header .p-inputtext { width: 300px; }
-         .search-container { display: flex; align-items: center; }
-         .search-container .p-inputtext {margin-right: 10px;}
-         .search-container .p-button {flex-shrink: 0;}
-        .p-overlaypanel { padding: 0; }
-        .p-overlaypanel .p-menuitem-link { padding: 10px; }
-       .p-dialog .p-dialog-header { padding: 15px; }
-        .p-dialog .p-dialog-content {padding: 20px;}
-        .p-divider.p-divider-horizontal { margin: 15px 0; }
-        .upload-progress .p-progressbar-label { display: none; }
-        .upload-progress { margin-top: 10px; }
-        .upload-progress .p-progressbar { width: 100%; }
-    .p-scrollpanel-wrapper { border: none; }
-        @media (max-width: 768px) {
-            #app { flex-direction: column; }
-            .sidebar { width: 100%;  }
-            .dashboard-header { flex-direction: column; align-items: flex-start; }
-             .dashboard-header .search-container { margin-bottom: 10px; }
-             .dashboard-header .p-button { margin-left: 0; margin-top: 10px;}
+        .p-select-label {
+          font-size: 10px;
         }
+
+        .p-inputtext {
+          border-radius: 6px !important;
+        }
+
+        .p-datatable-column-title {
+          font-size: 14px;
+        }
+
+        .date-filter-wrap {
+          display: flex;
+        }
+
+        .p-datatable-header {
+          padding: 0;
+        }
+
+        .clearAllFiltersBtn {
+          margin-bottom: 10px;
+        }
+
+        button[data-pc-group-section='pagebutton'] svg {
+          transform: scale(-1);
+          position: relative;
+        }
+
+        .p-datatable-header .dashBtn {
+          font-size: 12px;
+          padding: 5px 10px;
+        }
+
+        span.p-button-icon.p-button-icon-left.pi.pi-filter-slash {
+          display: none;
+        }
+
+        .date-filter-wrap {
+          gap: 2px;
+        }
+
+        .date-filter-column .p-datatable-column-filter-button {
+          display: none;
+        }
+
+        .status-filter-column .p-button-text {
+          display: none;
+        }
+
+        .p-select-option {
+          direction: ltr;
+        }
+
+        .p-datatable-table {
+          border-bottom: 1px solid #dbdbdb !important;
+          margin-bottom: 6px;
+        }
+
+        .p-datatable-tbody > tr > td {
+          line-height: 1.25;
+          vertical-align: top;
+        }
+
+        .p-datepicker-title {
+          font-size: 14px;
+        }
+
+        .p-textarea {
+          border-radius: 6px !important;
+          width: 100%;
+        }
+
+        .editable-note {
+          border: 1px dashed rgba(0, 0, 0, 0.2);
+          padding: 5px;
+          cursor: pointer;
+          display: inline-block;
+          min-height: 18px;
+          border-radius: 6px;
+          font-size: 1rem;
+          width: 100%;
+          text-align: center;
+        }
+
+        .p-button-label {
+          font-size: 12px;
+        }
+
+        .addNoteBtn {
+          padding: 5px;
+        }
+
+          .p-dialog {
+      direction: ltr;
+       Use code with caution.
+      }
     </style>
-</head>
-<body>
-<div id="app">
-    <div class="sidebar">
-        <div class="sidebar-header" style="margin-bottom: 20px;">
-         <img src="https://placehold.co/200x100/EEE/31343C" alt="Logo" style="max-width: 150px;"/>
+  </head>
+  <body>
+    <div id="app">
+      <div class="card">
+        <p-datatable
+          v-if="leads"
+          :value="leads"
+          v-model:filters="filters"
+          :global-filter-fields="[
+                    'businessName',
+                    'leadName',
+                    'contactInfo',
+                    'leadSource',
+                    'leadStatus',
+                ]"
+          filter-display="row"
+          showGridlines
+          data-key="clickedId"
+          :rows="10"
+          :paginator="true"
+          :rowsPerPageOptions="[5, 10, 20]"
+          :loading="loading"
+        >
+          <template #header>
+            <div class="flex justify-between clearAllFiltersBtn">
+              <p-button
+                type="button"
+                class="dashBtn"
+                label="Clear all filters"
+                @click="clearFilter"
+              />
+            </div>
+          </template>
+          <template #empty> No leads found. </template>
+          <template #loading>
+            <div class="flex justify-center align-center" style="height: 200px">
+              <p-progressspinner />
+            </div>
+          </template>
+          <p-column
+            class="status-filter-column"
+            field="leadStatus"
+            header="Status"
+            sortable
+            style="min-width: 10rem"
+          >
+            <template #body="{ data, rowIndex }">
+              <template v-if="isEditing(data, 'status')">
+                <p-dropdown
+                  v-model="data.editedStatus"
+                  :options="statuses"
+                  @change="onStatusChange(data, data.editedStatus)"
+                  :style="{ width: '100%' }"
+                >
+                  <template #option="slotProps">
+                    <p-tag
+                      :value="slotProps.option"
+                      :severity="getStatusBadge(slotProps.option)"
+                    />
+                  </template>
+                </p-dropdown>
+              </template>
+              <template v-else>
+                <p-tag
+                  :key="'tag-' + rowIndex + (data.editing ? '-edit' : '')"
+                  :value="data.leadStatus === 'Closed' && data.closedAmount ? `${data.leadStatus} (${data.closedAmount})` : data.leadStatus"
+                  :severity="getStatusBadge(data.leadStatus)"
+                  @click="editStatus(data, 'status')"
+                />
+              </template>
+            </template>
+            <template #filter="{ filterModel, filterCallback }">
+              <p-dropdown
+                v-model="filterModel.value"
+                @change="filterCallback()"
+                :options="statuses"
+                placeholder="Select"
+                showClear
+              >
+                <template #option="slotProps">
+                  <p-tag
+                    :value="slotProps.option"
+                    :severity="getStatusBadge(slotProps.option)"
+                  />
+                </template>
+              </p-dropdown>
+            </template>
+          </p-column>
+          <p-column
+            v-if="showBusinessName"
+            field="businessName"
+            header="Business Name"
+            sortable
+            style="min-width: 12rem"
+          >
+            <template #filter="{ filterModel, filterCallback }">
+              <input
+                type="text"
+                v-model="filterModel.value"
+                @input="filterCallback()"
+                placeholder="Search by Business Name"
+                class="p-inputtext"
+              />
+            </template>
+          </p-column>
+          <p-column
+            field="leadName"
+            header="Lead Name"
+            sortable
+            style="min-width: 9rem"
+          >
+            <template #filter="{ filterModel, filterCallback }">
+              <input
+                type="text"
+                v-model="filterModel.value"
+                @input="filterCallback()"
+                placeholder="Search by Name"
+                class="p-inputtext"
+              />
+            </template>
+          </p-column>
+          <p-column
+            field="contactInfo"
+            header="Contact Information"
+            sortable
+            style="min-width: 12rem"
+          >
+            <template #filter="{ filterModel, filterCallback }">
+              <input
+                type="text"
+                v-model="filterModel.value"
+                @input="filterCallback()"
+                placeholder="Search by Contact Info"
+                class="p-inputtext"
+              />
+            </template>
+          </p-column>
+          <p-column
+            field="leadSource"
+            header="Lead Source"
+            sortable
+            style="min-width: 12rem"
+          >
+            <template #filter="{ filterModel, filterCallback }">
+              <input
+                type="text"
+                v-model="filterModel.value"
+                @input="filterCallback()"
+                placeholder="Search by Lead Source"
+                class="p-inputtext"
+              />
+            </template>
+          </p-column>
+          <p-column
+            class="date-filter-column"
+            field="dateCreated"
+            header="Created On"
+            sortable
+            style="min-width: 13rem"
+          >
+            <template #body="{ data }">
+              {{ formatDate(data.dateCreated) }}
+            </template>
+            <template #filter="{ filterModel, filterCallback }">
+              <div class="flex align-items-center gap-2 date-filter-wrap">
+                <div class="date-filter">
+                  <p-calendar
+                    v-model="dates.from"
+                    @date-select="onDateChange"
+                    @clear="onDateChange"
+                    dateFormat="mm/dd/yy"
+                    placeholder="From date"
+                    showClear
+                    class="w-full"
+                  />
+                </div>
+                <div class="date-filter">
+                  <p-calendar
+                    v-model="dates.to"
+                    @date-select="onDateChange"
+                    @clear="onDateChange"
+                    dateFormat="mm/dd/yy"
+                    placeholder="To date"
+                    showClear
+                    class="w-full"
+                  />
+                </div>
+              </div>
+            </template>
+          </p-column>
+          <p-column field="notes" header="Notes" style="min-width: 9rem">
+            <template #body="{ data }">
+              <template v-if="isEditing(data, 'notes')">
+                <p-textarea
+                  v-model="data.editedNotes"
+                  rows="2"
+                  :style="{ width: '100%' }"
+                  @input="onNotesChange(data)"
+                  @blur="onNotesBlur(data)"
+                />
+              </template>
+              <template v-else>
+                <p-button
+                  class="dashBtn addNoteBtn"
+                  v-if="!data.notes"
+                  @click="editStatus(data, 'notes')"
+                  >Add personal note</p-button
+                >
+                <div
+                  v-else
+                  @click="editStatus(data, 'notes')"
+                  class="editable-note"
+                >
+                  {{ data.notes }}
+                </div>
+              </template>
+            </template>
+          </p-column>
+        </p-datatable>
+      </div>
+      <p-dialog
+        v-model:visible="dialogVisible"
+        header="Update Closed Amount"
+        :style="{ width: '30rem' }"
+        :modal="true"
+      >
+        <div class="flex flex-col gap-4">
+          <label for="closedAmount">Closed Amount:</label>
+          <p-inputtext type="number" id="closedAmount" v-model="closedAmount" />
         </div>
-        <p-menu class="sidebar-menu" :model="menuItems"></p-menu>
-           <p-divider />
-           <div class="sidebar-footer">
-                <p-button label="Contact Us" icon="pi pi-phone" class="p-button-secondary" @click="showContactPanel"></p-button>
-            </div>
-    </div>
-    <div class="content">
-        <div class="dashboard-header">
-            <div class="search-container">
-                <p-inputtext placeholder="Search..." v-model="searchQuery" />
-                <p-button icon="pi pi-search" class="p-button-secondary" @click="search"></p-button>
-            </div>
-           <div class="p-avatar-group">
-              <span class="notification-badge">
-                <p-button icon="pi pi-bell"  class="p-button-rounded p-button-secondary" @click="showNotificationsPanel"></p-button>
-                <p-badge value="3" severity="danger"></p-badge>
-              </span>
-                <p-avatar label="LL" shape="circle" style="background-color: #823994; color: white; margin-right: 5px; "></p-avatar>
-                <span>Lucy Lure</span>
-           </div>
-        </div>
-        <div class="dashboard-widgets">
-             <div class="widget">
-                <div class="widget-header">
-                    <h2>Referral Program</h2>
-                </div>
-                <div class="widget-content">
-                    <p>Want some EXTRA Money?</p>
-                    <p-button label="Referral Program" icon="pi pi-users" class="p-button-outlined p-button-secondary"></p-button>
-                </div>
-            </div>
-            <div class="widget">
-                <div class="widget-header">
-                    <h2>Total Products</h2>
-                </div>
-                  <div class="widget-content flex">
-                      <span>1,134 Items</span>
-                      <span :class="{'percentage': true, 'positive': productChange > 0, 'negative': productChange < 0}">{{ productChange > 0 ? '+' : '' }}{{ productChange }}% this week</span>
-                     <div class="chart-container">
-                       <canvas ref="productChart"></canvas>
-                     </div>
-                  </div>
-            </div>
-           <div class="widget">
-                 <div class="widget-header">
-                     <h2>Total Earnings</h2>
-                 </div>
-                <div class="widget-content flex">
-                   <span>${{ totalEarnings }}</span>
-                   <span :class="{'percentage': true, 'positive': earningsChange > 0, 'negative': earningsChange < 0}">{{ earningsChange > 0 ? '+' : '' }}{{ earningsChange }}% this week</span>
-                      <div class="chart-container">
-                          <canvas ref="earningsChart"></canvas>
-                      </div>
-                </div>
-             </div>
-             <div class="widget">
-                  <div class="widget-header">
-                       <h2>Latest Downloads</h2>
-                  </div>
-                 <div class="widget-content">
-                      <div class="chart-container">
-                          <canvas ref="downloadsChart"></canvas>
-                      </div>
-                 </div>
-                </div>
-            <div class="widget">
-                <div class="widget-header">
-                    <h2>Balances</h2>
-                </div>
-                <div class="widget-content flex">
-                    <div class="balance-item"><span>Available:</span><span>${{ availableBalance }}</span></div>
-                    <div class="balance-item"><span>Pending:</span> <span>${{ pendingBalance }}</span></div>
-                    <p-button label="Withdraw Money" icon="pi pi-money-bill" class="p-button-success" @click="showWithdrawDialog"></p-button>
-                </div>
-            </div>
-
-            <div class="widget">
-                <div class="widget-header">
-                    <h2>Top Products</h2>
-                 </div>
-                <div class="widget-content">
-                     <p-listbox class="top-products-list" :options="topProducts" listStyle="max-height: 250px" @click="handleProductClick" >
-                        <template #item="{option}">
-                            <div class="product-icon"><img :src="option.icon" alt="Product Icon" width="30" height="30"></div>
-                            <div class="product-details">
-                                <div>{{ option.name }}</div>
-                                <div class="category">{{ option.category }}</div>
-                            </div>
-                        </template>
-                    </p-listbox>
-                </div>
-            </div>
-        </div>
-         <div style="margin-top: 20px;">
-            <p-button label="Upload Product" icon="pi pi-upload"  @click="showUploadDialog" />
-         </div>
-    </div>
-     <p-dialog header="Upload Product" v-model:visible="uploadDialogVisible" :style="{width: '50vw'}" :modal="true">
-        <p>Select a product to upload:</p>
-           <input type="file" @change="handleFileUpload" />
-         <div v-if="uploadProgress > 0" class="upload-progress">
-           <p-progressbar  :value="uploadProgress" ></p-progressbar>
-         </div>
         <template #footer>
-          <p-button label="Upload" icon="pi pi-upload" class="p-button-success" :disabled="uploadProgress > 0" @click="uploadFile" />
-         <p-button label="Cancel" icon="pi pi-times" class="p-button-secondary" @click="uploadDialogVisible = false" />
+          <p-button
+            label="Cancel"
+            @click="cancelStatusEdit"
+            severity="secondary"
+          />
+          <p-button label="Save" @click="saveStatusEdit" />
         </template>
       </p-dialog>
-        <p-dialog header="Withdraw Money" v-model:visible="withdrawDialogVisible" :style="{width: '50vw'}" :modal="true">
-        <p>Enter the amount to withdraw:</p>
-         <p-inputtext type="number" v-model.number="withdrawAmount"  />
-        <template #footer>
-          <p-button label="Withdraw" icon="pi pi-money-bill" class="p-button-success"  @click="withdrawMoney" />
-           <p-button label="Cancel" icon="pi pi-times" class="p-button-secondary" @click="withdrawDialogVisible = false" />
-        </template>
-        </p-dialog>
-    <p-overlaypanel ref="notificationsPanel" :breakpoints="{'960px': '75vw'}" >
-    <p-scrollpanel style="width: 300px; height: 200px">
-        <p-menu :model="notificationItems" />
-     </p-scrollpanel>
-    </p-overlaypanel>
-       <p-overlaypanel ref="contactPanel" :breakpoints="{'960px': '75vw'}" >
-        <p-scrollpanel style="width: 300px; padding: 20px; ">
-             <p>You can reach us via:</p>
-            <ul>
-                <li>Email: <a href="mailto:support@example.com">support@example.com</a></li>
-                <li>Phone: <a href="tel:+15551234567">+1-555-123-4567</a></li>
-            </ul>
-         </p-scrollpanel>
-       </p-overlaypanel>
-</div>
-<script>
-const { createApp, ref, onMounted, reactive } = Vue;
-const { useToast } = PrimeVue.useToast();
-const app = createApp({
- setup() {
-  const toast = useToast();
-  const searchQuery = ref('');
-   const uploadDialogVisible = ref(false);
-   const withdrawDialogVisible = ref(false);
-    const withdrawAmount = ref(null);
-  const notificationsPanel = ref(null);
-    const contactPanel = ref(null);
-    const file = ref(null);
-    const uploadProgress = ref(0);
-    const productChart = ref(null);
-    const earningsChart = ref(null);
-   const downloadsChart = ref(null);
-  const menuItems = ref([
-      { label: 'Overview', icon: 'pi pi-home', to: '/', active: true },
-      { label: 'Products', icon: 'pi pi-box', to: '/products' },
-      { label: 'Campaigns', icon: 'pi pi-megaphone', to: '/campaigns' },
-      { label: 'Schedules', icon: 'pi pi-calendar', to: '/schedules' },
-      { label: 'Payouts', icon: 'pi pi-credit-card', to: '/payouts' },
-      { label: 'Statements', icon: 'pi pi-file', to: '/statements' },
-      { label: 'Settings', icon: 'pi pi-cog', to: '/settings' },
-    ]);
-     const notificationItems = ref([
-          { label: 'New product added', icon: 'pi pi-box', command: () => { toast.add({ severity: 'success', summary: 'Notification', detail: 'New product added', life: 3000 }); } },
-          { label: 'Payout processed', icon: 'pi pi-money-bill', command: () => { toast.add({ severity: 'info', summary: 'Notification', detail: 'Payout processed', life: 3000 }); } },
-            { label: 'New user registered', icon: 'pi pi-user', command: () => { toast.add({ severity: 'warn', summary: 'Notification', detail: 'New user registered', life: 3000 }); } },
-      ]);
+    </div>
+    <script>
+      const { createApp, ref, onMounted, computed } = Vue;
+      const { FilterMatchMode } = PrimeVue;
+      const app = createApp({
+        setup() {
+          const leads = ref([]);
+          const loading = ref(true);
+          const statuses = ref(['New', 'In progress', 'Closed', 'Lost']);
+          const dates = ref({
+            from: null,
+            to: null,
+          });
+          const dialogVisible = ref(false);
+          const closedAmount = ref(null);
+          const currentLead = ref(null);
+          const currentEditType = ref(null);
+          const showBusinessName = ref(true);
+          let debounceTimer = null;
+          const filters = ref({
+            global: {
+              value: null,
+              matchMode: FilterMatchMode.CONTAINS,
+            },
+            businessName: {
+              value: null,
+              matchMode: FilterMatchMode.STARTS_WITH,
+            },
+            leadName: {
+              value: null,
+              matchMode: FilterMatchMode.STARTS_WITH,
+            },
+            contactInfo: {
+              value: null,
+              matchMode: FilterMatchMode.STARTS_WITH,
+            },
+            leadSource: {
+              value: null,
+              matchMode: FilterMatchMode.STARTS_WITH,
+            },
+            dateCreated: {
+              operator: 'and',
+              constraints: [
+                {
+                  value: null,
+                  matchMode: FilterMatchMode.GREATER_THAN_OR_EQUAL_TO,
+                },
+                {
+                  value: null,
+                  matchMode: FilterMatchMode.LESS_THAN_OR_EQUAL_TO,
+                },
+              ],
+            },
+            leadStatus: {
+              value: null,
+              matchMode: FilterMatchMode.EQUALS,
+            },
+          });
 
-      const totalEarnings = ref(4231);
-        const earningsChange = ref(-22);
-        const availableBalance = ref(537);
-        const pendingBalance = ref(234);
-        const productChange = ref(10);
-         const topProducts = ref([
-           { name: 'Product A', category: 'Category X', icon: 'https://placehold.co/30/5DADE2/ffffff' },
-            { name: 'Product B', category: 'Category Y', icon: 'https://placehold.co/30/2ECC71/ffffff' },
-            { name: 'Product C', category: 'Category Z', icon: 'https://placehold.co/30/F4D03F/ffffff' },
-           { name: 'Product D', category: 'Category X', icon: 'https://placehold.co/30/E67E22/ffffff' },
-            { name: 'Product E', category: 'Category Y', icon: 'https://placehold.co/30/9B59B6/ffffff' },
-             { name: 'Product F', category: 'Category Z', icon: 'https://placehold.co/30/34495E/ffffff' },
-         ]);
-         const search = () => {
-            console.log('Searching for:', searchQuery.value);
+          const clearFilter = () => {
+            dates.value = {
+              from: null,
+              to: null,
+            };
+            filters.value = {
+              global: {
+                value: null,
+                matchMode: FilterMatchMode.CONTAINS,
+              },
+              businessName: {
+                value: null,
+                matchMode: FilterMatchMode.STARTS_WITH,
+              },
+              leadName: {
+                value: null,
+                matchMode: FilterMatchMode.STARTS_WITH,
+              },
+              contactInfo: {
+                value: null,
+                matchMode: FilterMatchMode.STARTS_WITH,
+              },
+              leadSource: {
+                value: null,
+                matchMode: FilterMatchMode.STARTS_WITH,
+              },
+              dateCreated: {
+                operator: 'and',
+                constraints: [
+                  {
+                    value: null,
+                    matchMode: FilterMatchMode.GREATER_THAN_OR_EQUAL_TO,
+                  },
+                  {
+                    value: null,
+                    matchMode: FilterMatchMode.LESS_THAN_OR_EQUAL_TO,
+                  },
+                ],
+              },
+              leadStatus: {
+                value: null,
+                matchMode: FilterMatchMode.EQUALS,
+              },
+            };
+          };
+
+          const formatDate = (value) => {
+            return new Intl.DateTimeFormat('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: '2-digit',
+            }).format(new Date(value));
+          };
+
+          const getStatusBadge = (status) => {
+            switch (status) {
+              case 'New':
+                return 'info';
+              case 'In progress':
+                return 'warn';
+              case 'Closed':
+                return 'success';
+              case 'Lost':
+                return 'danger';
+            }
+          };
+
+          const onDateChange = () => {
+            filters.value.dateCreated = {
+              operator: 'and',
+              constraints: [
+                {
+                  value: dates.value.from
+                    ? new Date(dates.value.from).toISOString()
+                    : null,
+                  matchMode: FilterMatchMode.GREATER_THAN_OR_EQUAL_TO,
+                },
+                {
+                  value: dates.value.to
+                    ? new Date(dates.value.to).toISOString()
+                    : null,
+                  matchMode: FilterMatchMode.LESS_THAN_OR_EQUAL_TO,
+                },
+              ],
+            };
+          };
+
+          const editStatus = (lead, type) => {
+            currentLead.value = lead;
+            currentEditType.value = type;
+
+            if (type === 'status') {
+              if (lead.leadStatus === 'Closed' && lead.closedAmount) {
+                closedAmount.value = lead.closedAmount;
+              } else {
+                closedAmount.value = null;
+              }
+              lead.editing = true;
+            } else if (type === 'notes') {
+              lead.editing = true;
+              lead.editedNotes = lead.notes;
+            }
+          };
+          const cancelStatusEdit = () => {
+            if (currentLead.value) {
+              currentLead.value.editing = false;
+              currentLead.value.editedStatus = null;
+              currentLead.value.editedNotes = null;
+              currentLead.value = null;
+            }
+            dialogVisible.value = false;
+            closedAmount.value = null;
+            currentEditType.value = null;
+          };
+          const saveStatusEdit = () => {
+            console.log('currentLead:', currentLead.value);
+            if (
+              currentLead.value.leadStatus !== 'Closed' &&
+              currentLead.value.editedStatus === 'Closed'
+            ) {
+              if (!closedAmount.value) {
+                console.error(
+                  'Closed amount value is required for status Closed',
+                );
+                return;
+              }
+            }
+
+            updateLeadStatus(
+              currentLead.value.editedStatus,
+              getCurrentLeadOwnerUserId(),
+              currentLead.value.clickedId,
+              closedAmount.value,
+              currentLead.value.leadType,
+            );
+
+            currentLead.value.leadStatus = currentLead.value.editedStatus;
+            if (currentLead.value.leadStatus === 'Closed') {
+              currentLead.value.closedAmount = closedAmount.value;
+            } else {
+              currentLead.value.closedAmount = null;
+            }
+            currentLead.value.editedStatus = null;
+            currentLead.value.editing = false;
+            dialogVisible.value = false;
+            currentLead.value = null;
+            closedAmount.value = null;
+            currentEditType.value = null;
+          };
+          const isEditing = (lead, type) => {
+            return lead.editing && currentEditType.value === type;
+          };
+
+          const updateLeadNotes = async (notes, leadOwnerUserId, clickedId, leadType) => {
+            console.log(
+              'updateLeadNotes called with:',
+              notes,
+              leadOwnerUserId,
+              clickedId,
+              leadType
+            );
+            try {
+              const formData = new FormData();
+              formData.append('updatedNote', notes);
+              formData.append('clickedId', clickedId);
+              formData.append('leadType', leadType);
+              const response = await fetch(
+                'https://www.hamaagal.com/api/widget/post/json/leads-table-upsert-note',
+                {
+                  method: 'POST',
+                  body: formData,
+                },
+              );
+              if (!response.ok) {
+                console.error(`HTTP error! Status: ${response.status}`);
+                return;
+              }
+              try {
+                const data = await response.json();
+                console.log('Server response for note update:', data);
+              } catch (error) {
+                console.error('Error parsing JSON:', error);
+              }
+            } catch (error) {
+              console.error('Error updating note:', error);
+            }
+          };
+          const updateLeadStatus = (
+            newStatus,
+            leadOwnerUserId,
+            clickedId,
+            closedAmount,
+            leadType,
+          ) => {
+            if (!leadOwnerUserId || leadOwnerUserId == 0) {
+              console.error('User ID not found.');
+              return;
+            }
+            const formData = new FormData();
+            formData.append('clickedId', clickedId);
+            formData.append('updatedStatus', newStatus);
+            formData.append('leadType', leadType);
+            if (closedAmount) {
+              formData.append('closedAmountValue', closedAmount);
+            }
+            fetch(
+              'https://www.hamaagal.com/api/widget/post/json/leads-table-upsert-status',
+              {
+                method: 'POST',
+                body: formData,
+              },
+            )
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then((data) => {
+                if (data.status === 'success') {
+                  console.log('Success:', data.message);
+                  console.log('Returned data:', data.data);
+                } else {
+                  console.error('Error:', data.message);
+                }
+              })
+              .catch((error) => {
+                console.error('Fetch Error:', error);
+              });
+          };
+
+          const getCurrentLeadOwnerUserId = () => {
+            return document.body.dataset.activeUserId;
+          };
+
+          const debouncedUpdateNote = (lead) => {
+            if (debounceTimer) {
+              clearTimeout(debounceTimer);
+            }
+            debounceTimer = setTimeout(() => {
+              console.log('update notes with debounce');
+              updateLeadNotes(
+                lead.editedNotes,
+                getCurrentLeadOwnerUserId(),
+                lead.clickedId,
+                lead.leadType,
+              );
+              lead.notes = lead.editedNotes;
+              debounceTimer = null;
+            }, 300);
+          };
+          const onNotesChange = (lead) => {
+            lead.notes = lead.editedNotes;
+            debouncedUpdateNote(lead);
+          };
+          const onNotesBlur = (lead) => {
+            if (lead.editedNotes !== lead.notes && lead.editedNotes) {
+              console.log('update notes on blur');
+              updateLeadNotes(
+                lead.editedNotes,
+                getCurrentLeadOwnerUserId(),
+                lead.clickedId,
+                lead.leadType,
+              );
+              lead.notes = lead.editedNotes;
+            }
+            lead.editedNotes = null;
+            lead.editing = false;
+            if (debounceTimer) {
+              clearTimeout(debounceTimer);
+            }
+            debounceTimer = null;
+          };
+
+          const onStatusChange = (lead, newStatus) => {
+            if (lead.leadStatus !== 'Closed' && newStatus === 'Closed') {
+              editStatus(lead, 'status');
+              dialogVisible.value = true;
+            } else if (lead.leadStatus !== 'Closed' && newStatus !== 'Closed') {
+              updateLeadStatus(
+                newStatus,
+                getCurrentLeadOwnerUserId(),
+                lead.clickedId,
+                null,
+                lead.leadType,
+              );
+              lead.leadStatus = newStatus;
+              lead.editedStatus = null;
+              lead.editing = false;
+            } else if (lead.leadStatus === 'Closed' && newStatus !== 'Closed') {
+              closedAmount.value = null;
+              dialogVisible.value = false;
+              updateLeadStatus(
+                newStatus,
+                getCurrentLeadOwnerUserId(),
+                lead.clickedId,
+                null,
+                lead.leadType,
+              );
+              lead.leadStatus = newStatus;
+              lead.editedStatus = null;
+              lead.editing = false;
+            }
+          };
+          const fetchDirectMessageLeads = async (memberId) => {
+            try {
+              const response = await fetch(
+                '/api/widget/post/json/getMemberMessages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ memberId: memberId })
+                }
+              );
+               if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log('Direct Message Leads:', data);
+                return data.data.map(lead => ({ ...lead, leadType: 'message' })) || [];
+            } catch (error) {
+                console.error('Error fetching direct message leads:', error);
+                return [];
+            }
         };
-   const showNotificationsPanel = (event) => {
-            notificationsPanel.value.toggle(event);
-      };
-       const showContactPanel = (event) => {
-            contactPanel.value.toggle(event);
-      };
-      const handleProductClick = (event) => {
-          console.log('Product clicked:', event.option);
-      };
-    const showUploadDialog = () => { uploadDialogVisible.value = true; };
-    const showWithdrawDialog = () => { withdrawDialogVisible.value = true; };
-     const handleFileUpload = (event) => { file.value = event.target.files[0];  };;
-   const uploadFile = async () => { uploadProgress.value = 0; if (!file.value) return; const formData = new FormData(); formData.append('file', file.value); const interval = setInterval(() => { uploadProgress.value += 20; if (uploadProgress.value >= 100) {clearInterval(interval); uploadDialogVisible.value = false; toast.add({ severity: 'success', summary: 'Success', detail: 'File uploaded successfully', life: 3000 }); } }, 200 ); };
-  const withdrawMoney = () => { if (!withdrawAmount.value) return; console.log('Withdrawing amount:', withdrawAmount.value); withdrawDialogVisible.value = false; toast.add({ severity: 'success', summary: 'Success', detail: 'Withdrawal processed', life: 3000 }); };
+          const fetchPhoneClickLeads = async (memberId) => {
+            try {
+              const response = await fetch(
+                '/api/widget/post/json/getPhoneClickLeads',
+                {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    memberId: memberId,
+                  }),
+                },
+              );
 
-  onMounted(() => {
-    const productCtx = productChart.value.getContext('2d');
-    new Chart(productCtx, {
-      type: 'line',
-      data: {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        datasets: [{
-          label: 'Products', data: [100, 110, 120, 130, 140, 150, 160],
-          borderColor: '#3498db', fill: false, tension: 0.4,
-        }],
-      },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { display: false } } },
-    });
-  const earningsCtx = earningsChart.value.getContext('2d');
-     new Chart(earningsCtx, {
-          type: 'line',
-         data: {
-           labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-           datasets: [{
-               label: 'Earnings', data: [1000, 1200, 1100, 1300, 1400, 1350, 1500],
-             borderColor: '#2ecc71', fill: false, tension: 0.4,
-          }],
+              if (!response.ok)
+                throw new Error(`HTTP error! status: ${response.status}`);
+
+              let data = await response.json();
+              console.log('Phone Click Leads:', data);
+              return data.data.map((lead) => ({
+                ...lead,
+                leadType: 'phoneButtonClick',
+              })) || [];
+            } catch (error) {
+              console.error('Error fetching phone click leads:', error);
+              return [];
+            }
+          };
+
+          const fetchWhatsappLeads = async (memberId) => {
+            try {
+              const response = await fetch(
+                '/api/widget/post/json/getWhatsappClickLeads',
+                {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    memberId: memberId,
+                  }),
+                },
+              );
+
+              if (!response.ok)
+                throw new Error(`HTTP error! status: ${response.status}`);
+
+              let data = await response.json();
+              console.log('WhatsApp Leads:', data);
+              return data.data.map((lead) => ({
+                ...lead,
+                leadType: 'whatsappButtonClick',
+              })) || [];
+            } catch (error) {
+              console.error('Error fetching WhatsApp leads:', error);
+              return [];
+            }
+          };
+
+          const fetchLeads = async () => {
+            loading.value = true;
+            const memberId = document.body.dataset.activeUserId;
+            try {
+               const directMessageLeads = await fetchDirectMessageLeads(memberId);
+              const phoneClickLeads = await fetchPhoneClickLeads(memberId);
+              const whatsappLeads = await fetchWhatsappLeads(memberId);
+              const combinedLeads = [...directMessageLeads,...phoneClickLeads, ...whatsappLeads];
+
+              const filteredLeads = Object.values(
+                combinedLeads.reduce((acc, lead) => {
+                  const date = new Date(lead.dateCreated)
+                    .toISOString()
+                    .split('T')[0];
+                  const key = `${lead.businessName}|${lead.contactInfo}|${date}|${lead.leadSource}`;
+                  if (
+                    !acc[key] ||
+                    new Date(lead.dateCreated) > new Date(acc[key].dateCreated)
+                  ) {
+                    acc[key] = lead;
+                  }
+                  acc[key].editing = false;
+                  acc[key].editedStatus = null;
+                   acc[key].editedNotes = null;
+                  return acc;
+                }, {}),
+              );
+
+              leads.value = filteredLeads;
+            } catch (error) {
+              console.error('Error fetching leads:', error);
+              leads.value = [];
+            } finally {
+              loading.value = false;
+            }
+          };
+
+          onMounted(fetchLeads);
+
+          return {
+            leads,
+            filters,
+            statuses,
+            dates,
+            loading,
+            dialogVisible,
+            closedAmount,
+            currentLead,
+            currentEditType,
+            formatDate,
+            clearFilter,
+            getStatusBadge,
+            onDateChange,
+            editStatus,
+            isEditing,
+            cancelStatusEdit,
+            saveStatusEdit,
+            onStatusChange,
+            onNotesChange,
+            onNotesBlur,
+            showBusinessName,
+          };
         },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { display: false } } },
-     });
-    const downloadsCtx = downloadsChart.value.getContext('2d');
-        new Chart(downloadsCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                datasets: [{
-                  label: 'Downloads', data: [200, 250, 300, 359, 320, 380, 400],
-                  backgroundColor: '#e74c3c',
-                }],
-           },
-           options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { display: false } } },
-        });
-    });
-  return {
-     searchQuery,
-      menuItems,
-      notificationItems,
-      totalEarnings,
-      earningsChange,
-      availableBalance,
-      pendingBalance,
-        topProducts,
-      productChange,
-      productChart,
-      earningsChart,
-      downloadsChart,
-       search,
-        showNotificationsPanel,
-          showContactPanel,
-        handleProductClick,
-      notificationsPanel,
-      contactPanel,
-      uploadDialogVisible,
-      showUploadDialog,
-      file,
-      uploadProgress,
-        uploadFile,
-          withdrawDialogVisible,
-        showWithdrawDialog,
-      withdrawAmount,
-      withdrawMoney
-    };
-  },
-});
-app.use(PrimeVue.ToastService);
-app.component('p-menu', PrimeVue.Menu);
-app.component('p-button', PrimeVue.Button);
-app.component('p-badge', PrimeVue.Badge);
-app.component('p-avatar', PrimeVue.Avatar);
-app.component('p-inputtext', PrimeVue.InputText);
-app.component('p-card', PrimeVue.Card);
-app.component('p-chart', PrimeVue.Chart);
-app.component('p-listbox', PrimeVue.Listbox);
-app.component('p-progressbar', PrimeVue.ProgressBar);
-app.component('p-dialog', PrimeVue.Dialog);
-app.component('p-overlaypanel', PrimeVue.OverlayPanel);
-app.component('p-divider', PrimeVue.Divider);
-app.component('p-tag', PrimeVue.Tag);
-app.component('p-scrollpanel', PrimeVue.ScrollPanel);
-app.component('p-dropdown', PrimeVue.Dropdown);
-app.mount('#app');
-</script>
-</body>
+      });
+
+      app.use(PrimeVue.Config, {
+        theme: {
+          preset: PrimeVue.Themes.Aura,
+          options: {
+            darkModeSelector: false || 'none',
+          },
+        },
+      });
+      app.component('p-datatable', PrimeVue.DataTable);
+      app.component('p-column', PrimeVue.Column);
+      app.component('p-inputtext', PrimeVue.InputText);
+      app.component('p-calendar', PrimeVue.Calendar);
+      app.component('p-dropdown', PrimeVue.Dropdown);
+      app.component('p-tag', PrimeVue.Tag);
+      app.component('p-button', PrimeVue.Button);
+      app.component('p-progressspinner', PrimeVue.ProgressSpinner);
+      app.component('p-dialog', PrimeVue.Dialog);
+      app.component('p-textarea', PrimeVue.Textarea);
+
+      app.mount('#app');
+    </script>
+  </body>
 </html>
